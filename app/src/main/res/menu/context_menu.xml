@@ -1,0 +1,14 @@
+<menu
+	android:id="@+id/context_player_menu"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	tools:context=".MainActivity">
+
+	<item
+		android:id="@+id/edit_selected"
+		android:orderInCategory="1"
+		android:title="@string/action_edit"
+		app:showAsAction="never"/>
+
+</menu>

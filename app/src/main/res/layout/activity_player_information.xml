@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.nirhart.parallaxscroll.views.ParallaxScrollView
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	app:parallax_factor="1.9">
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical">
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="@drawable/gradient_background"
+			android:orientation="horizontal"
+			android:weightSum="1">
+
+			<ImageView
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight=".38"
+				android:adjustViewBounds="true"
+				android:contentDescription="@string/player_picture"
+				android:src="@drawable/player"/>
+
+			<LinearLayout
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight=".62"
+				android:orientation="vertical"
+				android:padding="10dp">
+
+				<TextView
+					android:id="@+id/info_player_name"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center_vertical"
+					android:layout_marginBottom="5dp"
+					android:gravity="center"
+					android:textColor="@color/white"
+					android:textSize="25sp"
+					android:textStyle="bold|italic"/>
+
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="horizontal">
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_gravity="center_vertical"
+						android:text="@string/player_info_number"
+						android:textColor="@color/white"
+						android:textSize="15sp"/>
+
+					<TextView
+						android:id="@+id/stats_player_number"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:gravity="end"
+						android:textColor="@color/white"
+						android:textSize="15sp"
+						android:textStyle="bold|italic"/>
+
+				</LinearLayout>
+
+				<View
+					android:layout_width="match_parent"
+					android:layout_height="1dp"
+					android:layout_marginBottom="5dp"
+					android:background="@color/lightGreen"/>
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="horizontal">
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_gravity="center_vertical"
+						android:text="@string/player_info_team"
+						android:textColor="@color/white"
+						android:textSize="15sp"/>
+
+					<TextView
+						android:id="@+id/stats_player_team"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:gravity="end"
+						android:textColor="@color/white"
+						android:textSize="15sp"/>
+
+				</LinearLayout>
+
+				<View
+					android:layout_width="match_parent"
+					android:layout_height="1dp"
+					android:layout_marginBottom="5dp"
+					android:background="@color/lightGreen"/>
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="horizontal">
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_gravity="center_vertical"
+						android:text="@string/player_info_position"
+						android:textColor="@color/white"
+						android:textSize="15sp"/>
+
+					<TextView
+						android:id="@+id/stats_player_position"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:gravity="end"
+						android:textColor="@color/white"
+						android:textSize="15sp"/>
+				</LinearLayout>
+
+				<View
+					android:layout_width="match_parent"
+					android:layout_height="1dp"
+					android:layout_marginBottom="5dp"
+					android:background="@color/lightGreen"/>
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="horizontal">
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_gravity="center_vertical"
+						android:text="@string/player_info_bats"
+						android:textColor="@color/white"
+						android:textSize="15sp"/>
+
+					<TextView
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:gravity="end"
+						android:textColor="@color/white"
+						android:textSize="15sp"/>
+				</LinearLayout>
+
+				<View
+					android:layout_width="match_parent"
+					android:layout_height="1dp"
+					android:layout_marginBottom="5dp"
+					android:background="@color/lightGreen"/>
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="horizontal">
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_gravity="center_vertical"
+						android:text="@string/player_info_throws"
+						android:textColor="@color/white"
+						android:textSize="15sp"/>
+
+					<TextView
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:gravity="end"
+						android:textColor="@color/white"
+						android:textSize="15sp"/>
+				</LinearLayout>
+
+				<View
+					android:layout_width="match_parent"
+					android:layout_height="1dp"
+					android:layout_marginBottom="5dp"
+					android:background="@color/lightGreen"/>
+
+			</LinearLayout>
+
+		</LinearLayout>
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="@color/background_material_light"
+			android:orientation="vertical"
+			android:padding="10dp">
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:gravity="start"
+				android:text="@string/player_info_batting"
+				android:textColor="@color/black"
+				android:textSize="20sp"
+				android:textStyle="bold"/>
+
+			<View
+				android:layout_width="fill_parent"
+				android:layout_height="3dp"
+				android:layout_marginBottom="10dp"
+				android:layout_marginTop="0dp"
+				android:background="@color/lightGreen"/>
+
+			<RelativeLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="30dp"
+				android:orientation="horizontal">
+
+				<TextView
+					android:id="@+id/stats_player_batting_average"
+					style="@style/stats_text_views"
+					android:layout_alignParentLeft="true"
+					android:layout_alignParentStart="true"
+					android:text="AVG: "/>
+
+				<TextView
+					android:id="@+id/stats_player_rbi"
+					style="@style/stats_text_views"
+					android:layout_centerHorizontal="true"
+					android:text="RBI: "/>
+
+				<TextView
+					android:id="@+id/stats_player_runs"
+					style="@style/stats_text_views"
+					android:layout_alignParentEnd="true"
+					android:layout_alignParentRight="true"
+					android:text="Runs: "/>
+
+			</RelativeLayout>
+
+			<RelativeLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="30dp">
+
+				<TextView
+					android:id="@+id/stats_player_hits"
+					style="@style/stats_text_views"
+					android:layout_alignParentLeft="true"
+					android:layout_alignParentStart="true"
+					android:text="H: "/>
+
+				<TextView
+					android:id="@+id/stats_player_strikeouts"
+					style="@style/stats_text_views"
+					android:layout_centerHorizontal="true"
+					android:text="SO: "/>
+
+				<TextView
+					android:id="@+id/stats_player_walks"
+					style="@style/stats_text_views"
+					android:layout_alignParentEnd="true"
+					android:layout_alignParentRight="true"
+					android:text="BB: "/>
+
+			</RelativeLayout>
+
+			<RelativeLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="30dp">
+
+				<TextView
+					android:id="@+id/stats_player_1b"
+					style="@style/stats_text_views"
+					android:layout_alignParentLeft="true"
+					android:layout_alignParentStart="true"
+					android:text="1B: "/>
+
+				<TextView
+					android:id="@+id/stats_player_2b"
+					style="@style/stats_text_views"
+					android:layout_centerHorizontal="true"
+					android:text="2B: "/>
+
+				<TextView
+					android:id="@+id/stats_player_3b"
+					style="@style/stats_text_views"
+					android:layout_alignParentEnd="true"
+					android:layout_alignParentRight="true"
+					android:text="3B: "/>
+
+			</RelativeLayout>
+
+			<RelativeLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="30dp">
+
+				<TextView
+					android:id="@+id/stats_player_home_runs"
+					style="@style/stats_text_views"
+					android:layout_alignParentLeft="true"
+					android:layout_alignParentStart="true"
+					android:text="HR: "/>
+
+				<TextView
+					android:id="@+id/stats_player_fly_ball"
+					style="@style/stats_text_views"
+					android:layout_centerHorizontal="true"
+					android:text="FB: "/>
+
+				<TextView
+					android:id="@+id/stats_player_grounders"
+					style="@style/stats_text_views"
+					android:layout_alignParentEnd="true"
+					android:layout_alignParentRight="true"
+					android:text="GB: "/>
+
+
+			</RelativeLayout>
+
+			<RelativeLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="30dp">
+
+				<TextView
+					android:id="@+id/stats_player_on_base_percentage"
+					style="@style/stats_text_views"
+					android:layout_alignParentLeft="true"
+					android:layout_alignParentStart="true"
+					android:text="OBP: "/>
+
+				<TextView
+					android:id="@+id/stats_player_bases_stolen"
+					style="@style/stats_text_views"
+					android:layout_centerHorizontal="true"
+					android:text="BS: "/>
+
+
+				<TextView
+					android:id="@+id/stats_player_caught_stealing"
+					style="@style/stats_text_views"
+					android:layout_alignParentEnd="true"
+					android:layout_alignParentRight="true"
+					android:text="CS: "/>
+
+			</RelativeLayout>
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical">
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:gravity="start"
+					android:text="@string/player_info_fielding"
+					android:textColor="@color/black"
+					android:textSize="20sp"
+					android:textStyle="bold"/>
+
+				<View
+					android:layout_width="fill_parent"
+					android:layout_height="3dp"
+					android:layout_marginBottom="10dp"
+					android:layout_marginTop="0dp"
+					android:background="#009688"/>
+
+			</LinearLayout>
+
+			<RelativeLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="10dp">
+
+				<TextView
+					android:id="@+id/stats_player_errors"
+					style="@style/stats_text_views"
+					android:layout_alignParentLeft="true"
+					android:layout_alignParentStart="true"
+					android:text="ER: "/>
+
+				<TextView
+					android:id="@+id/stats_player_field_percentage"
+					style="@style/stats_text_views"
+					android:layout_centerHorizontal="true"
+					android:text="FPCT: "/>
+
+
+				<TextView
+					android:id="@+id/stats_player_put_out"
+					style="@style/stats_text_views"
+					android:layout_alignParentEnd="true"
+					android:layout_alignParentRight="true"
+					android:text="PO: "/>
+
+			</RelativeLayout>
+
+		</LinearLayout>
+
+	</LinearLayout>
+
+</com.nirhart.parallaxscroll.views.ParallaxScrollView>

@@ -1,0 +1,73 @@
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@drawable/default_background"
+	android:gravity="center_horizontal"
+	android:orientation="vertical"
+	tools:context=".MainActivity">
+
+	<TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="25dp"
+		android:gravity="center"
+		android:text="@string/app_name"
+		android:textAppearance="?android:attr/textAppearanceLarge"
+		android:textColor="@color/white"/>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:layout_weight="1">
+	</LinearLayout>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:gravity="center"
+		android:weightSum="2">
+
+		<Button
+			android:id="@+id/main_leagues"
+			style="@style/MainActivity"
+			android:text="@string/league_activity"/>
+
+		<Button
+			android:id="@+id/main_games"
+			style="@style/MainActivity"
+			android:text="@string/game_activity"/>
+
+	</LinearLayout>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:gravity="center"
+		android:weightSum="2">
+
+		<Button
+			android:id="@+id/main_teams"
+			style="@style/MainActivity"
+			android:text="@string/team_activity"/>
+
+		<Button
+			android:id="@+id/main_players"
+			style="@style/MainActivity"
+			android:text="@string/player_activity"/>
+
+	</LinearLayout>
+
+	<TextView
+		android:id="@+id/email"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginBottom="10dp"
+		android:background="@drawable/buttons_selector"
+		android:padding="10dp"
+		android:text="Sign in"
+		android:textColor="@color/white"
+		android:textSize="17sp"/>
+
+</LinearLayout>

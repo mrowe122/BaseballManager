@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<!-- App Colors -->
+	<color name="ColorPrimary">#005826</color>
+	<color name="ColorPrimaryDark">#004a1f</color>
+	<color name="lightGreen">#007733</color>
+
+	<!-- Deleted player warning -->
+	<color name="lightRed">#FFDCDC</color>
+
+	<!-- Universal colors -->
+	<color name="black">#000000</color>
+	<color name="white">#ffffff</color>
+	<color name="dark_grey">#d2d2d2</color>
+
+	<!-- Alpha colors -->
+	<color name="alpha_grey">#59a9a9a9</color>
+
+</resources>
