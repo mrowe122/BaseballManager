@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical">
+
+	<com.emilsjolander.components.StickyScrollViewItems.StickyScrollView
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:layout_weight="1"
+		android:padding="10dp">
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical">
+
+			<android.support.design.widget.TextInputLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				app:hintTextAppearance="@style/EditTextHint">
+
+				<EditText
+					android:id="@+id/form_team_name"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginBottom="25dp"
+					android:background="@color/white"
+					android:hint="@string/form_hint_team_name"
+					android:inputType="textCapWords|textMultiLine"
+					android:padding="12dp"/>
+
+			</android.support.design.widget.TextInputLayout>
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="10dp"
+				android:background="?android:colorBackground"
+				android:gravity="center_vertical"
+				android:orientation="horizontal"
+				android:paddingBottom="12dp"
+				android:paddingTop="2dp"
+				android:tag="sticky"
+				android:weightSum="1">
+
+				<TextView
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_marginEnd="5dp"
+					android:layout_marginRight="5dp"
+					android:layout_weight="1"
+					android:text="@string/new_player"
+					android:textAppearance="?android:attr/textAppearanceMedium"
+					android:textColor="@color/black"/>
+
+				<TextView
+					android:id="@+id/number_players_team_form"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginEnd="8dp"
+					android:layout_marginRight="8dp"
+					android:textColor="@color/black"/>
+
+				<ImageButton
+					android:id="@+id/add_new_field"
+					android:layout_width="30dp"
+					android:layout_height="30dp"
+					android:layout_gravity="end"
+					android:background="@drawable/add_icon"/>
+
+			</LinearLayout>
+
+			<LinearLayout
+				android:id="@+id/edit_fields"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical">
+
+			</LinearLayout>
+
+		</LinearLayout>
+
+	</com.emilsjolander.components.StickyScrollViewItems.StickyScrollView>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		android:weightSum="2">
+
+		<Button
+			android:id="@+id/cancel_team"
+			style="?android:buttonBarStyle"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginLeft="10dp"
+			android:layout_marginRight="10dp"
+			android:layout_weight="1"
+			android:background="@android:drawable/btn_default"
+			android:text="@string/cancel"/>
+
+		<Button
+			android:id="@+id/add_new_team"
+			style="?android:buttonBarStyle"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginLeft="10dp"
+			android:layout_marginRight="10dp"
+			android:layout_weight="1"
+			android:background="@android:drawable/btn_default"
+			android:text="@string/add_team"/>
+
+	</LinearLayout>
+
+</LinearLayout>

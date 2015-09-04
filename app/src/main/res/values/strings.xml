@@ -8,6 +8,7 @@
 	<string name="player_activity">Players</string>
 	<string name="player_information">Players Info</string>
 	<string name="team_information">Team Info</string>
+	<string name="new_activity_form">New Team</string>
 
 
 	<!--Activity Names-->
@@ -52,23 +53,6 @@
 	<!--Picture Descriptions-->
 	<string name="team_picture">team picture</string>
 	<string name="player_picture">player picture</string>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 	<!-- Activity names -->

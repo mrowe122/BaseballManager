@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -12,11 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.CursorAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.msrproduction.baseballmanager.Database.Contract;
 import com.msrproduction.baseballmanager.Database.DatabaseAdapter;
+import com.msrproduction.baseballmanager.plugins.ListView;
+import com.msrproduction.baseballmanager.plugins.OnDetectScrollListener;
 
 public class TeamInformation extends AppCompatActivity {
 
@@ -89,6 +91,18 @@ public class TeamInformation extends AppCompatActivity {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				startActivity(new Intent(getApplicationContext(), PlayerInformation.class)
 						.putExtra("player_id", id + ""));
+			}
+		});
+		final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+		listView.setOnDetectScrollListener(new OnDetectScrollListener() {
+			@Override
+			public void onUpScrolling() {
+				fab.show();
+			}
+
+			@Override
+			public void onDownScrolling() {
+				fab.hide();
 			}
 		});
 		cursor.close();

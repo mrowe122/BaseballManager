@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -12,21 +13,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.CursorAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.msrproduction.baseballmanager.Database.Contract;
 import com.msrproduction.baseballmanager.Database.DatabaseAdapter;
+import com.msrproduction.baseballmanager.plugins.ListView;
+import com.msrproduction.baseballmanager.plugins.OnDetectScrollListener;
 
 public class TeamsActivity extends AppCompatActivity {
 
 	private DatabaseAdapter databaseAdapter;
+	private ListView listView;
+	private FloatingActionButton fab;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.list_view_layout);
 		databaseAdapter = new DatabaseAdapter(this).open();
+		initSetup();
 	}
 
 	@Override
@@ -57,9 +62,30 @@ public class TeamsActivity extends AppCompatActivity {
 		}
 	}
 
-	private void readTeams() {
-		ListView listView = (ListView) findViewById(R.id.main_list_view);
+	private void initSetup() {
+		listView = (ListView) findViewById(R.id.main_list_view);
 		registerForContextMenu(listView);
+		fab = (FloatingActionButton) findViewById(R.id.fab);
+		fab.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startActivity(new Intent(TeamsActivity.this, NewTeamForm.class));
+			}
+		});
+		listView.setOnDetectScrollListener(new OnDetectScrollListener() {
+			@Override
+			public void onUpScrolling() {
+				fab.show();
+			}
+
+			@Override
+			public void onDownScrolling() {
+				fab.hide();
+			}
+		});
+	}
+
+	private void readTeams() {
 		listView.setAdapter(new TeamListAdapter(this, databaseAdapter.loadTeams(), CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER));
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
@@ -69,6 +95,7 @@ public class TeamsActivity extends AppCompatActivity {
 			}
 		});
 	}
+
 
 	private class TeamListAdapter extends CursorAdapter {
 

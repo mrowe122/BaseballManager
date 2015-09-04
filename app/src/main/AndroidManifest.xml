@@ -60,13 +60,15 @@
 
 		<activity
 			android:name=".PlayerInformation"
-			android:label="@string/player_information">
-		</activity>
+			android:label="@string/player_information"/>
 
 		<activity
 			android:name=".TeamInformation"
-			android:label="@string/team_information">
-		</activity>
+			android:label="@string/team_information"/>
+
+		<activity
+			android:name=".NewTeamForm"
+			android:label="@string/new_activity_form"/>
 
 	</application>
 
