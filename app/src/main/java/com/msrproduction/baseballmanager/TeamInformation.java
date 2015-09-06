@@ -50,8 +50,6 @@ public class TeamInformation extends AppCompatActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-			case R.id.action_add:
-				return true;
 			case R.id.edit_selected:
 				/*startActivity(new Intent(TeamInformation.this, EditActivityTeam.class)
 						.putExtra("edit_team", teamId));*/

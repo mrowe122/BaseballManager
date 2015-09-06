@@ -20,13 +20,13 @@
 			<android.support.design.widget.TextInputLayout
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
+				android:layout_marginBottom="25dp"
 				app:hintTextAppearance="@style/EditTextHint">
 
 				<EditText
 					android:id="@+id/form_team_name"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
-					android:layout_marginBottom="25dp"
 					android:background="@color/white"
 					android:hint="@string/form_hint_team_name"
 					android:inputType="textCapWords|textMultiLine"
@@ -99,7 +99,7 @@
 			android:layout_marginLeft="10dp"
 			android:layout_marginRight="10dp"
 			android:layout_weight="1"
-			android:background="@android:drawable/btn_default"
+			android:background="@android:drawable/btn_default_small"
 			android:text="@string/cancel"/>
 
 		<Button
@@ -110,7 +110,7 @@
 			android:layout_marginLeft="10dp"
 			android:layout_marginRight="10dp"
 			android:layout_weight="1"
-			android:background="@android:drawable/btn_default"
+			android:background="@android:drawable/btn_default_small"
 			android:text="@string/add_team"/>
 
 	</LinearLayout>
