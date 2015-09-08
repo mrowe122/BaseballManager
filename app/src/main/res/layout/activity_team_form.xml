@@ -4,6 +4,8 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
+	android:descendantFocusability="beforeDescendants"
+	android:focusableInTouchMode="true"
 	android:orientation="vertical">
 
 	<com.emilsjolander.components.StickyScrollViewItems.StickyScrollView
@@ -88,29 +90,20 @@
 	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
+		android:layout_marginBottom="8dp"
 		android:orientation="horizontal"
 		android:weightSum="2">
 
 		<Button
 			android:id="@+id/cancel_team"
-			style="?android:buttonBarStyle"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginLeft="10dp"
-			android:layout_marginRight="10dp"
-			android:layout_weight="1"
-			android:background="@android:drawable/btn_default_small"
+			style="@style/YesNoButtons"
+			android:background="@drawable/no_button"
 			android:text="@string/cancel"/>
 
 		<Button
 			android:id="@+id/add_new_team"
-			style="?android:buttonBarStyle"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginLeft="10dp"
-			android:layout_marginRight="10dp"
-			android:layout_weight="1"
-			android:background="@android:drawable/btn_default_small"
+			style="@style/YesNoButtons"
+			android:background="@drawable/yes_button"
 			android:text="@string/add_team"/>
 
 	</LinearLayout>
