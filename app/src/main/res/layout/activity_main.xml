@@ -26,36 +26,45 @@
 	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:gravity="center"
+		android:orientation="horizontal"
 		android:weightSum="2">
 
-		<Button
-			android:id="@+id/main_leagues"
-			style="@style/MainActivity"
-			android:text="@string/league_activity"/>
+		<LinearLayout
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_gravity="bottom"
+			android:layout_weight="1"
+			android:orientation="vertical">
 
-		<Button
-			android:id="@+id/main_games"
-			style="@style/MainActivity"
-			android:text="@string/game_activity"/>
+			<Button
+				android:id="@+id/main_leagues"
+				style="@style/MainActivity"
+				android:text="@string/league_activity"/>
 
-	</LinearLayout>
+			<Button
+				android:id="@+id/main_games"
+				style="@style/MainActivity"
+				android:text="@string/game_activity"/>
 
-	<LinearLayout
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:gravity="center"
-		android:weightSum="2">
+			<Button
+				android:id="@+id/main_teams"
+				style="@style/MainActivity"
+				android:text="@string/team_activity"/>
 
-		<Button
-			android:id="@+id/main_teams"
-			style="@style/MainActivity"
-			android:text="@string/team_activity"/>
+			<Button
+				android:id="@+id/main_players"
+				style="@style/MainActivity"
+				android:text="@string/player_activity"/>
 
-		<Button
-			android:id="@+id/main_players"
-			style="@style/MainActivity"
-			android:text="@string/player_activity"/>
+		</LinearLayout>
+
+		<ImageView
+			android:layout_width="0dp"
+			android:layout_height="match_parent"
+			android:layout_gravity="center_vertical"
+			android:layout_weight="1"
+			android:padding="15dp"
+			android:src="@drawable/batter"/>
 
 	</LinearLayout>
 

@@ -7,10 +7,9 @@
 	</style>
 
 	<style name="MainActivity" parent="AppTheme">
-		<item name="android:layout_width">0dp</item>
+		<item name="android:layout_width">match_parent</item>
 		<item name="android:layout_height">wrap_content</item>
 		<item name="android:layout_margin">7dp</item>
-		<item name="android:layout_weight">1</item>
 		<item name="android:background">@drawable/main_activity_buttons</item>
 		<item name="android:paddingBottom">17dp</item>
 		<item name="android:paddingTop">17dp</item>
