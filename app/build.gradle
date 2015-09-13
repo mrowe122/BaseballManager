@@ -25,5 +25,6 @@ dependencies {
     compile 'com.google.android.gms:play-services-identity:7.5.0'
     compile 'com.android.support:design:22.2.1'
     compile 'se.emilsjolander:StickyScrollViewItems:1.1.0'
+    compile 'se.emilsjolander:stickylistheaders:2.7.0'
     compile 'com.github.nirhart:parallaxscroll:1.0'
 }

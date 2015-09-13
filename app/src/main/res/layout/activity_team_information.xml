@@ -196,29 +196,12 @@
 			android:layout_marginTop="0dp"
 			android:background="@color/lightGreen"/>
 
-		<FrameLayout
+		<ListView
+			android:id="@+id/players_list"
 			android:layout_width="match_parent"
-			android:layout_height="match_parent">
-
-			<com.msrproduction.baseballmanager.plugins.ListView
-				android:id="@+id/players_list"
-				android:layout_width="match_parent"
-				android:layout_height="match_parent"
-				android:divider="@null"
-				android:dividerHeight="12dp"/>
-
-			<android.support.design.widget.FloatingActionButton
-				android:id="@+id/fab"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_gravity="bottom|end"
-				android:layout_margin="0dp"
-				android:src="@drawable/ic_action_content_new"
-				app:backgroundTint="@color/ColorPrimary"
-				app:borderWidth="0dp"
-				app:elevation="4dp"/>
-
-		</FrameLayout>
+			android:layout_height="match_parent"
+			android:divider="@null"
+			android:dividerHeight="12dp"/>
 
 	</LinearLayout>
 
