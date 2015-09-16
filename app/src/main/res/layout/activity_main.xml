@@ -59,12 +59,12 @@
 		</LinearLayout>
 
 		<ImageView
+			android:id="@+id/baseball_icon"
 			android:layout_width="0dp"
 			android:layout_height="match_parent"
 			android:layout_gravity="center_vertical"
 			android:layout_weight="1"
-			android:padding="15dp"
-			android:src="@drawable/batter"/>
+			android:padding="15dp"/>
 
 	</LinearLayout>
 
