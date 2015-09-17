@@ -19,16 +19,6 @@
 		</activity>
 
 		<activity
-			android:name=".LeagueActivity"
-			android:label="@string/league_activity"
-			android:parentActivityName=".MainActivity">
-
-			<meta-data
-				android:name="android.support.PARENT_ACTIVITY"
-				android:value=".MainActivity"/>
-		</activity>
-
-		<activity
 			android:name=".GamesActivity"
 			android:label="@string/game_activity"
 			android:parentActivityName=".MainActivity">

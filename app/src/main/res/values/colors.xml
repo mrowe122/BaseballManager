@@ -18,4 +18,17 @@
 	<!-- Alpha colors -->
 	<color name="alpha_grey">#59a9a9a9</color>
 
+
+
+
+
+
+
+
+
+
+	<color name="header_normal">#ffe74c3c</color>
+	<color name="header_pressed">#ffc0392b</color>
+	<color name="menu_section_header">#FFDDDDDD</color>
+
 </resources>

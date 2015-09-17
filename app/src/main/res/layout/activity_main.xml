@@ -37,11 +37,6 @@
 			android:orientation="vertical">
 
 			<Button
-				android:id="@+id/main_leagues"
-				style="@style/MainActivity"
-				android:text="@string/league_activity"/>
-
-			<Button
 				android:id="@+id/main_games"
 				style="@style/MainActivity"
 				android:text="@string/game_activity"/>
