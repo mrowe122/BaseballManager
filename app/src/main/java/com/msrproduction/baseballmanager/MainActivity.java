@@ -39,6 +39,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
+			case R.id.my_team:
+				startActivity(new Intent(MainActivity.this, MyTeamsActivity.class));
+				break;
 			case R.id.main_games:
 				startActivity(new Intent(MainActivity.this, GamesActivity.class));
 				break;
@@ -80,6 +83,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 				break;
 		}
 
+		findViewById(R.id.my_team).setOnClickListener(this);
 		findViewById(R.id.main_games).setOnClickListener(this);
 		findViewById(R.id.main_teams).setOnClickListener(this);
 		findViewById(R.id.main_players).setOnClickListener(this);
