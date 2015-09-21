@@ -47,12 +47,12 @@ public class PlayersActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.list_view_layout);
 		databaseAdapter = new DatabaseAdapter(this).open();
-		progressDialog = new ProgressDialog(PlayersActivity.this);
+		/*progressDialog = new ProgressDialog(PlayersActivity.this);
 		progressDialog.setCancelable(false);
 		progressDialog.setTitle("Loading Players");
 		progressDialog.setMessage("Please wait...");
 		progressDialog.show();
-		new talkToServer().execute("players");
+		new talkToServer().execute("players");*/
 	}
 
 	@Override

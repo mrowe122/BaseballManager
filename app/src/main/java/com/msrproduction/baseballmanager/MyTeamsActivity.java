@@ -2,6 +2,8 @@ package com.msrproduction.baseballmanager;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 public class MyTeamsActivity extends AppCompatActivity {
@@ -15,7 +17,7 @@ public class MyTeamsActivity extends AppCompatActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		switch(item.getItemId()) {
+		switch (item.getItemId()) {
 			case android.R.id.home:
 				finish();
 				break;
@@ -23,7 +25,13 @@ public class MyTeamsActivity extends AppCompatActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	private void initSetup(){
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.menu_my_team, menu);
+		return true;
+	}
+
+	private void initSetup() {
 		//noinspection ConstantConditions
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}

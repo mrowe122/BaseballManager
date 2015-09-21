@@ -54,6 +54,7 @@
 	<!--Picture Descriptions-->
 	<string name="team_picture">team picture</string>
 	<string name="player_picture">player picture</string>
+	<string name="black_fade">black fade</string>
 
 
 	<!-- Activity names -->
