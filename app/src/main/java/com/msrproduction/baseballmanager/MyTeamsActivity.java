@@ -1,5 +1,6 @@
 package com.msrproduction.baseballmanager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -20,6 +21,11 @@ public class MyTeamsActivity extends AppCompatActivity {
 		switch (item.getItemId()) {
 			case android.R.id.home:
 				finish();
+				break;
+			case R.id.action_new_player:
+				startActivity(new Intent(MyTeamsActivity.this, NewPlayerForm.class));
+				break;
+			case R.id.action_settings:
 				break;
 		}
 		return super.onOptionsItemSelected(item);

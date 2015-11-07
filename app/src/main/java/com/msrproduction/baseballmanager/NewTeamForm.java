@@ -27,7 +27,6 @@ public class NewTeamForm extends AppCompatActivity{
 			@Override
 			public void onClick(View v) {
 				finish();
-				overridePendingTransition(R.anim.abc_slide_in_bottom, R.anim.abc_slide_out_bottom);
 			}
 		});
 
