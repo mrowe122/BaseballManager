@@ -16,44 +16,44 @@
 	<string name="action_settings">Settings</string>
 	<string name="action_edit">Edit</string>
 	<string name="action_new_player">New Player</string>
+	<string name="action_search">Search</string>
 
-	<!--Variables-->
+	<!--Universal Variables-->
 	<string name="add">Add</string>
+	<string name="delete">Delete</string>
+	<string name="cancel">Cancel</string>
+	<string name="search_hint">Search Players or Teams</string>
+	<string name="ok">OK</string>
 
-	<!--Team Information-->
+	<!-- Team Information -->
 	<string name="record">Record</string>
 	<string name="roster">Roster</string>
 	<string name="coach_name">Coach:</string>
+	<string name="win">Wins:</string>
+	<string name="lose">Losses:</string>
+	<string name="game_history">Game History</string>
+
+	<!-- Team Form -->
+	<string name="form_hint_team_name">*Team Name</string>
+	<string name="add_team">Add New Team</string>
+	<string name="add_players">+Add Players</string>
 
 	<!-- Player Form -->
+	<string name="new_player">Add New Player</string>
+	<string name="add_new_field">+Add more</string>
 	<string name="form_hint_player_name">*Name</string>
 	<string name="form_hint_player_number">*Number</string>
-	<string name="spinner_team_title">Choose players team</string>
-	<string name="spinner_position_title">Choose players position</string>
-	<string name="label_players_team">Players team:</string>
+	<string name="number_players">Players:</string>
+	<string name="spinner_position_title">Choose position</string>
 	<string name="error_player_form_empty">Please fill in all the fields</string>
-	<string name="error_player_name_exists">Player name already exists in the league</string>
-	<string name="error_player_number_exists">Number already exists in the selected team</string>
+	<string name="error_player_number_exists">Number already exists in team</string>
 
+	<!--Picture Descriptions -->
+	<string name="team_picture">team picture</string>
+	<string name="player_picture">player picture</string>
+	<string name="black_fade">black fade</string>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	<!--Player Information-->
+	<!--Player Information -->
 	<string name="player_info_number">Number:</string>
 	<string name="player_info_team">Team:</string>
 	<string name="player_info_position">Position:</string>
@@ -80,75 +80,66 @@
 	<string name="player_info_hint_fpct">Fielding Percentage</string>
 	<string name="player_info_hint_put_outs">Put outs</string>
 
-	<!--Picture Descriptions-->
-	<string name="team_picture">team picture</string>
-	<string name="player_picture">player picture</string>
-	<string name="black_fade">black fade</string>
+
+	<!--
 
 
-	<!-- Activity names -->
-	<string name="league_title">League Manager</string>
-	<string name="new_player_title">New Player</string>
-	<string name="new_team_title">New Team</string>
-	<string name="search_title">Search</string>
-	<string name="team_information_title">Team Information</string>
-	<string name="score_keeper">Score Keeper</string>
-	<string name="add_player">Add Players</string>
-	<string name="add_player_to_team">Add Players To Team</string>
-
-	<!-- Menus -->
-	<string name="action_search">Search</string>
-	<string name="search_hint">Search Players or Teams</string>
-
-	<!-- Universal Variables -->
-	<string name="new_player">Add New Player</string>
-	<string name="add_team">Add New Team</string>
-	<string name="edit_player">Edit Player</string>
-	<string name="cancel">Cancel</string>
-	<string name="search_filter">Filter:</string>
-	<string name="teams">Teams</string>
-	<string name="players">Players</string>
-	<string name="free_agents">Free Agents</string>
-	<string name="all">All</string>
-	<string name="ok">OK</string>
-	<string name="team">Team</string>
-	<string name="sign_in">Sign in</string>
-	<string name="rank">Rank:</string>
-	<string name="win">Wins:</string>
-	<string name="lose">Losses:</string>
-	<string name="game_history">Game History</string>
-	<string name="position_optional">Position</string>
-	<string name="select_a_team">Select a team</string>
-
-	<!-- Edit Player Form -->
-	<string name="edit_player_name">Player:</string>
-	<string name="edit_player_number">Player Number:</string>
-	<string name="edit_player_position">Player Position:</string>
-
-	<!-- Edit Team Form -->
-	<string name="edit_team_name">Team Name:</string>
-	<string name="edit_team_name_hint">Enter team name</string>
-	<string name="edit_team_coach_name_hint">Enter coach\'s name</string>
-	<string name="edit_team_name_change_hint">Updating the Team Name, will update all the player\'s on the team</string>
-	<string name="edit_team">Edit Team</string>
-	<string name="edit_remove_player_title">Removing players</string>
-	<string name="edit_remove_player_message">Removing playings from the team will make them free agents.\nAre you sure you want to remove them?</string>
-
-	<!-- Player team form -->
-	<string name="spinner_choose_team">Choose a team</string>
-
-	<!-- Team Form -->
-	<string name="form_hint_team_name">*Team Name</string>
-	<string name="team_form_hint_player_name">*Players name</string>
-	<string name="team_form_hint_player_number">*Player #</string>
-	<string name="toast_error_team">Please fill in all the fields</string>
-	<string name="label_optional">(Optional)</string>
-	<string name="toast_error_empty_fields">ERROR: DELETE or FILL the empty fields that you have created</string>
-	<string name="error_duplicate_name_in_form">There is a duplicate name</string>
-	<string name="error_duplicate_number_in_form">There is a duplicate number</string>
-	<string name="error_team_exist">Team already exists</string>
-
-	<!-- Player Information Hints -->
 
 
+
+		<!- Activity names
+		<string name="league_title">League Manager</string>
+		<string name="new_player_title">New Player</string>
+		<string name="new_team_title">New Team</string>
+		<string name="search_title">Search</string>
+		<string name="team_information_title">Team Information</string>
+		<string name="score_keeper">Score Keeper</string>
+		<string name="add_player">Add Players</string>
+		<string name="add_player_to_team">Add Players To Team</string>
+
+		<!- Menus
+
+
+		<!- Universal Variables -
+		<string name="edit_player">Edit Player</string>
+		<string name="search_filter">Filter:</string>
+		<string name="teams">Teams</string>
+		<string name="players">Players</string>
+		<string name="free_agents">Free Agents</string>
+		<string name="all">All</string>
+		<string name="team">Team</string>
+		<string name="sign_in">Sign in</string>
+		<string name="rank">Rank:</string>
+		<string name="position_optional">Position</string>
+		<string name="select_a_team">Select a team</string>
+
+		<!- Edit Player Form -
+		<string name="edit_player_name">Player:</string>
+		<string name="edit_player_number">Player Number:</string>
+		<string name="edit_player_position">Player Position:</string>
+
+		<!- Edit Team Form
+		<string name="edit_team_name">Team Name:</string>
+		<string name="edit_team_name_hint">Enter team name</string>
+		<string name="edit_team_coach_name_hint">Enter coach\'s name</string>
+		<string name="edit_team_name_change_hint">Updating the Team Name, will update all the player\'s on the team</string>
+		<string name="edit_team">Edit Team</string>
+		<string name="edit_remove_player_title">Removing players</string>
+		<string name="edit_remove_player_message">Removing playings from the team will make them free agents.\nAre you sure you want to remove them?</string>
+
+		<!- Player team form
+		<string name="spinner_choose_team">Choose a team</string>
+
+		<!- Team Form
+		<string name="team_form_hint_player_name">*Players name</string>
+		<string name="team_form_hint_player_number">*Player #</string>
+		<string name="toast_error_team">Please fill in all the fields</string>
+		<string name="label_optional">(Optional)</string>
+		<string name="toast_error_empty_fields">ERROR: DELETE or FILL the empty fields that you have created</string>
+		<string name="error_duplicate_name_in_form">There is a duplicate name</string>
+		<string name="error_duplicate_number_in_form">There is a duplicate number</string>
+		<string name="error_team_exist">Team already exists</string>
+
+
+	-->
 </resources>

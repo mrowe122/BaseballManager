@@ -4,6 +4,7 @@
 	<!-- App Colors -->
 	<color name="ColorPrimary">#005826</color>
 	<color name="ColorPrimaryDark">#004a1f</color>
+	<color name="Color">#003316</color>
 	<color name="lightGreen">#007733</color>
 
 	<!-- Deleted player warning -->

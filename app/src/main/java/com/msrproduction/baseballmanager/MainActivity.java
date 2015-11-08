@@ -2,13 +2,16 @@ package com.msrproduction.baseballmanager;
 
 import android.accounts.AccountManager;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.common.AccountPicker;
@@ -25,6 +28,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		initSetup();
+		checkFirstRun();
+
 	}
 
 	@Override
@@ -90,12 +95,42 @@ public class MainActivity extends Activity implements View.OnClickListener {
 		findViewById(R.id.email).setOnClickListener(this);
 	}
 
+	private void checkFirstRun() {
+		Boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE)
+				.getBoolean("isfirstrun", true);
+
+		if (isFirstRun) {
+			getSharedPreferences("PREFERENCE", MODE_PRIVATE)
+					.edit().putBoolean("isfirstrun", false).commit();
+
+			new AlertDialog.Builder(this)
+					.setTitle("Welcome! :)")
+					.setMessage("Would you like to setup your team now? You will have a chance of creating one later")
+					.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							startActivity(new Intent(getApplicationContext(), NewTeamForm.class));
+						}
+					}).setNegativeButton("Later", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							//do nothing :D
+						}
+					}).setCancelable(false)
+					.show();
+		}
+	}
+
 	private void getUsersEmail() {
+		getSharedPreferences("PREFERENCE", MODE_PRIVATE)
+				.edit().putBoolean("isfirstrun", true).commit();
+		/*
 		try {
 			Intent intent = AccountPicker.newChooseAccountIntent(null, null, new String[]{GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE}, false, null, null, null, null);
 			startActivityForResult(intent, 1);
 		} catch (ActivityNotFoundException e) {
 			Log.e(LOG_TAG, "Exception: " + e);
 		}
+		*/
 	}
 }

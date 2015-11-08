@@ -1,82 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:descendantFocusability="beforeDescendants"
-	android:focusableInTouchMode="true"
 	android:orientation="vertical">
 
 	<com.emilsjolander.components.StickyScrollViewItems.StickyScrollView
 		android:layout_width="match_parent"
 		android:layout_height="0dp"
+		android:layout_marginBottom="10dp"
 		android:layout_weight="1"
-		android:padding="10dp">
+		android:overScrollMode="never">
 
 		<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:orientation="vertical">
 
-			<android.support.design.widget.TextInputLayout
+			<EditText
+				android:id="@+id/form_team_name"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:layout_marginBottom="25dp"
-				app:hintTextAppearance="@style/EditTextHint">
-
-				<EditText
-					android:id="@+id/form_team_name"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:background="@color/white"
-					android:hint="@string/form_hint_team_name"
-					android:inputType="textCapWords|textMultiLine"
-					android:padding="12dp"/>
-
-			</android.support.design.widget.TextInputLayout>
+				android:layout_marginEnd="10dp"
+				android:layout_marginLeft="10dp"
+				android:layout_marginRight="10dp"
+				android:layout_marginStart="10dp"
+				android:layout_marginTop="10dp"
+				android:background="@color/white"
+				android:hint="@string/form_hint_team_name"
+				android:inputType="textCapWords|textMultiLine"
+				android:padding="12dp"/>
 
 			<LinearLayout
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:layout_marginBottom="10dp"
 				android:background="?android:colorBackground"
-				android:gravity="center_vertical"
 				android:orientation="horizontal"
-				android:paddingBottom="12dp"
-				android:paddingTop="2dp"
-				android:tag="sticky"
-				android:weightSum="1">
+				android:padding="10dp"
+				android:tag="sticky">
 
 				<TextView
-					android:layout_width="0dp"
-					android:layout_height="wrap_content"
-					android:layout_marginEnd="5dp"
-					android:layout_marginRight="5dp"
-					android:layout_weight="1"
-					android:text="@string/new_player"
-					android:textAppearance="?android:attr/textAppearanceMedium"
-					android:textColor="@color/black"/>
-
-				<TextView
-					android:id="@+id/number_players_team_form"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					android:layout_marginEnd="8dp"
-					android:layout_marginRight="8dp"
-					android:textColor="@color/black"/>
+					android:layout_gravity="center_vertical"
+					android:text="@string/number_players"
+					android:textColor="@color/black"
+					android:textSize="20sp"/>
 
-				<ImageButton
+				<TextView
+					android:id="@+id/number_players"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center_vertical"
+					android:layout_weight="1"
+					android:textColor="@color/black"
+					android:textSize="20sp"/>
+
+				<Button
 					android:id="@+id/add_new_field"
-					android:layout_width="30dp"
+					android:layout_width="wrap_content"
 					android:layout_height="30dp"
-					android:layout_gravity="end"
-					android:background="@drawable/add_icon"/>
+					android:background="@drawable/add_more"
+					android:paddingLeft="8dp"
+					android:paddingRight="8dp"
+					android:text="@string/add_players"
+					android:textAllCaps="false"
+					android:textColor="@color/white"
+					android:textSize="14sp"/>
 
 			</LinearLayout>
 
+			<View
+				android:layout_width="fill_parent"
+				android:layout_height="3dp"
+				android:background="#009688"/>
+
 			<LinearLayout
-				android:id="@+id/edit_fields"
+				android:id="@+id/new_fields_created"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:orientation="vertical">

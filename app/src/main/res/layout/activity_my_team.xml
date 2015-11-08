@@ -11,10 +11,9 @@
 
 		<ImageView
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
+			android:layout_height="match_parent"
 			android:contentDescription="@string/team_picture"
 			android:scaleType="centerCrop"
-			android:maxHeight="500dp"
 			android:src="@drawable/team"/>
 
 		<ImageView
