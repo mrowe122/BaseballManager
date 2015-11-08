@@ -18,14 +18,18 @@
 	<string name="action_new_player">New Player</string>
 	<string name="action_search">Search</string>
 
-	<!-- My Team Information -->
+	<!-- My Team -->
 	<string name="my_phone">Phone:</string>
 	<string name="my_email">E-mail:</string>
 	<string name="coach_name">Coach:</string>
+	<string name="add_free_agents">Add Free Agents</string>
+	<string name="create_new_team">Create New Team</string>
+	<string name="dialog_setup_team_title">Team setup</string>
+	<string name="dialog_setup_team_message">Would you like to setup your team now?</string>
 
 	<!-- Team Form -->
 	<string name="form_hint_team_name">*Team Name</string>
-	<string name="add_team">Add New Team</string>
+	<string name="create_team">Create Team</string>
 	<string name="add_players">+Add Players</string>
 
 	<!-- Team Information -->
@@ -78,6 +82,8 @@
 	<string name="form_coach_phone">Your phone</string>
 	<string name="form_coach_team">*Team name</string>
 	<string name="form_coach_done">Done</string>
+	<string name="error_empty_name">Please enter your name</string>
+	<string name="error_empty_team">Please enter a team name</string>
 
 	<!-- Picture Descriptions -->
 	<string name="team_picture">team picture</string>
@@ -93,6 +99,9 @@
 	<string name="ok">OK</string>
 	<string name="n_a">n/a</string>
 	<string name="sign_in">Sign in</string>
+	<string name="filler">……</string>
+	<string name="yes">Yes</string>
+	<string name="later">Later</string>
 
 
 	<!--
@@ -105,7 +114,6 @@
 		<string name="team_information_title">Team Information</string>
 		<string name="score_keeper">Score Keeper</string>
 		<string name="add_player">Add Players</string>
-		<string name="add_player_to_team">Add Players To Team</string>
 
 		<!- Menus
 

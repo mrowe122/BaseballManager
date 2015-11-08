@@ -9,7 +9,7 @@ public class Database extends SQLiteOpenHelper {
 	//private final String LOG_TAG = Database.class.getSimpleName();
 	private static Database sInstance;
 	private static final int DATABASE_VERSION = 1;
-	private static final String DATABASE_NAME = "baseball_league.db";
+	private static final String DATABASE_NAME = "baseball_manager.db";
 
 	public static synchronized Database getInstance(Context context) {
 		if (sInstance == null) {

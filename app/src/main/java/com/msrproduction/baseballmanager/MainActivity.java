@@ -99,30 +99,21 @@ public class MainActivity extends Activity implements View.OnClickListener {
 				.getBoolean("isfirstrun", true);
 
 		if (isFirstRun) {
-			getSharedPreferences("PREFERENCE", MODE_PRIVATE)
-					.edit().putBoolean("isfirstrun", false).apply();
+			getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit().putBoolean("isfirstrun", false).apply();
 
 			new AlertDialog.Builder(this)
 					.setTitle("Welcome! :)")
-					.setMessage("Would you like to setup your team now? You will have a chance of creating one later")
-					.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+					.setMessage("Hope you enjoy this app!")
+					.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							startActivity(new Intent(getApplicationContext(), NewCoachForm.class));
+							//do nothing
 						}
-					}).setNegativeButton("Later", new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					//do nothing :D
-				}
-			}).setCancelable(false)
-					.show();
+					}).setCancelable(false).show();
 		}
 	}
 
 	private void getUsersEmail() {
-		getSharedPreferences("PREFERENCE", MODE_PRIVATE)
-				.edit().putBoolean("isfirstrun", true).commit();
 		try {
 			Intent intent = AccountPicker.newChooseAccountIntent(null, null, new String[]{GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE}, false, null, null, null, null);
 			startActivityForResult(intent, 1);

@@ -13,7 +13,7 @@ public class ListView extends android.widget.ListView {
 	private OnDetectScrollListener onDetectScrollListener;
 	private int mLastScrollY;
 	private int mPreviousFirstVisibleItem;
-	private int mScrollThreshold = getResources().getDimensionPixelOffset(R.dimen.fab_scroll_threshold);;
+	private int mScrollThreshold = getResources().getDimensionPixelOffset(R.dimen.fab_scroll_threshold);
 
 	public ListView(Context context) {
 		super(context);

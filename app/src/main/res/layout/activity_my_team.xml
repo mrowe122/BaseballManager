@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:fab="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:orientation="vertical">
@@ -38,6 +39,7 @@
 					android:id="@+id/my_team_name"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
+					android:text="@string/filler"
 					android:textColor="@color/white"
 					android:textSize="25sp"
 					android:textStyle="bold|italic"/>
@@ -60,6 +62,7 @@
 						android:id="@+id/my_coach_name"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
+						android:text="@string/filler"
 						android:textColor="@color/white"
 						android:textSize="15sp"/>
 
@@ -83,7 +86,7 @@
 						android:id="@+id/my_phone"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
-						android:text="@string/n_a"
+						android:text="@string/filler"
 						android:textColor="@color/white"
 						android:textSize="15sp"/>
 
@@ -106,7 +109,7 @@
 						android:id="@+id/my_email"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
-						android:text="@string/n_a"
+						android:text="@string/filler"
 						android:textColor="@color/white"
 						android:textSize="15sp"/>
 
@@ -161,12 +164,66 @@
 			android:layout_marginTop="0dp"
 			android:background="@color/lightGreen"/>
 
-		<ListView
-			android:id="@+id/my_players_list"
+		<FrameLayout
 			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:divider="@null"
-			android:dividerHeight="12dp"/>
+			android:layout_height="match_parent">
+
+			<ListView
+				android:id="@+id/my_players_list"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:divider="@null"
+				android:dividerHeight="12dp"/>
+
+			<com.github.clans.fab.FloatingActionMenu
+				android:id="@+id/fab_menu"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="bottom|end"
+				android:layout_marginBottom="10dp"
+				android:layout_marginEnd="10dp"
+				android:layout_marginRight="10dp"
+				fab:menu_animationDelayPerItem="50"
+				fab:menu_backgroundColor="@android:color/transparent"
+				fab:menu_colorNormal="@color/ColorPrimary"
+				fab:menu_colorPressed="@color/ColorPrimaryDark"
+				fab:menu_fab_size="normal"
+				fab:menu_icon="@drawable/fab_add"
+				fab:menu_openDirection="up">
+
+				<com.github.clans.fab.FloatingActionButton
+					android:id="@+id/fab_add_player"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:src="@drawable/ic_star"
+					fab:fab_colorNormal="@color/ColorPrimaryDark"
+					fab:fab_colorPressed="@color/ColorPrimary"
+					fab:fab_label="@string/new_player"
+					fab:fab_size="mini"/>
+
+				<com.github.clans.fab.FloatingActionButton
+					android:id="@+id/fab_add_team"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:src="@drawable/ic_star"
+					fab:fab_colorNormal="@color/ColorPrimaryDark"
+					fab:fab_colorPressed="@color/ColorPrimary"
+					fab:fab_label="@string/create_new_team"
+					fab:fab_size="mini"/>
+
+				<com.github.clans.fab.FloatingActionButton
+					android:id="@+id/fab_add_player_to_team"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:src="@drawable/ic_star"
+					fab:fab_colorNormal="@color/ColorPrimaryDark"
+					fab:fab_colorPressed="@color/ColorPrimary"
+					fab:fab_label="@string/add_free_agents"
+					fab:fab_size="mini"/>
+
+			</com.github.clans.fab.FloatingActionMenu>
+
+		</FrameLayout>
 
 	</LinearLayout>
 

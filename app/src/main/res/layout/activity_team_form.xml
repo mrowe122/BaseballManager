@@ -61,19 +61,14 @@
 					android:layout_width="wrap_content"
 					android:layout_height="30dp"
 					android:background="@drawable/add_more"
-					android:paddingLeft="8dp"
-					android:paddingRight="8dp"
+					android:paddingLeft="12dp"
+					android:paddingRight="12dp"
 					android:text="@string/add_players"
 					android:textAllCaps="false"
 					android:textColor="@color/white"
 					android:textSize="14sp"/>
 
 			</LinearLayout>
-
-			<View
-				android:layout_width="fill_parent"
-				android:layout_height="3dp"
-				android:background="#009688"/>
 
 			<LinearLayout
 				android:id="@+id/new_fields_created"
@@ -104,7 +99,7 @@
 			android:id="@+id/add_new_team"
 			style="@style/YesNoButtons"
 			android:background="@drawable/yes_button"
-			android:text="@string/add_team"/>
+			android:text="@string/create_team"/>
 
 	</LinearLayout>
 

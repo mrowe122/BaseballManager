@@ -1,6 +1,8 @@
 package com.msrproduction.baseballmanager;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -16,16 +18,20 @@ import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 import com.msrproduction.baseballmanager.Database.Contract;
 import com.msrproduction.baseballmanager.Database.DatabaseAdapter;
 
 public class MyTeamsActivity extends AppCompatActivity {
 
 	private DatabaseAdapter databaseAdapter;
+	FloatingActionMenu fabMenu;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		checkFirstRun();
 		setContentView(R.layout.activity_my_team);
 		databaseAdapter = new DatabaseAdapter(getApplicationContext()).open();
 		initSetup();
@@ -36,9 +42,6 @@ public class MyTeamsActivity extends AppCompatActivity {
 		switch (item.getItemId()) {
 			case android.R.id.home:
 				finish();
-				break;
-			case R.id.action_new_player:
-				startActivity(new Intent(MyTeamsActivity.this, NewPlayerForm.class));
 				break;
 			case R.id.action_settings:
 				break;
@@ -55,7 +58,44 @@ public class MyTeamsActivity extends AppCompatActivity {
 	@Override
 	public void onResume() {
 		super.onResume();
+		loadCoachData();
 		readPlayers();
+	}
+
+	@Override
+	protected void onPause() {
+		fabMenu.close(false);
+		super.onPause();
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (requestCode == 1) {
+			if (resultCode != 1) {
+				finish();
+			}
+		}
+	}
+
+	private void checkFirstRun() {
+		Boolean isCoachSetup = getSharedPreferences("PREFERENCE", MODE_PRIVATE).getBoolean("isCoachSetup", false);
+		if (!isCoachSetup) {
+			new AlertDialog.Builder(this)
+					.setTitle(R.string.dialog_setup_team_title)
+					.setMessage(R.string.dialog_setup_team_message)
+					.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							startActivityForResult(new Intent(getApplicationContext(), NewCoachForm.class), 1);
+						}
+					}).setNegativeButton(R.string.later, new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					finish();
+				}
+			}).setCancelable(false).show();
+		}
 	}
 
 	private void readPlayers() {
@@ -68,6 +108,52 @@ public class MyTeamsActivity extends AppCompatActivity {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				startActivity(new Intent(getApplicationContext(), PlayerInformation.class)
 						.putExtra("player_id", id + ""));
+			}
+		});
+	}
+
+	private void initSetup() {
+		//noinspection ConstantConditions
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		loadCoachData();
+		setupFabButtons();
+	}
+
+	private void loadCoachData() {
+		SharedPreferences coachInfo = getSharedPreferences("coach_info", MODE_PRIVATE);
+		((TextView) findViewById(R.id.my_coach_name)).setText(coachInfo.getString("coach_name", ""));
+		((TextView) findViewById(R.id.my_team_name)).setText(coachInfo.getString("team_name", ""));
+		((TextView) findViewById(R.id.my_email)).setText(coachInfo.getString("coach_email", ""));
+		((TextView) findViewById(R.id.my_phone)).setText(coachInfo.getString("coach_phone", ""));
+	}
+
+	private void setupFabButtons() {
+		fabMenu = (FloatingActionMenu) findViewById(R.id.fab_menu);
+		FloatingActionButton addPlayer = (FloatingActionButton) findViewById(R.id.fab_add_player);
+		FloatingActionButton addTeam = (FloatingActionButton) findViewById(R.id.fab_add_team);
+		FloatingActionButton addFreeAgents = (FloatingActionButton) findViewById(R.id.fab_add_player_to_team);
+
+		addPlayer.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startActivity(new Intent(MyTeamsActivity.this, NewPlayerForm.class));
+				overridePendingTransition(R.anim.abc_slide_in_bottom, R.anim.abc_slide_out_bottom);
+			}
+		});
+
+		addTeam.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startActivity(new Intent(MyTeamsActivity.this, NewTeamForm.class));
+				overridePendingTransition(R.anim.abc_slide_in_bottom, R.anim.abc_slide_out_bottom);
+			}
+		});
+
+		addFreeAgents.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				//startActivity(new Intent(MyTeamsActivity.this, AddPlayerToTeam.class));
+				//overridePendingTransition(R.anim.abc_slide_in_bottom, R.anim.abc_slide_out_bottom);
 			}
 		});
 	}
@@ -85,26 +171,11 @@ public class MyTeamsActivity extends AppCompatActivity {
 
 		@Override
 		public void bindView(View view, Context context, Cursor cursor) {
-			((TextView) view.findViewById(R.id.list_item_name)).setText("#" +
-					cursor.getInt(cursor.getColumnIndexOrThrow(Contract.PlayerEntry.COLUMN_PLAYER_NUMBER)) + " " +
-					cursor.getString(cursor.getColumnIndexOrThrow(Contract.PlayerEntry.COLUMN_PLAYER_NAME)));
-			((TextView) view.findViewById(R.id.list_item_sub_text)).setText(
-					"(" + cursor.getString(cursor.getColumnIndexOrThrow(Contract.PlayerEntry.COLUMN_PLAYER_TEAM_NAME)) + ")");
-		}
-	}
-
-	private void initSetup() {
-		//noinspection ConstantConditions
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		SharedPreferences coachInfo = getSharedPreferences("coachInfo", MODE_PRIVATE);
-		((TextView) findViewById(R.id.my_coach_name)).setText(coachInfo.getString("coach-name", ""));
-		((TextView) findViewById(R.id.my_team_name)).setText(coachInfo.getString("team-name", ""));
-		if (coachInfo.getString("coach-email", "").equals("")) {
-			((TextView) findViewById(R.id.my_email)).setText("n/a");
-		}
-
-		if (coachInfo.getString("coach-phone", "").equals("")) {
-			((TextView) findViewById(R.id.my_phone)).setText("n/a");
+			String playerInfo = "#" + cursor.getInt(cursor.getColumnIndexOrThrow(Contract.PlayerEntry.COLUMN_PLAYER_NUMBER)) + " " +
+					cursor.getString(cursor.getColumnIndexOrThrow(Contract.PlayerEntry.COLUMN_PLAYER_NAME));
+			((TextView) view.findViewById(R.id.list_item_name)).setText(playerInfo);
+			playerInfo = "(" + cursor.getString(cursor.getColumnIndexOrThrow(Contract.PlayerEntry.COLUMN_PLAYER_POSITION)) + ")";
+			((TextView) view.findViewById(R.id.list_item_sub_text)).setText(playerInfo);
 		}
 	}
 }

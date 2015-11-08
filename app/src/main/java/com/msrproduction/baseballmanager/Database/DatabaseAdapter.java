@@ -76,34 +76,11 @@ public class DatabaseAdapter extends AsyncTask<String, Void, Cursor> {
 		db.insert(Contract.PlayerEntry.TABLE_NAME, null, addItem);
 	}
 
-	public void updateTeam(String oldTeamName, String newTeamName, String coachName) {
-		ContentValues contentValues = new ContentValues();
-		contentValues.put(Contract.TeamEntry.COLUMN_TEAM_NAME, newTeamName);
-		contentValues.put(Contract.TeamEntry.COLUMN_TEAM_COACH, coachName);
-		db.update(Contract.TeamEntry.TABLE_NAME, contentValues, Contract.TeamEntry.COLUMN_TEAM_NAME + " = '" + oldTeamName + "'", null);
-		if (!oldTeamName.equals(newTeamName)) {
-			updatePlayersTeam(oldTeamName, newTeamName);
-		}
-	}
-
-	private void updatePlayersTeam(String oldTeam, String newTeam) {
-		ContentValues contentValues = new ContentValues();
-		contentValues.put(Contract.PlayerEntry.COLUMN_PLAYER_TEAM_NAME, newTeam);
-		db.update(Contract.PlayerEntry.TABLE_NAME, contentValues, Contract.PlayerEntry.COLUMN_PLAYER_TEAM_NAME + " = '" + oldTeam + "'", null);
-	}
-
 	public void updatePlayerNumberTeamPosition(String name, String number, String team, String position) {
 		ContentValues contentValues = new ContentValues();
 		contentValues.put(Contract.PlayerEntry.COLUMN_PLAYER_NUMBER, number);
 		contentValues.put(Contract.PlayerEntry.COLUMN_PLAYER_TEAM_NAME, team);
 		contentValues.put(Contract.PlayerEntry.COLUMN_PLAYER_POSITION, position);
-		db.update(Contract.PlayerEntry.TABLE_NAME, contentValues, Contract.PlayerEntry.COLUMN_PLAYER_NAME + " = '" + name + "'", null);
-	}
-
-	public void updatePlayerTeam(String name, String number, String team) {
-		ContentValues contentValues = new ContentValues();
-		contentValues.put(Contract.PlayerEntry.COLUMN_PLAYER_NUMBER, number);
-		contentValues.put(Contract.PlayerEntry.COLUMN_PLAYER_TEAM_NAME, team);
 		db.update(Contract.PlayerEntry.TABLE_NAME, contentValues, Contract.PlayerEntry.COLUMN_PLAYER_NAME + " = '" + name + "'", null);
 	}
 
@@ -117,17 +94,8 @@ public class DatabaseAdapter extends AsyncTask<String, Void, Cursor> {
 
 	public Cursor loadPlayers() {
 		return db.rawQuery(
-				"SELECT " + Contract.PlayerEntry._ID + ", " + Contract.PlayerEntry.COLUMN_PLAYER_NAME + ", " + Contract.PlayerEntry.COLUMN_PLAYER_NUMBER + ", " + Contract.PlayerEntry.COLUMN_PLAYER_TEAM_NAME +
+				"SELECT " + Contract.PlayerEntry._ID + ", " + Contract.PlayerEntry.COLUMN_PLAYER_NAME + ", " + Contract.PlayerEntry.COLUMN_PLAYER_NUMBER + ", " + Contract.PlayerEntry.COLUMN_PLAYER_TEAM_NAME + ", " + Contract.PlayerEntry.COLUMN_PLAYER_POSITION +
 						" FROM " + Contract.PlayerEntry.TABLE_NAME +
-						" ORDER BY " + Contract.PlayerEntry.COLUMN_PLAYER_NAME + ";", null
-		);
-	}
-
-	public Cursor loadFreeAgents() {
-		return db.rawQuery(
-				"SELECT " + Contract.PlayerEntry._ID + ", " + Contract.PlayerEntry.COLUMN_PLAYER_NAME + ", " + Contract.PlayerEntry.COLUMN_PLAYER_POSITION +
-						" FROM " + Contract.PlayerEntry.TABLE_NAME +
-						" WHERE " + Contract.PlayerEntry.COLUMN_PLAYER_TEAM_NAME + " = 'Free Agent'" +
 						" ORDER BY " + Contract.PlayerEntry.COLUMN_PLAYER_NAME + ";", null
 		);
 	}
@@ -146,17 +114,6 @@ public class DatabaseAdapter extends AsyncTask<String, Void, Cursor> {
 		Cursor cursor = loadTeams();
 		while (cursor.moveToNext()) {
 			if (cursor.getString(cursor.getColumnIndexOrThrow(Contract.TeamEntry.COLUMN_TEAM_NAME)).equals(teamName)) {
-				cursor.close();
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public boolean checkIfPlayerExists(String name) {
-		Cursor cursor = loadPlayers();
-		while (cursor.moveToNext()) {
-			if (cursor.getString(cursor.getColumnIndexOrThrow(Contract.PlayerEntry.COLUMN_PLAYER_NAME)).equals(name)) {
 				cursor.close();
 				return true;
 			}
@@ -184,16 +141,6 @@ public class DatabaseAdapter extends AsyncTask<String, Void, Cursor> {
 			}
 		}
 		return false;
-	}
-
-	public void freeAgentPlayers(List<String> players) {
-		ContentValues contentValues = new ContentValues();
-		contentValues.put(Contract.PlayerEntry.COLUMN_PLAYER_TEAM_NAME, "Free Agent");
-		contentValues.put(Contract.PlayerEntry.COLUMN_PLAYER_NUMBER, 0);
-		for (int i = 0; i < players.size(); i++) {
-			db.update(Contract.PlayerEntry.TABLE_NAME, contentValues, Contract.PlayerEntry._ID + " = " + players.get(i), null);
-		}
-		//EditActivityTeam.freeAgent.clear();
 	}
 
 	public Cursor select(String id, String table) {
