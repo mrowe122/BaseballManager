@@ -2,12 +2,12 @@ package com.msrproduction.baseballmanager;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -96,5 +96,15 @@ public class MyTeamsActivity extends AppCompatActivity {
 	private void initSetup() {
 		//noinspection ConstantConditions
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		SharedPreferences coachInfo = getSharedPreferences("coachInfo", MODE_PRIVATE);
+		((TextView) findViewById(R.id.my_coach_name)).setText(coachInfo.getString("coach-name", ""));
+		((TextView) findViewById(R.id.my_team_name)).setText(coachInfo.getString("team-name", ""));
+		if (coachInfo.getString("coach-email", "").equals("")) {
+			((TextView) findViewById(R.id.my_email)).setText("n/a");
+		}
+
+		if (coachInfo.getString("coach-phone", "").equals("")) {
+			((TextView) findViewById(R.id.my_phone)).setText("n/a");
+		}
 	}
 }

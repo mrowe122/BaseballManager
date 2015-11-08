@@ -62,11 +62,18 @@
 
 		<activity
 			android:name=".NewTeamForm"
-			android:label="@string/new_activity_form"/>
+			android:label="@string/new_activity_form"
+			android:screenOrientation="portrait"/>
 
 		<activity
 			android:name=".NewPlayerForm"
-			android:label="@string/new_activity_form_player"/>
+			android:label="@string/new_activity_form_player"
+			android:screenOrientation="portrait"/>
+
+		<activity
+			android:name=".NewCoachForm"
+			android:label="@string/app_name"
+			android:screenOrientation="portrait"/>
 
 		<activity
 			android:name=".MyTeamsActivity"

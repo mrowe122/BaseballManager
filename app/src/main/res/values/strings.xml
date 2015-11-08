@@ -1,6 +1,6 @@
 <resources>
 
-	<!--Activity Names-->
+	<!-- Activity Names -->
 	<string name="app_name">Baseball Manager</string>
 	<string name="league_activity">Leagues</string>
 	<string name="game_activity">Games</string>
@@ -12,31 +12,28 @@
 	<string name="new_activity_form_player">New Player</string>
 	<string name="my_team">My Team</string>
 
-	<!--Activity Settings-->
+	<!-- Activity Settings -->
 	<string name="action_settings">Settings</string>
 	<string name="action_edit">Edit</string>
 	<string name="action_new_player">New Player</string>
 	<string name="action_search">Search</string>
 
-	<!--Universal Variables-->
-	<string name="add">Add</string>
-	<string name="delete">Delete</string>
-	<string name="cancel">Cancel</string>
-	<string name="search_hint">Search Players or Teams</string>
-	<string name="ok">OK</string>
-
-	<!-- Team Information -->
-	<string name="record">Record</string>
-	<string name="roster">Roster</string>
+	<!-- My Team Information -->
+	<string name="my_phone">Phone:</string>
+	<string name="my_email">E-mail:</string>
 	<string name="coach_name">Coach:</string>
-	<string name="win">Wins:</string>
-	<string name="lose">Losses:</string>
-	<string name="game_history">Game History</string>
 
 	<!-- Team Form -->
 	<string name="form_hint_team_name">*Team Name</string>
 	<string name="add_team">Add New Team</string>
 	<string name="add_players">+Add Players</string>
+
+	<!-- Team Information -->
+	<string name="record">Record</string>
+	<string name="roster">Roster</string>
+	<string name="win">Wins:</string>
+	<string name="lose">Losses:</string>
+	<string name="game_history">Game History</string>
 
 	<!-- Player Form -->
 	<string name="new_player">Add New Player</string>
@@ -48,12 +45,7 @@
 	<string name="error_player_form_empty">Please fill in all the fields</string>
 	<string name="error_player_number_exists">Number already exists in team</string>
 
-	<!--Picture Descriptions -->
-	<string name="team_picture">team picture</string>
-	<string name="player_picture">player picture</string>
-	<string name="black_fade">black fade</string>
-
-	<!--Player Information -->
+	<!-- Player Information -->
 	<string name="player_info_number">Number:</string>
 	<string name="player_info_team">Team:</string>
 	<string name="player_info_position">Position:</string>
@@ -80,12 +72,30 @@
 	<string name="player_info_hint_fpct">Fielding Percentage</string>
 	<string name="player_info_hint_put_outs">Put outs</string>
 
+	<!-- New Coach Form -->
+	<string name="form_coach_name">*Your name</string>
+	<string name="form_coach_email">Your email</string>
+	<string name="form_coach_phone">Your phone</string>
+	<string name="form_coach_team">*Team name</string>
+	<string name="form_coach_done">Done</string>
+
+	<!-- Picture Descriptions -->
+	<string name="team_picture">team picture</string>
+	<string name="player_picture">player picture</string>
+	<string name="black_fade">black fade</string>
+	<string name="baseball_silhouette">baseball icons</string>
+
+	<!-- Universal Variables -->
+	<string name="add">Add</string>
+	<string name="delete">Delete</string>
+	<string name="cancel">Cancel</string>
+	<string name="search_hint">Search Players or Teams</string>
+	<string name="ok">OK</string>
+	<string name="n_a">n/a</string>
+	<string name="sign_in">Sign in</string>
+
 
 	<!--
-
-
-
-
 
 		<!- Activity names
 		<string name="league_title">League Manager</string>

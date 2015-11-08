@@ -17,11 +17,11 @@
 		android:textAppearance="?android:attr/textAppearanceLarge"
 		android:textColor="@color/white"/>
 
-	<LinearLayout
+	<View
 		android:layout_width="match_parent"
 		android:layout_height="0dp"
 		android:layout_weight="1">
-	</LinearLayout>
+	</View>
 
 	<LinearLayout
 		android:layout_width="match_parent"
@@ -64,6 +64,7 @@
 			android:layout_height="match_parent"
 			android:layout_gravity="center_vertical"
 			android:layout_weight="1"
+			android:contentDescription="@string/baseball_silhouette"
 			android:padding="15dp"/>
 
 	</LinearLayout>
@@ -75,7 +76,7 @@
 		android:layout_marginBottom="10dp"
 		android:background="@drawable/buttons_selector"
 		android:padding="10dp"
-		android:text="Sign in"
+		android:text="@string/sign_in"
 		android:textColor="@color/white"
 		android:textSize="17sp"/>
 

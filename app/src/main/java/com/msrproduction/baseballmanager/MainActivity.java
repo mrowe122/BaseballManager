@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.common.AccountPicker;
@@ -101,7 +100,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
 		if (isFirstRun) {
 			getSharedPreferences("PREFERENCE", MODE_PRIVATE)
-					.edit().putBoolean("isfirstrun", false).commit();
+					.edit().putBoolean("isfirstrun", false).apply();
 
 			new AlertDialog.Builder(this)
 					.setTitle("Welcome! :)")
@@ -109,14 +108,14 @@ public class MainActivity extends Activity implements View.OnClickListener {
 					.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							startActivity(new Intent(getApplicationContext(), NewTeamForm.class));
+							startActivity(new Intent(getApplicationContext(), NewCoachForm.class));
 						}
 					}).setNegativeButton("Later", new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							//do nothing :D
-						}
-					}).setCancelable(false)
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					//do nothing :D
+				}
+			}).setCancelable(false)
 					.show();
 		}
 	}
@@ -124,13 +123,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
 	private void getUsersEmail() {
 		getSharedPreferences("PREFERENCE", MODE_PRIVATE)
 				.edit().putBoolean("isfirstrun", true).commit();
-		/*
 		try {
 			Intent intent = AccountPicker.newChooseAccountIntent(null, null, new String[]{GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE}, false, null, null, null, null);
 			startActivityForResult(intent, 1);
 		} catch (ActivityNotFoundException e) {
 			Log.e(LOG_TAG, "Exception: " + e);
 		}
-		*/
 	}
 }

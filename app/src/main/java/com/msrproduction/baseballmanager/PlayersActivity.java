@@ -111,7 +111,7 @@ public class PlayersActivity extends AppCompatActivity {
 				conn.setDoOutput(true);
 
 				OutputStream os = conn.getOutputStream();
-				BufferedWriter writer = new BufferedWriter(	new OutputStreamWriter(os));
+				BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os));
 				writer.write("method=" + param[0]);
 				writer.flush();
 				writer.close();
