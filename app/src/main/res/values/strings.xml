@@ -11,6 +11,7 @@
 	<string name="new_activity_form">New Team</string>
 	<string name="new_activity_form_player">New Player</string>
 	<string name="my_team">My Team</string>
+	<string name="edit_team">Edit Team</string>
 
 	<!-- Activity Settings -->
 	<string name="action_settings">Settings</string>
@@ -48,6 +49,7 @@
 	<string name="spinner_position_title">Choose position</string>
 	<string name="error_player_form_empty">Please fill in all the fields</string>
 	<string name="error_player_number_exists">Number already exists in team</string>
+	<string name="no_position_selected">position not set</string>
 
 	<!-- Player Information -->
 	<string name="player_info_number">Number:</string>
@@ -99,7 +101,6 @@
 	<string name="ok">OK</string>
 	<string name="n_a">n/a</string>
 	<string name="sign_in">Sign in</string>
-	<string name="filler">……</string>
 	<string name="yes">Yes</string>
 	<string name="later">Later</string>
 

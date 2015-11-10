@@ -15,6 +15,7 @@ import com.msrproduction.baseballmanager.Database.DatabaseAdapter;
 import com.msrproduction.baseballmanager.R;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class NewPlayerModel {
@@ -26,6 +27,7 @@ public class NewPlayerModel {
 	public ArrayList<EditText> playerName = new ArrayList<>();
 	public ArrayList<EditText> playerNumber = new ArrayList<>();
 	public ArrayList<Button> playerPositions = new ArrayList<>();
+	private LinkedList<View> listView = new LinkedList<>();
 	public int numPlayers = 0;
 
 	public NewPlayerModel(Activity act) {
@@ -36,6 +38,7 @@ public class NewPlayerModel {
 	public void addField() {
 		final LinearLayout containerLayout = (LinearLayout) activity.findViewById(R.id.new_fields_created);
 		final View layout = activity.getLayoutInflater().inflate(R.layout.layout_new_player_field, null);
+		listView.add(layout);
 		final EditText name = (EditText) layout.findViewById(R.id.form_player_name);
 		final EditText number = (EditText) layout.findViewById(R.id.form_player_number);
 		final Button spinnerPosition = (Button) layout.findViewById(R.id.spinner_pos);
@@ -44,15 +47,21 @@ public class NewPlayerModel {
 		playerNumber.add(number);
 		playerPositions.add(spinnerPosition);
 		((TextView) activity.findViewById(R.id.number_players)).setText(String.valueOf(++numPlayers));
+		((TextView) layout.findViewById(R.id.field_number)).setText(String.valueOf(numPlayers));
+
 		//delete button
 		layout.findViewById(R.id.remove_field).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				((TextView) activity.findViewById(R.id.number_players)).setText(String.valueOf(--numPlayers));
+				listView.remove(layout);
 				playerName.remove(name);
 				playerNumber.remove(number);
 				playerPositions.remove(spinnerPosition);
 				containerLayout.removeView(layout);
+				for (int i = 0; i < numPlayers; ) {
+					((TextView) listView.get(i).findViewById(R.id.field_number)).setText(String.valueOf(++i));
+				}
 			}
 		});
 		//configure Alert Dialog for players position
@@ -110,20 +119,22 @@ public class NewPlayerModel {
 			if (!playerName.get(i).getText().toString().equals("") && !playerNumber.get(i).getText().toString().equals("")) {
 				nameList.add(playerName.get(i).getText().toString());
 				numberList.add(playerNumber.get(i).getText().toString());
-				if (playerPositions.get(i).getText().toString().equals("")) {
-					positionList.add("n/a");
+				if (playerPositions.get(i).getText().toString().equals(activity.getString(R.string.spinner_position_title))) {
+					positionList.add(activity.getString(R.string.no_position_selected));
 				} else {
 					positionList.add(playerPositions.get(i).getText().toString());
 				}
 			} else {
+				String message = "Error: Field " + ++i + " is empty";
 				//toast message to a field is empty or team wasn't selected
-				Toast.makeText(activity, R.string.error_player_form_empty, Toast.LENGTH_SHORT).show();
+				Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
 				nameList.clear();
 				numberList.clear();
 				positionList.clear();
 				return false;
 			}
 		}
+		System.out.println(activity.getSharedPreferences("coach_info", Context.MODE_PRIVATE).getString("team_name", ""));
 		databaseAdapter.bulkInsert(nameList, numberList, positionList, activity.getSharedPreferences("coach_info", Context.MODE_PRIVATE).getString("team_name", ""));
 		return true;
 	}

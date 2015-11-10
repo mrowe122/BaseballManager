@@ -79,6 +79,16 @@
 			android:name=".MyTeamsActivity"
 			android:label="@string/my_team"/>
 
+		<activity
+			android:name=".EditMyTeam"
+			android:label="@string/edit_team"
+			android:parentActivityName=".MyTeamsActivity">
+
+			<meta-data
+				android:name="android.support.PARENT_ACTIVITY"
+				android:value=".MyTeamsActivity"/>
+		</activity>
+
 	</application>
 
 </manifest>

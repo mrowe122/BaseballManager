@@ -73,33 +73,9 @@ public class NewPlayerForm extends AppCompatActivity {
 	}
 
 	private void addPlayer() {
-		/*
-		List<String> nameList = new ArrayList<>(newPlayers.playerName.size());
-		List<String> numberList = new ArrayList<>(newPlayers.playerNumber.size());
-		List<String> positionList = new ArrayList<>(newPlayers.playerPositions.size());
-		for(int i = 0; i < newPlayers.numPlayers; i++) {
-			if (!newPlayers.playerName.get(i).getText().toString().equals("") && !newPlayers.playerNumber.get(i).getText().toString().equals("")) {
-				nameList.add(newPlayers.playerName.get(i).getText().toString());
-				numberList.add(newPlayers.playerNumber.get(i).getText().toString());
-				if (newPlayers.playerPositions.get(i).getText().toString().equals("")) {
-					positionList.add("n/a");
-				} else {
-					positionList.add(newPlayers.playerPositions.get(i).getText().toString());
-				}
-			} else {
-				//toast message to a field is empty or team wasn't selected
-				Toast.makeText(getApplicationContext(),
-						R.string.error_player_form_empty,
-						Toast.LENGTH_SHORT).show();
-				nameList.clear();
-				numberList.clear();
-				positionList.clear();
-				return;
-			}
+		//if adding players is true, finish
+		if (newPlayers.addPlayers()) {
+			finish();
 		}
-		databaseAdapter.bulkInsert(nameList, numberList, positionList, getSharedPreferences("coach_info", MODE_PRIVATE).getString("team_name", ""));
-		*/
-		newPlayers.addPlayers();
-		finish();
 	}
 }

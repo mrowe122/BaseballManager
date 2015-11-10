@@ -39,7 +39,6 @@
 					android:id="@+id/my_team_name"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					android:text="@string/filler"
 					android:textColor="@color/white"
 					android:textSize="25sp"
 					android:textStyle="bold|italic"/>
@@ -62,7 +61,6 @@
 						android:id="@+id/my_coach_name"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
-						android:text="@string/filler"
 						android:textColor="@color/white"
 						android:textSize="15sp"/>
 
@@ -86,7 +84,6 @@
 						android:id="@+id/my_phone"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
-						android:text="@string/filler"
 						android:textColor="@color/white"
 						android:textSize="15sp"/>
 
@@ -109,7 +106,6 @@
 						android:id="@+id/my_email"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
-						android:text="@string/filler"
 						android:textColor="@color/white"
 						android:textSize="15sp"/>
 

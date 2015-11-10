@@ -43,6 +43,9 @@ public class MyTeamsActivity extends AppCompatActivity {
 			case android.R.id.home:
 				finish();
 				break;
+			case R.id.action_edit_team:
+				startActivity(new Intent(MyTeamsActivity.this, EditMyTeam.class));
+				break;
 			case R.id.action_settings:
 				break;
 		}

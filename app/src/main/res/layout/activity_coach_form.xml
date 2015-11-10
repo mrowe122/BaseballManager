@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical">
+
+	<LinearLayout
+		android:id="@+id/test"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginBottom="10dp"
+		android:orientation="vertical">
+
+		<android.support.design.widget.TextInputLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginEnd="10dp"
+			android:layout_marginLeft="10dp"
+			android:layout_marginRight="10dp"
+			android:layout_marginStart="10dp"
+			android:layout_marginTop="10dp"
+			app:hintTextAppearance="@style/EditTextHint">
+
+			<EditText
+				android:id="@+id/form_coach_name"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:background="@color/white"
+				android:hint="@string/form_coach_name"
+				android:inputType="textCapWords|textMultiLine|textVisiblePassword"
+				android:padding="12dp"/>
+
+		</android.support.design.widget.TextInputLayout>
+
+		<android.support.design.widget.TextInputLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginEnd="10dp"
+			android:layout_marginLeft="10dp"
+			android:layout_marginRight="10dp"
+			android:layout_marginStart="10dp"
+			android:layout_marginTop="10dp"
+			app:hintTextAppearance="@style/EditTextHint">
+
+			<EditText
+				android:id="@+id/form_coach_team"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:background="@color/white"
+				android:hint="@string/form_coach_team"
+				android:inputType="textCapWords|textMultiLine|textVisiblePassword"
+				android:padding="12dp"/>
+
+
+		</android.support.design.widget.TextInputLayout>
+
+		<android.support.design.widget.TextInputLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginEnd="10dp"
+			android:layout_marginLeft="10dp"
+			android:layout_marginRight="10dp"
+			android:layout_marginStart="10dp"
+			android:layout_marginTop="10dp">
+
+			<EditText
+				android:id="@+id/form_coach_email"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:background="@color/white"
+				android:hint="@string/form_coach_email"
+				android:inputType="textEmailAddress"
+				android:padding="12dp"/>
+
+		</android.support.design.widget.TextInputLayout>
+
+
+		<android.support.design.widget.TextInputLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginEnd="10dp"
+			android:layout_marginLeft="10dp"
+			android:layout_marginRight="10dp"
+			android:layout_marginStart="10dp"
+			android:layout_marginTop="10dp">
+
+			<EditText
+				android:id="@+id/form_coach_phone"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:background="@color/white"
+				android:hint="@string/form_coach_phone"
+				android:inputType="phone"
+				android:padding="12dp"/>
+
+		</android.support.design.widget.TextInputLayout>
+
+	</LinearLayout>
+
+	<LinearLayout
+		android:id="@+id/edit_roster"
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:layout_weight="1"
+		android:orientation="vertical"
+		android:visibility="invisible">
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginEnd="10dp"
+			android:layout_marginLeft="10dp"
+			android:layout_marginRight="10dp"
+			android:layout_marginStart="10dp"
+			android:orientation="horizontal">
+
+			<TextView
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:gravity="start"
+				android:text="@string/roster"
+				android:textColor="@color/black"
+				android:textSize="20sp"
+				android:textStyle="bold"/>
+
+			<TextView
+				android:id="@+id/my_team_total_players"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:gravity="end"
+				android:textColor="@color/black"
+				android:textSize="15sp"/>
+
+		</LinearLayout>
+
+		<View
+			android:layout_width="fill_parent"
+			android:layout_height="3dp"
+			android:background="@color/lightGreen"/>
+
+		<com.nirhart.parallaxscroll.views.ParallaxListView
+			android:id="@+id/my_players_list"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:dividerHeight="12dp"
+			app:parallax_factor="1.9"
+			tools:context=".EditMyTeam"/>
+
+	</LinearLayout>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginBottom="10dp"
+		android:orientation="horizontal"
+		android:weightSum="2">
+
+		<Button
+			android:id="@+id/cancel_coach"
+			style="@style/YesNoButtons"
+			android:background="@drawable/no_button"
+			android:text="@string/cancel"/>
+
+		<Button
+			android:id="@+id/add_new_coach"
+			style="@style/YesNoButtons"
+			android:background="@drawable/yes_button"
+			android:text="@string/form_coach_done"/>
+
+	</LinearLayout>
+
+</LinearLayout>
