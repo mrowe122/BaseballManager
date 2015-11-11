@@ -142,17 +142,10 @@
 			android:layout_height="3dp"
 			android:background="@color/lightGreen"/>
 
-		<com.nirhart.parallaxscroll.views.ParallaxListView
-			android:id="@+id/my_players_list"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:dividerHeight="12dp"
-			app:parallax_factor="1.9"
-			tools:context=".EditMyTeam"/>
-
 	</LinearLayout>
 
 	<LinearLayout
+		android:id="@+id/buttons"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_marginBottom="10dp"

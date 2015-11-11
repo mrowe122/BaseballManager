@@ -18,18 +18,33 @@ import android.widget.Toast;
 
 import com.msrproduction.baseballmanager.Database.Contract;
 import com.msrproduction.baseballmanager.Database.DatabaseAdapter;
-import com.nirhart.parallaxscroll.views.ParallaxListView;
 
 public class EditMyTeam extends AppCompatActivity {
 
 	SharedPreferences sharedpreferences;
 	private DatabaseAdapter databaseAdapter;
+	private ViewGroup header;
+	ListView listView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_coach_form);
 		databaseAdapter = new DatabaseAdapter(getApplicationContext()).open();
+		setContentView(R.layout.list_view_parallax);
+		listView = (ListView) findViewById(R.id.my_players_list);
+		LayoutInflater inflater = getLayoutInflater();
+		header = (ViewGroup) inflater.inflate(R.layout.activity_coach_form, listView,	false);
+		listView.addHeaderView(header);
+		registerForContextMenu(listView);
+		//noinspection ConstantConditions
+		listView.setAdapter(new PlayerListAdapter(getApplicationContext(), databaseAdapter.loadPlayers(), CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER));
+		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				startActivity(new Intent(getApplicationContext(), PlayerInformation.class)
+						.putExtra("player_id", id + ""));
+			}
+		});
 		initSetup();
 	}
 
@@ -41,9 +56,10 @@ public class EditMyTeam extends AppCompatActivity {
 
 	private void initSetup() {
 		//set edit roster to visible
-		findViewById(R.id.edit_roster).setVisibility(View.VISIBLE);
+		header.findViewById(R.id.edit_roster).setVisibility(View.VISIBLE);
+
 		//add coach button
-		(findViewById(R.id.add_new_coach)).setOnClickListener(new View.OnClickListener() {
+		findViewById(R.id.parallax_add_new_coach).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				editCoach();
@@ -51,7 +67,7 @@ public class EditMyTeam extends AppCompatActivity {
 		});
 
 		//cancel button
-		findViewById(R.id.cancel_coach).setOnClickListener(new View.OnClickListener() {
+		findViewById(R.id.parallax_cancel_coach).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				finish();
@@ -59,10 +75,14 @@ public class EditMyTeam extends AppCompatActivity {
 		});
 
 		SharedPreferences coachInfo = getSharedPreferences("coach_info", MODE_PRIVATE);
-		((EditText) findViewById(R.id.form_coach_name)).setText(coachInfo.getString("coach_name", ""));
-		((EditText) findViewById(R.id.form_coach_team)).setText(coachInfo.getString("team_name", ""));
-		((EditText) findViewById(R.id.form_coach_email)).setText(coachInfo.getString("coach_email", ""));
-		((EditText) findViewById(R.id.form_coach_phone)).setText(coachInfo.getString("coach_phone", ""));
+		((EditText) header.findViewById(R.id.form_coach_name)).setText(coachInfo.getString("coach_name", ""));
+		((EditText) header.findViewById(R.id.form_coach_team)).setText(coachInfo.getString("team_name", ""));
+		((EditText) header.findViewById(R.id.form_coach_email)).setText(coachInfo.getString("coach_email", ""));
+		((EditText) header.findViewById(R.id.form_coach_phone)).setText(coachInfo.getString("coach_phone", ""));
+
+		//hide/show appropiate views
+		header.findViewById(R.id.buttons).setVisibility(View.GONE);
+		header.findViewById(R.id.edit_roster).setVisibility(View.VISIBLE);
 	}
 
 	private void editCoach() {
@@ -95,18 +115,7 @@ public class EditMyTeam extends AppCompatActivity {
 	}
 
 	private void readPlayers() {
-		//noinspection ConstantConditions
-		final ParallaxListView listView = (ParallaxListView) findViewById(R.id.my_players_list);
-		registerForContextMenu(listView);
-		listView.setAdapter(new PlayerListAdapter(getApplicationContext(), databaseAdapter.loadPlayers(), CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER));
-		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				startActivity(new Intent(getApplicationContext(), PlayerInformation.class)
-						.putExtra("player_id", id + ""));
-			}
-		});
-		//listView.addParallaxedHeaderView(findViewById(R.id.form_coach_email));
+
 	}
 
 	private class PlayerListAdapter extends CursorAdapter {

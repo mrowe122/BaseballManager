@@ -1,0 +1,41 @@
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:orientation="vertical">
+
+	<ListView
+		android:id="@+id/my_players_list"
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:layout_marginEnd="10dp"
+		android:layout_marginLeft="10dp"
+		android:layout_marginRight="10dp"
+		android:layout_marginStart="10dp"
+		android:layout_weight="1"
+		android:divider="@null"
+		android:dividerHeight="12dp"/>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginBottom="10dp"
+		android:layout_marginTop="10dp"
+		android:orientation="horizontal"
+		android:weightSum="2">
+
+		<Button
+			android:id="@+id/parallax_cancel_coach"
+			style="@style/YesNoButtons"
+			android:background="@drawable/no_button"
+			android:text="@string/cancel"/>
+
+		<Button
+			android:id="@+id/parallax_add_new_coach"
+			style="@style/YesNoButtons"
+			android:background="@drawable/yes_button"
+			android:text="@string/form_coach_done"/>
+
+	</LinearLayout>
+
+</LinearLayout>
