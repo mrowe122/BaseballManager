@@ -1,34 +1,24 @@
 package com.msrproduction.baseballmanager;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.msrproduction.baseballmanager.Database.DatabaseAdapter;
-import com.msrproduction.baseballmanager.plugins.NewPlayerModel;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.msrproduction.baseballmanager.plugins.PlayerSchema;
 
 public class NewPlayerForm extends AppCompatActivity {
 
 	private DatabaseAdapter databaseAdapter;
-	NewPlayerModel newPlayers;
+	PlayerSchema newPlayers;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_player_form);
 		databaseAdapter = new DatabaseAdapter(getApplicationContext()).open();
-		newPlayers = new NewPlayerModel(this);
+		newPlayers = new PlayerSchema(this);
 		initSetup();
 	}
 

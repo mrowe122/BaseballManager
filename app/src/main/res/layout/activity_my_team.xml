@@ -8,206 +8,162 @@
 
 	<FrameLayout
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content">
-
-		<ImageView
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:contentDescription="@string/team_picture"
-			android:scaleType="centerCrop"
-			android:src="@drawable/team"/>
-
-		<ImageView
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:background="@drawable/black_fade_out"
-			android:contentDescription="@string/black_fade"/>
+		android:layout_height="match_parent">
 
 		<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:orientation="vertical"
-			android:padding="10dp">
+			android:orientation="vertical">
 
-			<TextView
-				android:id="@+id/my_team_name"
+			<FrameLayout
+				android:layout_width="match_parent"
+				android:layout_height="200dp"
+				android:layout_marginBottom="10dp">
+
+				<ImageView
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:scaleType="centerCrop"
+					android:contentDescription="@string/team_picture"
+					android:src="@drawable/team"/>
+
+				<ImageView
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:background="@drawable/black_fade_out"
+					android:contentDescription="@string/black_fade"/>
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="vertical"
+					android:padding="10dp">
+
+					<TextView
+						android:id="@+id/my_team_name"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:textColor="@color/white"
+						android:textSize="25sp"
+						android:textStyle="bold|italic"/>
+
+					<LinearLayout
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_marginBottom="3dp">
+
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginEnd="5dp"
+							android:layout_marginRight="5dp"
+							android:text="@string/coach_name"
+							android:textColor="@color/white"
+							android:textSize="15sp"/>
+
+						<TextView
+							android:id="@+id/my_coach_name"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:textColor="@color/white"
+							android:textSize="15sp"/>
+
+					</LinearLayout>
+
+					<LinearLayout
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_marginBottom="3dp">
+
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginEnd="5dp"
+							android:layout_marginRight="5dp"
+							android:text="@string/my_phone"
+							android:textColor="@color/white"
+							android:textSize="15sp"/>
+
+						<TextView
+							android:id="@+id/my_phone"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:textColor="@color/white"
+							android:textSize="15sp"/>
+
+					</LinearLayout>
+
+					<LinearLayout
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content">
+
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginEnd="5dp"
+							android:layout_marginRight="5dp"
+							android:text="@string/my_email"
+							android:textColor="@color/white"
+							android:textSize="15sp"/>
+
+						<TextView
+							android:id="@+id/my_email"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:textColor="@color/white"
+							android:textSize="15sp"/>
+
+					</LinearLayout>
+
+				</LinearLayout>
+
+			</FrameLayout>
+
+			<LinearLayout
 				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:textColor="@color/white"
-				android:textSize="25sp"
-				android:textStyle="bold|italic"/>
+				android:layout_height="match_parent"
+				android:orientation="vertical">
 
-			<LinearLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_marginBottom="3dp">
-
-				<TextView
-					android:layout_width="wrap_content"
+				<LinearLayout
+					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
-					android:layout_marginEnd="5dp"
-					android:layout_marginRight="5dp"
-					android:text="@string/coach_name"
-					android:textColor="@color/white"
-					android:textSize="15sp"/>
+					android:layout_marginEnd="10dp"
+					android:layout_marginLeft="10dp"
+					android:layout_marginRight="10dp"
+					android:layout_marginStart="10dp"
+					android:orientation="horizontal">
 
-				<TextView
-					android:id="@+id/my_coach_name"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:textColor="@color/white"
-					android:textSize="15sp"/>
+					<TextView
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:gravity="start"
+						android:text="@string/roster"
+						android:textColor="@color/black"
+						android:textSize="20sp"
+						android:textStyle="bold"/>
 
-			</LinearLayout>
+					<TextView
+						android:id="@+id/my_team_total_players"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:gravity="end"
+						android:textColor="@color/black"
+						android:textSize="15sp"/>
 
-			<LinearLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_marginBottom="3dp">
+				</LinearLayout>
 
-				<TextView
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_marginEnd="5dp"
-					android:layout_marginRight="5dp"
-					android:text="@string/my_phone"
-					android:textColor="@color/white"
-					android:textSize="15sp"/>
-
-				<TextView
-					android:id="@+id/my_phone"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:textColor="@color/white"
-					android:textSize="15sp"/>
-
-			</LinearLayout>
-
-			<LinearLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content">
-
-				<TextView
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_marginEnd="5dp"
-					android:layout_marginRight="5dp"
-					android:text="@string/my_email"
-					android:textColor="@color/white"
-					android:textSize="15sp"/>
-
-				<TextView
-					android:id="@+id/my_email"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:textColor="@color/white"
-					android:textSize="15sp"/>
+				<View
+					android:layout_width="fill_parent"
+					android:layout_height="3dp"
+					android:layout_marginBottom="10dp"
+					android:layout_marginTop="0dp"
+					android:background="@color/lightGreen"/>
 
 			</LinearLayout>
 
 		</LinearLayout>
 
 	</FrameLayout>
-
-	<LinearLayout
-		android:layout_width="wrap_content"
-		android:layout_height="match_parent"
-		android:orientation="vertical"
-		android:padding="10dp">
-
-		<LinearLayout
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:orientation="horizontal">
-
-			<TextView
-				android:layout_width="0dp"
-				android:layout_height="wrap_content"
-				android:layout_weight="1"
-				android:gravity="start"
-				android:text="@string/roster"
-				android:textColor="@color/black"
-				android:textSize="20sp"
-				android:textStyle="bold"/>
-
-			<TextView
-				android:id="@+id/my_team_total_players"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:gravity="end"
-				android:textColor="@color/black"
-				android:textSize="15sp"/>
-
-		</LinearLayout>
-
-		<View
-			android:layout_width="fill_parent"
-			android:layout_height="3dp"
-			android:layout_marginBottom="10dp"
-			android:layout_marginTop="0dp"
-			android:background="@color/lightGreen"/>
-
-		<FrameLayout
-			android:layout_width="match_parent"
-			android:layout_height="match_parent">
-
-			<ListView
-				android:id="@+id/my_players_list"
-				android:layout_width="match_parent"
-				android:layout_height="match_parent"
-				android:divider="@null"
-				android:dividerHeight="12dp"/>
-
-			<com.github.clans.fab.FloatingActionMenu
-				android:id="@+id/fab_menu"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_gravity="bottom|end"
-				android:layout_marginBottom="10dp"
-				android:layout_marginEnd="10dp"
-				android:layout_marginRight="10dp"
-				fab:menu_animationDelayPerItem="50"
-				fab:menu_backgroundColor="@android:color/transparent"
-				fab:menu_colorNormal="@color/ColorPrimary"
-				fab:menu_colorPressed="@color/ColorPrimaryDark"
-				fab:menu_fab_size="normal"
-				fab:menu_icon="@drawable/fab_add"
-				fab:menu_openDirection="up">
-
-				<com.github.clans.fab.FloatingActionButton
-					android:id="@+id/fab_add_player"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:src="@drawable/ic_star"
-					fab:fab_colorNormal="@color/ColorPrimaryDark"
-					fab:fab_colorPressed="@color/ColorPrimary"
-					fab:fab_label="@string/new_player"
-					fab:fab_size="mini"/>
-
-				<com.github.clans.fab.FloatingActionButton
-					android:id="@+id/fab_add_team"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:src="@drawable/ic_star"
-					fab:fab_colorNormal="@color/ColorPrimaryDark"
-					fab:fab_colorPressed="@color/ColorPrimary"
-					fab:fab_label="@string/create_new_team"
-					fab:fab_size="mini"/>
-
-				<com.github.clans.fab.FloatingActionButton
-					android:id="@+id/fab_add_player_to_team"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:src="@drawable/ic_star"
-					fab:fab_colorNormal="@color/ColorPrimaryDark"
-					fab:fab_colorPressed="@color/ColorPrimary"
-					fab:fab_label="@string/add_free_agents"
-					fab:fab_size="mini"/>
-
-			</com.github.clans.fab.FloatingActionMenu>
-
-		</FrameLayout>
-
-	</LinearLayout>
 
 </LinearLayout>

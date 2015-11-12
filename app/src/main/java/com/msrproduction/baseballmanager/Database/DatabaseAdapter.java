@@ -49,7 +49,7 @@ public class DatabaseAdapter extends AsyncTask<String, Void, Cursor> {
 		db.insert(Contract.TeamEntry.TABLE_NAME, null, addItem);
 	}
 
-	public void insertPlayer(String name, String number, String position, String team) {
+	private void insertPlayer(String name, String number, String position, String team) {
 		ContentValues addItem = new ContentValues();
 		addItem.put(Contract.PlayerEntry.COLUMN_PLAYER_NAME, name);
 		addItem.put(Contract.PlayerEntry.COLUMN_PLAYER_NUMBER, number);
@@ -76,10 +76,9 @@ public class DatabaseAdapter extends AsyncTask<String, Void, Cursor> {
 		db.insert(Contract.PlayerEntry.TABLE_NAME, null, addItem);
 	}
 
-	public void updatePlayerNumberTeamPosition(String name, String number, String team, String position) {
+	public void updatePlayer(String name, String number, String position) {
 		ContentValues contentValues = new ContentValues();
 		contentValues.put(Contract.PlayerEntry.COLUMN_PLAYER_NUMBER, number);
-		contentValues.put(Contract.PlayerEntry.COLUMN_PLAYER_TEAM_NAME, team);
 		contentValues.put(Contract.PlayerEntry.COLUMN_PLAYER_POSITION, position);
 		db.update(Contract.PlayerEntry.TABLE_NAME, contentValues, Contract.PlayerEntry.COLUMN_PLAYER_NAME + " = '" + name + "'", null);
 	}

@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,13 +27,14 @@ import com.msrproduction.baseballmanager.Database.DatabaseAdapter;
 public class MyTeamsActivity extends AppCompatActivity {
 
 	private DatabaseAdapter databaseAdapter;
-	FloatingActionMenu fabMenu;
+	private FloatingActionMenu fabMenu;
+	private PlayerListAdapter cursorAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		checkFirstRun();
-		setContentView(R.layout.activity_my_team);
+		setContentView(R.layout.list_view_parallax);
 		databaseAdapter = new DatabaseAdapter(getApplicationContext()).open();
 		initSetup();
 	}
@@ -62,7 +64,7 @@ public class MyTeamsActivity extends AppCompatActivity {
 	public void onResume() {
 		super.onResume();
 		loadCoachData();
-		readPlayers();
+		cursorAdapter.notifyDataSetChanged();
 	}
 
 	@Override
@@ -78,6 +80,28 @@ public class MyTeamsActivity extends AppCompatActivity {
 			if (resultCode != 1) {
 				finish();
 			}
+		}
+	}
+
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
+		if (v.getId() == R.id.my_players_list) {
+			getMenuInflater().inflate(R.menu.context_menu, menu);
+		}
+	}
+
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+		switch (item.getItemId()) {
+			case R.id.edit_selected:
+				startActivity(new Intent(getApplicationContext(), EditPlayer.class)
+						.putExtra("edit_player", info.id + ""));
+				return true;
+
+			default:
+				return super.onContextItemSelected(item);
 		}
 	}
 
@@ -101,11 +125,16 @@ public class MyTeamsActivity extends AppCompatActivity {
 		}
 	}
 
-	private void readPlayers() {
+	private void initSetup() {
 		//noinspection ConstantConditions
-		final ListView listView = (ListView) findViewById(R.id.my_players_list);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		findViewById(R.id.fab_menu).setVisibility(View.VISIBLE);
+		ListView listView = (ListView) findViewById(R.id.my_players_list);
+		ViewGroup header = (ViewGroup) getLayoutInflater().inflate(R.layout.activity_my_team, listView, false);
+		listView.addHeaderView(header);
 		registerForContextMenu(listView);
-		listView.setAdapter(new PlayerListAdapter(getApplicationContext(), databaseAdapter.loadPlayers(), CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER));
+		cursorAdapter = new PlayerListAdapter(getApplicationContext(), databaseAdapter.loadPlayers(), CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+		listView.setAdapter(cursorAdapter);
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -113,11 +142,6 @@ public class MyTeamsActivity extends AppCompatActivity {
 						.putExtra("player_id", id + ""));
 			}
 		});
-	}
-
-	private void initSetup() {
-		//noinspection ConstantConditions
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		loadCoachData();
 		setupFabButtons();
 	}

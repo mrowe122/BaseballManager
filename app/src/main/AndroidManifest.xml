@@ -89,6 +89,11 @@
 				android:value=".MyTeamsActivity"/>
 		</activity>
 
+		<activity
+			android:name=".EditPlayer"
+			android:theme="@style/ActivityDialogTheme">
+		</activity>
+
 	</application>
 
 </manifest>

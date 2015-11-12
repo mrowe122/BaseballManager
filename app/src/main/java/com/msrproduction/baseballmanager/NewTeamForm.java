@@ -4,22 +4,21 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.EditText;
 
 import com.msrproduction.baseballmanager.Database.DatabaseAdapter;
-import com.msrproduction.baseballmanager.plugins.NewPlayerModel;
+import com.msrproduction.baseballmanager.plugins.PlayerSchema;
 
 public class NewTeamForm extends AppCompatActivity {
 
 	private DatabaseAdapter databaseAdapter;
 	SharedPreferences sharedpreferences;
-	NewPlayerModel newPlayers;
+	PlayerSchema newPlayers;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_team_form);
-		newPlayers = new NewPlayerModel(this);
+		newPlayers = new PlayerSchema(this);
 		initSetup();
 	}
 

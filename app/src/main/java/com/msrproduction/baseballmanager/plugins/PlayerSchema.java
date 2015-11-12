@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class NewPlayerModel {
+public class PlayerSchema {
 
 	final private CharSequence positions[] = {"P", "C", "1B", "2B", "3B", "SS", "LF", "CF", "RF"};
 	private Activity activity;
@@ -30,7 +30,7 @@ public class NewPlayerModel {
 	private LinkedList<View> listView = new LinkedList<>();
 	public int numPlayers = 0;
 
-	public NewPlayerModel(Activity act) {
+	public PlayerSchema(Activity act) {
 		activity = act;
 		databaseAdapter = new DatabaseAdapter(activity).open();
 	}
@@ -38,11 +38,12 @@ public class NewPlayerModel {
 	public void addField() {
 		final LinearLayout containerLayout = (LinearLayout) activity.findViewById(R.id.new_fields_created);
 		final View layout = activity.getLayoutInflater().inflate(R.layout.layout_new_player_field, null);
-		listView.add(layout);
 		final EditText name = (EditText) layout.findViewById(R.id.form_player_name);
 		final EditText number = (EditText) layout.findViewById(R.id.form_player_number);
 		final Button spinnerPosition = (Button) layout.findViewById(R.id.spinner_pos);
 		final ArrayList<Integer> selList = new ArrayList<>();
+
+		listView.add(layout);
 		playerName.add(name);
 		playerNumber.add(number);
 		playerPositions.add(spinnerPosition);
@@ -134,7 +135,6 @@ public class NewPlayerModel {
 				return false;
 			}
 		}
-		System.out.println(activity.getSharedPreferences("coach_info", Context.MODE_PRIVATE).getString("team_name", ""));
 		databaseAdapter.bulkInsert(nameList, numberList, positionList, activity.getSharedPreferences("coach_info", Context.MODE_PRIVATE).getString("team_name", ""));
 		return true;
 	}

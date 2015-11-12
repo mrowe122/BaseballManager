@@ -23,38 +23,39 @@ public class EditMyTeam extends AppCompatActivity {
 
 	SharedPreferences sharedpreferences;
 	private DatabaseAdapter databaseAdapter;
-	private ViewGroup header;
-	ListView listView;
+	private PlayerListAdapter cursorAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		databaseAdapter = new DatabaseAdapter(getApplicationContext()).open();
 		setContentView(R.layout.list_view_parallax);
-		listView = (ListView) findViewById(R.id.my_players_list);
-		LayoutInflater inflater = getLayoutInflater();
-		header = (ViewGroup) inflater.inflate(R.layout.activity_coach_form, listView,	false);
-		listView.addHeaderView(header);
-		registerForContextMenu(listView);
-		//noinspection ConstantConditions
-		listView.setAdapter(new PlayerListAdapter(getApplicationContext(), databaseAdapter.loadPlayers(), CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER));
-		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				startActivity(new Intent(getApplicationContext(), PlayerInformation.class)
-						.putExtra("player_id", id + ""));
-			}
-		});
 		initSetup();
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
-		readPlayers();
+		cursorAdapter.notifyDataSetChanged();
 	}
 
 	private void initSetup() {
+		ListView listView = (ListView) findViewById(R.id.my_players_list);
+		ViewGroup header = (ViewGroup) getLayoutInflater().inflate(R.layout.activity_coach_form, listView, false);
+		listView.addHeaderView(header);
+		registerForContextMenu(listView);
+
+		SharedPreferences coachInfo = getSharedPreferences("coach_info", MODE_PRIVATE);
+		((EditText) header.findViewById(R.id.form_coach_name)).setText(coachInfo.getString("coach_name", ""));
+		((EditText) header.findViewById(R.id.form_coach_team)).setText(coachInfo.getString("team_name", ""));
+		((EditText) header.findViewById(R.id.form_coach_email)).setText(coachInfo.getString("coach_email", ""));
+		((EditText) header.findViewById(R.id.form_coach_phone)).setText(coachInfo.getString("coach_phone", ""));
+
+		//hide/show appropiate views
+		header.findViewById(R.id.buttons).setVisibility(View.GONE);
+		header.findViewById(R.id.edit_roster).setVisibility(View.VISIBLE);
+		findViewById(R.id.parallax_buttons).setVisibility(View.VISIBLE);
+
 		//set edit roster to visible
 		header.findViewById(R.id.edit_roster).setVisibility(View.VISIBLE);
 
@@ -74,15 +75,17 @@ public class EditMyTeam extends AppCompatActivity {
 			}
 		});
 
-		SharedPreferences coachInfo = getSharedPreferences("coach_info", MODE_PRIVATE);
-		((EditText) header.findViewById(R.id.form_coach_name)).setText(coachInfo.getString("coach_name", ""));
-		((EditText) header.findViewById(R.id.form_coach_team)).setText(coachInfo.getString("team_name", ""));
-		((EditText) header.findViewById(R.id.form_coach_email)).setText(coachInfo.getString("coach_email", ""));
-		((EditText) header.findViewById(R.id.form_coach_phone)).setText(coachInfo.getString("coach_phone", ""));
+		cursorAdapter = new PlayerListAdapter(getApplicationContext(), databaseAdapter.loadPlayers(), CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
 
-		//hide/show appropiate views
-		header.findViewById(R.id.buttons).setVisibility(View.GONE);
-		header.findViewById(R.id.edit_roster).setVisibility(View.VISIBLE);
+		//noinspection ConstantConditions
+		listView.setAdapter(cursorAdapter);
+		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				startActivity(new Intent(getApplicationContext(), PlayerInformation.class)
+						.putExtra("player_id", id + ""));
+			}
+		});
 	}
 
 	private void editCoach() {
@@ -112,10 +115,6 @@ public class EditMyTeam extends AppCompatActivity {
 		editor.apply();
 		getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit().putBoolean("isCoachSetup", true).apply();
 		finish();
-	}
-
-	private void readPlayers() {
-
 	}
 
 	private class PlayerListAdapter extends CursorAdapter {

@@ -47,4 +47,9 @@
 		<item name="android:paddingBottom">5dp</item>
 	</style>
 
+	<style name="ActivityDialogTheme" parent="Theme.AppCompat.Light.Dialog">
+		<item name="android:windowMinWidthMajor">100%</item>
+		<item name="android:windowMinWidthMinor">100%</item>
+	</style>
+
 </resources>

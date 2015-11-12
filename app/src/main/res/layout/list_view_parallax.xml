@@ -1,27 +1,27 @@
-<LinearLayout
+<FrameLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:fab="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
-	android:layout_height="wrap_content"
+	android:layout_height="match_parent"
 	android:orientation="vertical">
 
 	<ListView
 		android:id="@+id/my_players_list"
 		android:layout_width="match_parent"
-		android:layout_height="0dp"
-		android:layout_marginEnd="10dp"
-		android:layout_marginLeft="10dp"
-		android:layout_marginRight="10dp"
-		android:layout_marginStart="10dp"
-		android:layout_weight="1"
+		android:layout_height="match_parent"
 		android:divider="@null"
 		android:dividerHeight="12dp"/>
 
 	<LinearLayout
+		android:id="@+id/parallax_buttons"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_marginBottom="10dp"
-		android:layout_marginTop="10dp"
+		android:layout_gravity="bottom"
+		android:background="?android:colorBackground"
 		android:orientation="horizontal"
+		android:paddingBottom="10dp"
+		android:paddingTop="10dp"
+		android:visibility="gone"
 		android:weightSum="2">
 
 		<Button
@@ -38,4 +38,53 @@
 
 	</LinearLayout>
 
-</LinearLayout>
+	<com.github.clans.fab.FloatingActionMenu
+		android:id="@+id/fab_menu"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="bottom|end"
+		android:layout_marginBottom="10dp"
+		android:layout_marginEnd="10dp"
+		android:layout_marginRight="10dp"
+		android:visibility="gone"
+		fab:menu_animationDelayPerItem="50"
+		fab:menu_backgroundColor="@android:color/transparent"
+		fab:menu_colorNormal="@color/ColorPrimary"
+		fab:menu_colorPressed="@color/ColorPrimaryDark"
+		fab:menu_fab_size="normal"
+		fab:menu_icon="@drawable/fab_add"
+		fab:menu_openDirection="up">
+
+		<com.github.clans.fab.FloatingActionButton
+			android:id="@+id/fab_add_player"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:src="@drawable/ic_star"
+			fab:fab_colorNormal="@color/ColorPrimaryDark"
+			fab:fab_colorPressed="@color/ColorPrimary"
+			fab:fab_label="@string/new_player"
+			fab:fab_size="mini"/>
+
+		<com.github.clans.fab.FloatingActionButton
+			android:id="@+id/fab_add_team"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:src="@drawable/ic_star"
+			fab:fab_colorNormal="@color/ColorPrimaryDark"
+			fab:fab_colorPressed="@color/ColorPrimary"
+			fab:fab_label="@string/create_new_team"
+			fab:fab_size="mini"/>
+
+		<com.github.clans.fab.FloatingActionButton
+			android:id="@+id/fab_add_player_to_team"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:src="@drawable/ic_star"
+			fab:fab_colorNormal="@color/ColorPrimaryDark"
+			fab:fab_colorPressed="@color/ColorPrimary"
+			fab:fab_label="@string/add_free_agents"
+			fab:fab_size="mini"/>
+
+	</com.github.clans.fab.FloatingActionMenu>
+
+</FrameLayout>
