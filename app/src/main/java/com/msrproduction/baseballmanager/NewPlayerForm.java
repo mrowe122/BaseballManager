@@ -10,38 +10,27 @@ import com.msrproduction.baseballmanager.plugins.PlayerSchema;
 
 public class NewPlayerForm extends AppCompatActivity {
 
-	private DatabaseAdapter databaseAdapter;
-	PlayerSchema newPlayers;
+	private PlayerSchema playerSchema;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_player_form);
-		databaseAdapter = new DatabaseAdapter(getApplicationContext()).open();
-		newPlayers = new PlayerSchema(this);
 		initSetup();
 	}
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-			case android.R.id.home:
-				finish();
-				break;
-		}
-		return super.onOptionsItemSelected(item);
-	}
-
 	private void initSetup() {
-		//noinspection ConstantConditions
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		newPlayers.addField();
+		playerSchema = new PlayerSchema(this);
+		playerSchema.addField();
 
 		//add player button
 		(findViewById(R.id.add_new_player)).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				addPlayer();
+				if (playerSchema.addPlayers()) {
+					setResult(1);
+					finish();
+				}
 			}
 		});
 
@@ -49,6 +38,7 @@ public class NewPlayerForm extends AppCompatActivity {
 		findViewById(R.id.cancel_player).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				setResult(0);
 				finish();
 			}
 		});
@@ -57,15 +47,8 @@ public class NewPlayerForm extends AppCompatActivity {
 		findViewById(R.id.add_new_field).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				newPlayers.addField();
+				playerSchema.addField();
 			}
 		});
-	}
-
-	private void addPlayer() {
-		//if adding players is true, finish
-		if (newPlayers.addPlayers()) {
-			finish();
-		}
 	}
 }

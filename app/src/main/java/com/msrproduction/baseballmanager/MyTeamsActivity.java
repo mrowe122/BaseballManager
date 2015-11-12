@@ -64,7 +64,6 @@ public class MyTeamsActivity extends AppCompatActivity {
 	public void onResume() {
 		super.onResume();
 		loadCoachData();
-		cursorAdapter.notifyDataSetChanged();
 	}
 
 	@Override
@@ -76,10 +75,19 @@ public class MyTeamsActivity extends AppCompatActivity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		if (requestCode == 1) {
-			if (resultCode != 1) {
-				finish();
-			}
+		switch (requestCode) {
+			//for first time running check
+			case 1:
+				if(resultCode != 1) {
+					finish();
+				}
+				break;
+			//for updating list view
+			case 2:
+				if(resultCode == 1) {
+					cursorAdapter.swapCursor(databaseAdapter.loadPlayers());
+					break;
+				}
 		}
 	}
 
@@ -96,8 +104,8 @@ public class MyTeamsActivity extends AppCompatActivity {
 		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 		switch (item.getItemId()) {
 			case R.id.edit_selected:
-				startActivity(new Intent(getApplicationContext(), EditPlayer.class)
-						.putExtra("edit_player", info.id + ""));
+				startActivityForResult(new Intent(getApplicationContext(), EditPlayer.class)
+						.putExtra("edit_player", info.id + ""), 2);
 				return true;
 
 			default:
@@ -128,11 +136,16 @@ public class MyTeamsActivity extends AppCompatActivity {
 	private void initSetup() {
 		//noinspection ConstantConditions
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 		findViewById(R.id.fab_menu).setVisibility(View.VISIBLE);
+
 		ListView listView = (ListView) findViewById(R.id.my_players_list);
+
 		ViewGroup header = (ViewGroup) getLayoutInflater().inflate(R.layout.activity_my_team, listView, false);
-		listView.addHeaderView(header);
+
+		listView.addHeaderView(header, null, false);
 		registerForContextMenu(listView);
+
 		cursorAdapter = new PlayerListAdapter(getApplicationContext(), databaseAdapter.loadPlayers(), CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
 		listView.setAdapter(cursorAdapter);
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -163,7 +176,7 @@ public class MyTeamsActivity extends AppCompatActivity {
 		addPlayer.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				startActivity(new Intent(MyTeamsActivity.this, NewPlayerForm.class));
+				startActivityForResult(new Intent(MyTeamsActivity.this, NewPlayerForm.class), 2);
 				overridePendingTransition(R.anim.abc_slide_in_bottom, R.anim.abc_slide_out_bottom);
 			}
 		});

@@ -52,4 +52,18 @@
 		<item name="android:windowMinWidthMinor">100%</item>
 	</style>
 
+	<style name="filter_buttons" parent="AppTheme">
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:background">@drawable/radio_buttons</item>
+		<item name="android:button">@android:color/transparent</item>
+		<item name="android:gravity">center</item>
+		<item name="android:paddingTop">7dp</item>
+		<item name="android:paddingBottom">7dp</item>
+		<item name="android:paddingLeft">13dp</item>
+		<item name="android:paddingRight">13dp</item>
+		<item name="android:textColor">@drawable/text_selector</item>
+		<item name="android:textSize">16sp</item>
+	</style>
+
 </resources>

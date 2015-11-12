@@ -42,7 +42,7 @@ public class EditMyTeam extends AppCompatActivity {
 	private void initSetup() {
 		ListView listView = (ListView) findViewById(R.id.my_players_list);
 		ViewGroup header = (ViewGroup) getLayoutInflater().inflate(R.layout.activity_coach_form, listView, false);
-		listView.addHeaderView(header);
+		listView.addHeaderView(header, null, false);
 		registerForContextMenu(listView);
 
 		SharedPreferences coachInfo = getSharedPreferences("coach_info", MODE_PRIVATE);

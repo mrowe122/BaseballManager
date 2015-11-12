@@ -37,6 +37,8 @@ public class Database extends SQLiteOpenHelper {
 				Contract.PlayerEntry.COLUMN_PLAYER_NUMBER + " INTEGER NOT NULL, \n" +
 				Contract.PlayerEntry.COLUMN_PLAYER_TEAM_NAME + " TEXT NOT NULL, \n" +
 				Contract.PlayerEntry.COLUMN_PLAYER_POSITION + " TEXT, \n" +
+				Contract.PlayerEntry.COLUMN_PLAYER_BATS + " TEXT, \n" +
+				Contract.PlayerEntry.COLUMN_PLAYER_THROWS + " TEXT, \n" +
 				Contract.PlayerEntry.COLUMN_PLAYER_BATTING_AVERAGE + " REAL, \n" +
 				Contract.PlayerEntry.COLUMN_PLAYER_RBI + " REAL, \n" +
 				Contract.PlayerEntry.COLUMN_PLAYER_RUNS + " INTEGER, \n" +

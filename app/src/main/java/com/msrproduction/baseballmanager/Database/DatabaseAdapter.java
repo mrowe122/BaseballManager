@@ -49,12 +49,14 @@ public class DatabaseAdapter extends AsyncTask<String, Void, Cursor> {
 		db.insert(Contract.TeamEntry.TABLE_NAME, null, addItem);
 	}
 
-	private void insertPlayer(String name, String number, String position, String team) {
+	private void insertPlayer(String name, String number, String position, String team, String bats, String throws_) {
 		ContentValues addItem = new ContentValues();
 		addItem.put(Contract.PlayerEntry.COLUMN_PLAYER_NAME, name);
 		addItem.put(Contract.PlayerEntry.COLUMN_PLAYER_NUMBER, number);
 		addItem.put(Contract.PlayerEntry.COLUMN_PLAYER_TEAM_NAME, team);
 		addItem.put(Contract.PlayerEntry.COLUMN_PLAYER_POSITION, position);
+		addItem.put(Contract.PlayerEntry.COLUMN_PLAYER_BATS, bats);
+		addItem.put(Contract.PlayerEntry.COLUMN_PLAYER_THROWS, throws_);
 		addItem.put(Contract.PlayerEntry.COLUMN_PLAYER_BATTING_AVERAGE, 0);
 		addItem.put(Contract.PlayerEntry.COLUMN_PLAYER_RBI, 0);
 		addItem.put(Contract.PlayerEntry.COLUMN_PLAYER_RUNS, 0);
@@ -76,10 +78,12 @@ public class DatabaseAdapter extends AsyncTask<String, Void, Cursor> {
 		db.insert(Contract.PlayerEntry.TABLE_NAME, null, addItem);
 	}
 
-	public void updatePlayer(String name, String number, String position) {
+	public void updatePlayer(String name, String number, String position, String bats, String throws_) {
 		ContentValues contentValues = new ContentValues();
 		contentValues.put(Contract.PlayerEntry.COLUMN_PLAYER_NUMBER, number);
 		contentValues.put(Contract.PlayerEntry.COLUMN_PLAYER_POSITION, position);
+		contentValues.put(Contract.PlayerEntry.COLUMN_PLAYER_BATS, bats);
+		contentValues.put(Contract.PlayerEntry.COLUMN_PLAYER_THROWS, throws_);
 		db.update(Contract.PlayerEntry.TABLE_NAME, contentValues, Contract.PlayerEntry.COLUMN_PLAYER_NAME + " = '" + name + "'", null);
 	}
 
@@ -191,10 +195,10 @@ public class DatabaseAdapter extends AsyncTask<String, Void, Cursor> {
 		}
 	}
 
-	public void bulkInsert(List<String> name, List<String> number, List<String> position, String team) {
+	public void bulkInsert(List<String> name, List<String> number, List<String> position, String team,  List<String> bats,  List<String> throws_ ) {
 		for (int i = 0; i < name.size(); i++) {
 			//  insertPlayer params(String name, String number, String team)
-			insertPlayer(name.get(i), number.get(i), position.get(i), team);
+			insertPlayer(name.get(i), number.get(i), position.get(i), team, bats.get(i), throws_.get(i));
 		}
 	}
 

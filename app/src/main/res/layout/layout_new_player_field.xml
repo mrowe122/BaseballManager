@@ -68,6 +68,7 @@
 	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
+		android:layout_marginBottom="10dp"
 		android:layout_marginEnd="10dp"
 		android:layout_marginLeft="10dp"
 		android:layout_marginRight="10dp"
@@ -103,8 +104,97 @@
 
 	<LinearLayout
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content">
+		android:layout_height="wrap_content"
+		android:layout_marginBottom="10dp"
+		android:background="@color/white"
+		android:orientation="horizontal"
+		android:paddingBottom="10dp"
+		android:paddingTop="10dp"
+		android:weightSum="2">
 
+		<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:orientation="vertical">
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center"
+				android:text="@string/player_bats"
+				android:textColor="@color/black"
+				android:textSize="18sp"
+				android:textStyle="bold"/>
+
+			<LinearLayout
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center"
+				android:orientation="horizontal">
+
+				<CheckBox
+					android:id="@+id/bats_left"
+					style="@style/filter_buttons"
+					android:layout_marginEnd="4dp"
+					android:layout_marginRight="4dp"
+					android:text="@string/left"/>
+
+				<CheckBox
+					android:id="@+id/bats_right"
+					style="@style/filter_buttons"
+					android:layout_marginLeft="4dp"
+					android:layout_marginRight="4dp"
+					android:text="@string/right"/>
+
+			</LinearLayout>
+
+
+		</LinearLayout>
+
+		<View
+			android:layout_width="1dp"
+			android:layout_height="match_parent"
+			android:background="@color/ColorPrimary"/>
+
+		<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:orientation="vertical">
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center"
+				android:text="@string/player_throws"
+				android:textColor="@color/black"
+				android:textSize="18sp"
+				android:textStyle="bold"/>
+
+			<LinearLayout
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center"
+				android:orientation="horizontal">
+
+				<CheckBox
+					android:id="@+id/throws_left"
+					style="@style/filter_buttons"
+					android:layout_marginEnd="4dp"
+					android:layout_marginRight="4dp"
+					android:text="@string/left"/>
+
+				<CheckBox
+					android:id="@+id/throws_right"
+					style="@style/filter_buttons"
+					android:layout_marginLeft="4dp"
+					android:layout_marginRight="4dp"
+					android:text="@string/right"/>
+
+			</LinearLayout>
+
+		</LinearLayout>
 
 
 	</LinearLayout>

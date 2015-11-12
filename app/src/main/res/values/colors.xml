@@ -4,8 +4,7 @@
 	<!-- App Colors -->
 	<color name="ColorPrimary">#005826</color>
 	<color name="ColorPrimaryDark">#004a1f</color>
-	<color name="Color">#003316</color>
-	<color name="lightGreen">#007733</color>
+	<color name="ColorPrimaryLight">#007733</color>
 
 	<!-- Deleted player warning -->
 	<color name="lightRed">#FFDCDC</color>
@@ -18,10 +17,5 @@
 
 	<!-- Alpha colors -->
 	<color name="alpha_grey">#59a9a9a9</color>
-
-
-	<color name="header_normal">#ffe74c3c</color>
-	<color name="header_pressed">#ffc0392b</color>
-	<color name="menu_section_header">#FFDDDDDD</color>
 
 </resources>

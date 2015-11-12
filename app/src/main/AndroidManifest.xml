@@ -63,12 +63,24 @@
 		<activity
 			android:name=".NewTeamForm"
 			android:label="@string/new_activity_form"
-			android:screenOrientation="portrait"/>
+			android:parentActivityName=".MyTeamsActivity"
+			android:screenOrientation="portrait">
+
+			<meta-data
+				android:name="android.support.PARENT_ACTIVITY"
+				android:value=".MyTeamsActivity"/>
+		</activity>
 
 		<activity
 			android:name=".NewPlayerForm"
 			android:label="@string/new_activity_form_player"
-			android:screenOrientation="portrait"/>
+			android:parentActivityName=".MyTeamsActivity"
+			android:screenOrientation="portrait">
+
+			<meta-data
+				android:name="android.support.PARENT_ACTIVITY"
+				android:value=".MyTeamsActivity"/>
+		</activity>
 
 		<activity
 			android:name=".NewCoachForm"

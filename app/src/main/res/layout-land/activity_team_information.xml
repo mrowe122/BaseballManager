@@ -81,7 +81,7 @@
 				android:layout_height="3dp"
 				android:layout_marginBottom="5dp"
 				android:layout_marginTop="0dp"
-				android:background="@color/lightGreen"/>
+				android:background="@color/ColorPrimaryLight"/>
 
 			<LinearLayout
 				android:layout_width="match_parent"
@@ -192,7 +192,7 @@
 			android:layout_height="3dp"
 			android:layout_marginBottom="10dp"
 			android:layout_marginTop="0dp"
-			android:background="@color/lightGreen"/>
+			android:background="@color/ColorPrimaryLight"/>
 
 		<ListView
 			android:id="@+id/players_list"

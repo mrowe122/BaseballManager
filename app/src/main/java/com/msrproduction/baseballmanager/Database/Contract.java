@@ -20,6 +20,8 @@ public class Contract {
 		public static final String COLUMN_PLAYER_NAME = "name";
 		public static final String COLUMN_PLAYER_NUMBER = "number";
 		public static final String COLUMN_PLAYER_TEAM_NAME = "team_name";
+		public static final String COLUMN_PLAYER_BATS = "bats";
+		public static final String COLUMN_PLAYER_THROWS = "throws";
 		public static final String COLUMN_PLAYER_POSITION = "position";
 		public static final String COLUMN_PLAYER_BATTING_AVERAGE = "batting_average";
 		public static final String COLUMN_PLAYER_RBI = "rbi";

@@ -100,7 +100,11 @@ public class PlayerInformation extends AppCompatActivity {
 				// field percentage
 				(TextView) findViewById(R.id.stats_player_field_percentage),
 				//how many outs player made
-				(TextView) findViewById(R.id.stats_player_put_out)
+				(TextView) findViewById(R.id.stats_player_put_out),
+				//bats
+				(TextView) findViewById(R.id.stats_player_bats),
+				//throws
+				(TextView) findViewById(R.id.stats_player_throws)
 		};
 
 		playerTextViews[0].setText(cursor.getString(cursor.getColumnIndexOrThrow(PlayerEntry.COLUMN_PLAYER_NAME)));
@@ -125,6 +129,8 @@ public class PlayerInformation extends AppCompatActivity {
 		playerTextViews[19].setText("ER: " + cursor.getString(cursor.getColumnIndexOrThrow(PlayerEntry.COLUMN_PLAYER_ERRORS)));
 		playerTextViews[20].setText("FPCT: " + cursor.getString(cursor.getColumnIndexOrThrow(PlayerEntry.COLUMN_PLAYER_FIELD_PERCENTAGE)));
 		playerTextViews[21].setText("PO: " + cursor.getString(cursor.getColumnIndexOrThrow(PlayerEntry.COLUMN_PLAYER_PUT_OUTS)));
+		playerTextViews[22].setText(cursor.getString(cursor.getColumnIndexOrThrow(PlayerEntry.COLUMN_PLAYER_BATS)));
+		playerTextViews[23].setText(cursor.getString(cursor.getColumnIndexOrThrow(PlayerEntry.COLUMN_PLAYER_THROWS)));
 
 		cursor.close();
 	}

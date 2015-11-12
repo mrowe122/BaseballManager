@@ -3,6 +3,14 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
 	<item
+		android:id="@+id/action_search"
+		android:icon="@android:drawable/ic_menu_search"
+		android:menuCategory="system"
+		android:orderInCategory="2"
+		android:title="@string/action_search"
+		app:showAsAction="ifRoom"/>
+
+	<item
 		android:id="@+id/action_edit_team"
 		android:orderInCategory="99"
 		android:title="@string/action_edit"

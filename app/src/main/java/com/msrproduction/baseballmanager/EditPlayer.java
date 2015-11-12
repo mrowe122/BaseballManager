@@ -1,47 +1,51 @@
 package com.msrproduction.baseballmanager;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.msrproduction.baseballmanager.Database.Contract;
 import com.msrproduction.baseballmanager.Database.DatabaseAdapter;
 import com.msrproduction.baseballmanager.plugins.PlayerSchema;
+import com.nirhart.parallaxscroll.views.ParallaxListView;
+
+import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 public class EditPlayer extends Activity {
 
-	private DatabaseAdapter databaseAdapter;
+	private PlayerSchema playerSchema;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_edit_player);
-		databaseAdapter = new DatabaseAdapter(getApplicationContext()).open();
-		editFields(databaseAdapter.select(getIntent().getExtras().getString("edit_player"), Contract.PlayerEntry.TABLE_NAME));
 		initSetup();
 	}
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-			case android.R.id.home:
-				finish();
-				break;
-		}
-		return super.onOptionsItemSelected(item);
-	}
-
 	private void initSetup() {
+		playerSchema = new PlayerSchema(this);
+		playerSchema.editInitSetup(getIntent().getExtras().getString("edit_player"));
+
 		//edit player button
 		(findViewById(R.id.edit_player)).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				editPlayer();
+				if (playerSchema.editPlayer()) {
+					setResult(1);
+					finish();
+				}
 			}
 		});
 
@@ -49,25 +53,9 @@ public class EditPlayer extends Activity {
 		findViewById(R.id.cancel_edit).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				setResult(0);
 				finish();
 			}
 		});
-	}
-
-	String name;
-	String oldNumber;
-
-	private void editFields(Cursor cursor) {
-		cursor.moveToNext();
-		name = cursor.getString(cursor.getColumnIndexOrThrow(Contract.PlayerEntry.COLUMN_PLAYER_NAME));
-		oldNumber = cursor.getString(cursor.getColumnIndexOrThrow(Contract.PlayerEntry.COLUMN_PLAYER_NUMBER));
-		((TextView) findViewById(R.id.player_name)).setText(name);
-		((EditText) findViewById(R.id.form_player_number)).setText(oldNumber);
-	}
-
-	private void editPlayer() {
-		String number = ((EditText)findViewById(R.id.form_player_number)).getText().toString();
-		databaseAdapter.updatePlayer(name, number, "n/a");
-		finish();
 	}
 }
