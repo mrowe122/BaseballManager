@@ -8,12 +8,7 @@
 	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_marginBottom="10dp"
-		android:layout_marginEnd="10dp"
-		android:layout_marginLeft="10dp"
-		android:layout_marginRight="10dp"
-		android:layout_marginStart="10dp"
-		android:layout_marginTop="10dp">
+		android:layout_margin="10dp">
 
 		<TextView
 			android:layout_width="wrap_content"
@@ -47,36 +42,50 @@
 
 	</LinearLayout>
 
-	<ScrollView
+	<FrameLayout
 		android:layout_width="match_parent"
 		android:layout_height="0dp"
-		android:layout_marginBottom="10dp"
-		android:layout_weight="1"
-		android:overScrollMode="never">
+		android:layout_weight="1">
 
-		<LinearLayout
+		<ScrollView
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:orientation="vertical">
+			android:layout_height="match_parent"
+			android:overScrollMode="never">
 
 			<LinearLayout
-				android:id="@+id/new_fields_created"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:orientation="vertical">
 
+				<LinearLayout
+					android:id="@+id/new_fields_created"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="vertical">
+
+				</LinearLayout>
+
 			</LinearLayout>
 
-		</LinearLayout>
+		</ScrollView>
 
-	</ScrollView>
+		<View
+			android:layout_width="match_parent"
+			android:layout_height="30dp"
+			android:layout_gravity="bottom"
+			android:background="@drawable/alphabackground"/>
+
+	</FrameLayout>
 
 	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_marginBottom="10dp"
+		android:background="@color/white"
+		android:gravity="center"
 		android:orientation="horizontal"
-		android:weightSum="2">
+		android:paddingBottom="10dp"
+		android:paddingTop="5dp"
+		android:weightSum="2.2">
 
 		<Button
 			android:id="@+id/cancel_player"

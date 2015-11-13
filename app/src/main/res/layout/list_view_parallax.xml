@@ -5,36 +5,44 @@
 	android:layout_height="match_parent"
 	android:orientation="vertical">
 
-	<ListView
-		android:id="@+id/my_players_list"
+	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:divider="@null"
-		android:dividerHeight="12dp"/>
+		android:orientation="vertical">
 
-	<LinearLayout
-		android:id="@+id/parallax_buttons"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_gravity="bottom"
-		android:background="?android:colorBackground"
-		android:orientation="horizontal"
-		android:paddingBottom="10dp"
-		android:paddingTop="10dp"
-		android:visibility="gone"
-		android:weightSum="2">
+		<ListView
+			android:id="@+id/my_players_list"
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			android:layout_weight="1"
+			android:divider="@null"
+			android:dividerHeight="12dp"/>
 
-		<Button
-			android:id="@+id/parallax_cancel_coach"
-			style="@style/YesNoButtons"
-			android:background="@drawable/no_button"
-			android:text="@string/cancel"/>
+		<LinearLayout
+			android:id="@+id/parallax_buttons"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_gravity="bottom"
+			android:background="@color/white"
+			android:orientation="horizontal"
+			android:paddingBottom="10dp"
+			android:paddingTop="10dp"
+			android:visibility="gone"
+			android:weightSum="2.2">
 
-		<Button
-			android:id="@+id/parallax_add_new_coach"
-			style="@style/YesNoButtons"
-			android:background="@drawable/yes_button"
-			android:text="@string/form_coach_done"/>
+			<Button
+				android:id="@+id/parallax_cancel_coach"
+				style="@style/YesNoButtons"
+				android:background="@drawable/no_button"
+				android:text="@string/cancel"/>
+
+			<Button
+				android:id="@+id/parallax_add_new_coach"
+				style="@style/YesNoButtons"
+				android:background="@drawable/yes_button"
+				android:text="@string/form_coach_done"/>
+
+		</LinearLayout>
 
 	</LinearLayout>
 

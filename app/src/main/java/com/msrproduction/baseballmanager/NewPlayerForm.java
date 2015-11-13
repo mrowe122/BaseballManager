@@ -2,10 +2,8 @@ package com.msrproduction.baseballmanager;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
 import android.view.View;
 
-import com.msrproduction.baseballmanager.Database.DatabaseAdapter;
 import com.msrproduction.baseballmanager.plugins.PlayerSchema;
 
 public class NewPlayerForm extends AppCompatActivity {

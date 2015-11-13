@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,7 +86,7 @@ public class TeamsActivity extends AppCompatActivity {
 		public void bindView(View view, Context context, Cursor cursor) {
 			((TextView) view.findViewById(R.id.list_item_name)).setText(
 					cursor.getString(cursor.getColumnIndexOrThrow(Contract.TeamEntry.COLUMN_TEAM_NAME)));
-			Cursor cursor1 = databaseAdapter.loadPlayersInTeams(cursor.getString(cursor.getColumnIndexOrThrow(Contract.TeamEntry.COLUMN_TEAM_NAME)));
+			Cursor cursor1 = databaseAdapter.loadPlayersInTeam(cursor.getString(cursor.getColumnIndexOrThrow(Contract.TeamEntry.COLUMN_TEAM_NAME)));
 			((TextView) view.findViewById(R.id.list_item_sub_text)).setText("(" + cursor1.getCount() + " players)");
 			cursor1.close();
 		}

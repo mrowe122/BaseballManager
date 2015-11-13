@@ -79,7 +79,7 @@ public class TeamInformation extends AppCompatActivity {
 				.setText(cursor.getString(cursor.getColumnIndexOrThrow(Contract.TeamEntry.COLUMN_TEAM_LOSE)));
 
 		ListView listView = (ListView) findViewById(R.id.players_list);
-		Cursor playersInTeams = databaseAdapter.loadPlayersInTeams(cursor.getString(cursor.getColumnIndexOrThrow(Contract.TeamEntry.COLUMN_TEAM_NAME)));
+		Cursor playersInTeams = databaseAdapter.loadPlayersInTeam(cursor.getString(cursor.getColumnIndexOrThrow(Contract.TeamEntry.COLUMN_TEAM_NAME)));
 		((TextView) findViewById(R.id.stats_team_total_players)).setText(playersInTeams.getCount() + " players");
 		listView.setAdapter(new PlayerListAdapter(getApplicationContext(), playersInTeams, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER));
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

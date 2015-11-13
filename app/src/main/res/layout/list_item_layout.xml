@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+	android:id="@+id/text_view_layout"
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
@@ -15,7 +16,7 @@
 		android:layout_gravity="center_vertical"
 		android:layout_weight="1"
 		android:gravity="center_vertical"
-		android:text="Name - remove from layout"
+		android:text="Name"
 		android:textColor="@color/black"
 		android:textSize="19sp"/>
 
@@ -24,11 +25,28 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_gravity="center_vertical"
+		android:layout_marginEnd="10dp"
 		android:layout_marginLeft="10dp"
+		android:layout_marginRight="10dp"
 		android:layout_marginStart="10dp"
 		android:maxWidth="100dp"
 		android:text="side info"
 		android:textColor="#3E3E3E"
 		android:textSize="12sp"/>
+
+	<CheckBox
+		android:id="@+id/remove_field"
+		android:layout_width="wrap_content"
+		android:layout_height="30dp"
+		android:layout_gravity="center_vertical"
+		android:background="@drawable/no_button"
+		android:button="@android:color/transparent"
+		android:paddingLeft="10dp"
+		android:paddingRight="10dp"
+		android:text="@string/remove"
+		android:textAllCaps="false"
+		android:textColor="@color/white"
+		android:textSize="14sp"
+		android:visibility="gone"/>
 
 </LinearLayout>

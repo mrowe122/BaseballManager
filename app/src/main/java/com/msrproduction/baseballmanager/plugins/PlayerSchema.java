@@ -165,6 +165,8 @@ public class PlayerSchema {
 					batsList.add(activity.getString(R.string.left));
 				} else if (batsRightArray.get(i).isChecked()) {
 					batsList.add(activity.getString(R.string.right));
+				} else {
+					batsList.add(activity.getString(R.string.n_a));
 				}
 				//grab players throwing direction
 				if (throwsLeftArray.get(i).isChecked() && throwsRightArray.get(i).isChecked()) {
@@ -173,6 +175,8 @@ public class PlayerSchema {
 					throwsList.add(activity.getString(R.string.left));
 				} else if (throwsRightArray.get(i).isChecked()) {
 					throwsList.add(activity.getString(R.string.right));
+				} else {
+					throwsList.add(activity.getString(R.string.n_a));
 				}
 			} else {
 				String message = "Error: Field " + ++i + " is empty";
@@ -255,7 +259,7 @@ public class PlayerSchema {
 		//get number of player
 		number = ((EditText) activity.findViewById(R.id.form_player_number)).getText().toString();
 		position = ((Button) activity.findViewById(R.id.spinner_pos)).getText().toString();
-		if(!number.equals("")) {
+		if (!number.equals("")) {
 			//get which way the player bats
 			if (batsLeft.isChecked() && batsRight.isChecked()) {
 				bats = activity.getString(R.string.both);
@@ -266,7 +270,7 @@ public class PlayerSchema {
 			} else {
 				bats = activity.getString(R.string.n_a);
 			}
-
+			//get which way the player throws
 			if (throwsLeft.isChecked() && throwsRight.isChecked()) {
 				throws_ = activity.getString(R.string.both);
 			} else if (throwsRight.isChecked()) {
@@ -282,5 +286,28 @@ public class PlayerSchema {
 		}
 		databaseAdapter.updatePlayer(name, number, position, bats, throws_);
 		return true;
+	}
+
+	public void removePlayer(String id) {
+		final List<String> temp = new ArrayList<>();
+		temp.add(id);
+		new AlertDialog.Builder(activity)
+				.setTitle(R.string.removing_players_title)
+				.setMessage(R.string.removing_players_message)
+				.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						databaseAdapter.removePlayersFromTeam(temp);
+						activity.setResult(1);
+						activity.finish();
+					}
+				})
+				.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						activity.setResult(0);
+						//do nothing
+					}
+				}).show();
 	}
 }

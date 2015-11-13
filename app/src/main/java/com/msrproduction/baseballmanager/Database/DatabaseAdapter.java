@@ -7,10 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.util.Log;
 
-//import com.msrproduction.android.baseballleague.EditActivityTeam;
-
-import java.util.ArrayList;
 import java.util.List;
+
+//import com.msrproduction.android.baseballleague.EditActivityTeam;
 
 public class DatabaseAdapter extends AsyncTask<String, Void, Cursor> {
 
@@ -103,7 +102,15 @@ public class DatabaseAdapter extends AsyncTask<String, Void, Cursor> {
 		);
 	}
 
-	public Cursor loadPlayersInTeams(String teamName) {
+	public Cursor loadPlayersInMyTeam(String teamName) {
+		return db.rawQuery(
+				"SELECT " + Contract.PlayerEntry._ID + ", " + Contract.PlayerEntry.COLUMN_PLAYER_NAME + ", " + Contract.PlayerEntry.COLUMN_PLAYER_NUMBER + ", " + Contract.PlayerEntry.COLUMN_PLAYER_POSITION +
+						" FROM " + Contract.PlayerEntry.TABLE_NAME +
+						" WHERE " + Contract.PlayerEntry.COLUMN_PLAYER_TEAM_NAME + " = '" + teamName + "'" +
+						" ORDER BY " + Contract.PlayerEntry.COLUMN_PLAYER_NAME + ";", null);
+	}
+
+	public Cursor loadPlayersInTeam(String teamName) {
 		return db.rawQuery(
 				"SELECT " + Contract.PlayerEntry._ID + ", " + Contract.PlayerEntry.COLUMN_PLAYER_NAME + ", " + Contract.PlayerEntry.COLUMN_PLAYER_NUMBER + ", " + Contract.PlayerEntry.COLUMN_PLAYER_POSITION +
 						" FROM " + Contract.PlayerEntry.TABLE_NAME +
@@ -111,6 +118,14 @@ public class DatabaseAdapter extends AsyncTask<String, Void, Cursor> {
 						" IN (SELECT " + Contract.TeamEntry.COLUMN_TEAM_NAME +
 						" FROM " + Contract.TeamEntry.TABLE_NAME +
 						" WHERE " + Contract.TeamEntry.COLUMN_TEAM_NAME + " = '" + teamName + "');", null);
+	}
+
+	public void removePlayersFromTeam(List<String> removePlayers) {
+		ContentValues contentValues = new ContentValues();
+		contentValues.put(Contract.PlayerEntry.COLUMN_PLAYER_TEAM_NAME, "Free Agent");
+		for (int i = 0; i < removePlayers.size(); i++) {
+			db.update(Contract.PlayerEntry.TABLE_NAME, contentValues, Contract.PlayerEntry._ID + " = " + removePlayers.get(i), null);
+		}
 	}
 
 	public boolean checkIfTeamExists(String teamName) {
@@ -124,28 +139,29 @@ public class DatabaseAdapter extends AsyncTask<String, Void, Cursor> {
 		return false;
 	}
 
-	public boolean checkIfNumberExistsInTeam(String number, String teamName) {
-		Cursor cursor = loadPlayersInTeams(teamName);
-		while (cursor.moveToNext()) {
-			if (cursor.getString(cursor.getColumnIndexOrThrow(Contract.PlayerEntry.COLUMN_PLAYER_NUMBER)).equals(number)) {
-				cursor.close();
-				return true;
+	/*
+		public boolean checkIfNumberExistsInTeam(String number, String teamName) {
+			Cursor cursor = loadPlayersInTeams(teamName);
+			while (cursor.moveToNext()) {
+				if (cursor.getString(cursor.getColumnIndexOrThrow(Contract.PlayerEntry.COLUMN_PLAYER_NUMBER)).equals(number)) {
+					cursor.close();
+					return true;
+				}
 			}
+			return false;
 		}
-		return false;
-	}
 
-	public boolean editing(String team, String playerNumber) {
-		Cursor cursor;
-		cursor = loadPlayersInTeams(team);
-		while (cursor.moveToNext()) {
-			if (cursor.getString(cursor.getColumnIndexOrThrow(Contract.PlayerEntry.COLUMN_PLAYER_NUMBER)).equals(playerNumber)) {
-				return true;
+		public boolean editing(String team, String playerNumber) {
+			Cursor cursor;
+			cursor = loadPlayersInTeams(team);
+			while (cursor.moveToNext()) {
+				if (cursor.getString(cursor.getColumnIndexOrThrow(Contract.PlayerEntry.COLUMN_PLAYER_NUMBER)).equals(playerNumber)) {
+					return true;
+				}
 			}
+			return false;
 		}
-		return false;
-	}
-
+	*/
 	public Cursor select(String id, String table) {
 		return db.rawQuery(
 				"SELECT *" +
@@ -195,27 +211,10 @@ public class DatabaseAdapter extends AsyncTask<String, Void, Cursor> {
 		}
 	}
 
-	public void bulkInsert(List<String> name, List<String> number, List<String> position, String team,  List<String> bats,  List<String> throws_ ) {
+	public void bulkInsert(List<String> name, List<String> number, List<String> position, String team, List<String> bats, List<String> throws_) {
 		for (int i = 0; i < name.size(); i++) {
 			//  insertPlayer params(String name, String number, String team)
 			insertPlayer(name.get(i), number.get(i), position.get(i), team, bats.get(i), throws_.get(i));
-		}
-	}
-
-	public String[] loadTeams(boolean freeAgent) {
-		Cursor cursor = loadTeams();
-		int size = cursor.getCount();
-		List<String> teamList = new ArrayList<>();
-		for (int i = 0; i < size; i++) {
-			cursor.moveToNext();
-			teamList.add(cursor.getString(cursor.getColumnIndex(Contract.TeamEntry.COLUMN_TEAM_NAME)));
-		}
-		cursor.close();
-		if(freeAgent) {
-			teamList.add("Free Agent");
-			return teamList.toArray(new String[size + 1]);
-		} else {
-			return teamList.toArray(new String[size]);
 		}
 	}
 }

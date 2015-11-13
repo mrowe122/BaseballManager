@@ -2,7 +2,6 @@ package com.msrproduction.baseballmanager.plugins;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.View;
 import android.widget.AbsListView;
 
 import com.msrproduction.baseballmanager.R;

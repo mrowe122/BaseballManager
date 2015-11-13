@@ -42,11 +42,8 @@ public class MyTeamsActivity extends AppCompatActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-			case android.R.id.home:
-				finish();
-				break;
 			case R.id.action_edit_team:
-				startActivity(new Intent(MyTeamsActivity.this, EditMyTeam.class));
+				startActivityForResult(new Intent(MyTeamsActivity.this, EditMyTeam.class), 2);
 				break;
 			case R.id.action_settings:
 				break;
@@ -78,14 +75,17 @@ public class MyTeamsActivity extends AppCompatActivity {
 		switch (requestCode) {
 			//for first time running check
 			case 1:
-				if(resultCode != 1) {
+				if (resultCode != 1) {
 					finish();
 				}
 				break;
 			//for updating list view
 			case 2:
-				if(resultCode == 1) {
-					cursorAdapter.swapCursor(databaseAdapter.loadPlayers());
+				if (resultCode == 1) {
+					cursorAdapter.swapCursor(
+							databaseAdapter.loadPlayersInMyTeam(
+									getSharedPreferences("coach_info", MODE_PRIVATE)
+											.getString("team_name", "")));
 					break;
 				}
 		}
@@ -134,19 +134,14 @@ public class MyTeamsActivity extends AppCompatActivity {
 	}
 
 	private void initSetup() {
-		//noinspection ConstantConditions
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 		findViewById(R.id.fab_menu).setVisibility(View.VISIBLE);
-
 		ListView listView = (ListView) findViewById(R.id.my_players_list);
-
 		ViewGroup header = (ViewGroup) getLayoutInflater().inflate(R.layout.activity_my_team, listView, false);
-
 		listView.addHeaderView(header, null, false);
 		registerForContextMenu(listView);
 
-		cursorAdapter = new PlayerListAdapter(getApplicationContext(), databaseAdapter.loadPlayers(), CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+		String teamName = getSharedPreferences("coach_info", MODE_PRIVATE).getString("team_name", "");
+		cursorAdapter = new PlayerListAdapter(getApplicationContext(), databaseAdapter.loadPlayersInMyTeam(teamName), CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
 		listView.setAdapter(cursorAdapter);
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
