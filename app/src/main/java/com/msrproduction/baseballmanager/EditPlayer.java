@@ -9,7 +9,6 @@ import com.msrproduction.baseballmanager.plugins.PlayerSchema;
 public class EditPlayer extends Activity {
 
 	private PlayerSchema playerSchema;
-	String id;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +19,7 @@ public class EditPlayer extends Activity {
 
 	private void initSetup() {
 		setFinishOnTouchOutside(false);
-		id = getIntent().getExtras().getString("edit_player");
+		final String id = getIntent().getExtras().getString("edit_player");
 		playerSchema = new PlayerSchema(this);
 		playerSchema.editInitSetup(id);
 

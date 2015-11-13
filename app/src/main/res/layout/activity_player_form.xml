@@ -97,7 +97,7 @@
 			android:id="@+id/add_new_player"
 			style="@style/YesNoButtons"
 			android:background="@drawable/yes_button"
-			android:text="@string/new_player"/>
+			android:text="@string/add"/>
 
 	</LinearLayout>
 

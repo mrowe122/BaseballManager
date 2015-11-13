@@ -108,18 +108,20 @@ public class PlayerSchema {
 		layout.findViewById(R.id.remove_field).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				((TextView) activity.findViewById(R.id.number_players)).setText(String.valueOf(--numPlayers));
-				listView.remove(layout);
-				nameArray.remove(name);
-				numberArray.remove(number);
-				positionArray.remove(spinnerPosition);
-				batsLeftArray.remove(batsLeft);
-				batsRightArray.remove(batsRight);
-				throwsLeftArray.remove(throwsLeft);
-				throwsRightArray.remove(throwsRight);
-				containerLayout.removeView(layout);
-				for (int i = 0; i < numPlayers; ) {
-					((TextView) listView.get(i).findViewById(R.id.field_number)).setText(String.valueOf(++i));
+				if(numPlayers > 1) {
+					((TextView) activity.findViewById(R.id.number_players)).setText(String.valueOf(--numPlayers));
+					listView.remove(layout);
+					nameArray.remove(name);
+					numberArray.remove(number);
+					positionArray.remove(spinnerPosition);
+					batsLeftArray.remove(batsLeft);
+					batsRightArray.remove(batsRight);
+					throwsLeftArray.remove(throwsLeft);
+					throwsRightArray.remove(throwsRight);
+					containerLayout.removeView(layout);
+					for (int i = 0; i < numPlayers; ) {
+						((TextView) listView.get(i).findViewById(R.id.field_number)).setText(String.valueOf(++i));
+					}
 				}
 			}
 		});
