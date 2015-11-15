@@ -48,7 +48,7 @@ public class PlayerSchema {
 	private void configureAlertDialog(String position, final Button spinnerButton) {
 		final ArrayList<Integer> selList = new ArrayList<>();
 
-		final AlertDialog popupPosition = new AlertDialog.Builder(activity).setMultiChoiceItems(positionList, setSelectedPositions(position), new DialogInterface.OnMultiChoiceClickListener() {
+		final AlertDialog popupPosition = new AlertDialog.Builder(activity).setMultiChoiceItems(positionList, setSelectedPositions(position, selList), new DialogInterface.OnMultiChoiceClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which, boolean isChecked) {
 				if (isChecked) {
@@ -215,7 +215,7 @@ public class PlayerSchema {
 		configureAlertDialog(position, ((Button) activity.findViewById(R.id.spinner_pos)));
 	}
 
-	private boolean[] setSelectedPositions(String position) {
+	private boolean[] setSelectedPositions(String position, ArrayList<Integer> list) {
 		int size = positionList.length;
 		boolean checkedPositions[] = new boolean[size];
 		if (!position.equals(activity.getString(R.string.no_position_selected))) {
@@ -225,6 +225,7 @@ public class PlayerSchema {
 				for (int i = 0; i < size; i++) {
 					if (positionList[i].equals(temp)) {
 						checkedPositions[i] = true;
+						list.add(i);
 					}
 				}
 			}

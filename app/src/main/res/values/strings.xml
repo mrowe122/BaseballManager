@@ -85,6 +85,7 @@
 	<string name="form_coach_done">Done</string>
 	<string name="error_empty_name">Error: Enter your name</string>
 	<string name="error_empty_team">Error: Enter team name</string>
+	<string name="error_invalid_phone">Not a valid phone number</string>
 
 	<!-- Picture Descriptions -->
 	<string name="team_picture">team picture</string>

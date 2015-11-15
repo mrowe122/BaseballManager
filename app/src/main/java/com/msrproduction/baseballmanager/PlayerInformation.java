@@ -1,5 +1,6 @@
 package com.msrproduction.baseballmanager;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,21 +16,14 @@ public class PlayerInformation extends AppCompatActivity {
 	private final String LOG_TAG = PlayerInformation.class.getSimpleName();
 	private DatabaseAdapter databaseAdapter;
 	private String playerId;
+	private boolean dataChanged = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_player_information);
 		databaseAdapter = new DatabaseAdapter(getApplicationContext()).open();
-		playerId = getIntent().getExtras().getString("player_id");
-		//noinspection ConstantConditions
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		loadPlayerStats(databaseAdapter.select(playerId, PlayerEntry.TABLE_NAME));
+		initSetup();
 	}
 
 	@Override
@@ -42,8 +36,8 @@ public class PlayerInformation extends AppCompatActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 			case R.id.edit_selected:
-				/*startActivity(new Intent(PlayerInformation.this, EditActivityPlayer.class)
-						.putExtra("edit_player", playerId));*/
+				startActivityForResult(new Intent(PlayerInformation.this, EditPlayer.class)
+						.putExtra("edit_player", playerId), 1);
 				return true;
 			case android.R.id.home:
 				finish();
@@ -51,6 +45,26 @@ public class PlayerInformation extends AppCompatActivity {
 			default:
 				return super.onContextItemSelected(item);
 		}
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		switch (requestCode) {
+			case 1:
+				if (resultCode == 1) {
+					loadPlayerStats(databaseAdapter.select(playerId, PlayerEntry.TABLE_NAME));
+					setResult(1);
+					break;
+				}
+		}
+	}
+
+	private void initSetup() {
+		playerId = getIntent().getExtras().getString("player_id");
+		//noinspection ConstantConditions
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		loadPlayerStats(databaseAdapter.select(playerId, PlayerEntry.TABLE_NAME));
 	}
 
 	private void loadPlayerStats(Cursor cursor) {

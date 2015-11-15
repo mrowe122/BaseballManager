@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -22,7 +23,9 @@ import android.widget.Toast;
 
 import com.msrproduction.baseballmanager.Database.Contract;
 import com.msrproduction.baseballmanager.Database.DatabaseAdapter;
+import com.msrproduction.baseballmanager.plugins.UsPhoneNumberFormatter;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +33,8 @@ public class EditMyTeam extends AppCompatActivity {
 
 	private DatabaseAdapter databaseAdapter;
 	private List<String> removedPlayers = new ArrayList<>();
+	private EditText phone;
+	private UsPhoneNumberFormatter phoneNumberFormatter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +54,12 @@ public class EditMyTeam extends AppCompatActivity {
 		((EditText) header.findViewById(R.id.form_coach_name)).setText(coachInfo.getString("coach_name", ""));
 		((EditText) header.findViewById(R.id.form_coach_team)).setText(coachInfo.getString("team_name", ""));
 		((EditText) header.findViewById(R.id.form_coach_email)).setText(coachInfo.getString("coach_email", ""));
-		((EditText) header.findViewById(R.id.form_coach_phone)).setText(coachInfo.getString("coach_phone", ""));
+		phone = (EditText) header.findViewById(R.id.form_coach_phone);
+		phone.setText(coachInfo.getString("coach_phone", ""));
+
+		//add auto number formatter
+		phoneNumberFormatter = new UsPhoneNumberFormatter(new WeakReference<>(phone), (TextInputLayout) findViewById(R.id.input_layout_phone), this);
+		phone.addTextChangedListener(phoneNumberFormatter);
 
 		//hide/show appropiate views
 		header.findViewById(R.id.buttons).setVisibility(View.GONE);
@@ -123,16 +133,22 @@ public class EditMyTeam extends AppCompatActivity {
 		String email = ((EditText) findViewById(R.id.form_coach_email)).getText().toString();
 		if (email.equals(""))
 			email = "n/a";
-		String phone = ((EditText) findViewById(R.id.form_coach_phone)).getText().toString();
-		if (phone.equals(""))
-			phone = "n/a";
+
+		String formattedPhone = phone.getText().toString();
+		if(!phoneNumberFormatter.getError()) {
+			if (formattedPhone.equals(""))
+				formattedPhone = "n/a";
+		} else {
+			Toast.makeText(this, R.string.error_invalid_phone, Toast.LENGTH_SHORT).show();
+			return;
+		}
 
 		SharedPreferences sharedpreferences = getSharedPreferences("coach_info", MODE_PRIVATE);
 		SharedPreferences.Editor editor = sharedpreferences.edit();
 		editor.putString("coach_name", name);
 		editor.putString("team_name", teamName);
 		editor.putString("coach_email", email);
-		editor.putString("coach_phone", phone);
+		editor.putString("coach_phone", formattedPhone);
 		editor.apply();
 		getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit().putBoolean("isCoachSetup", true).apply();
 		setResult(1);

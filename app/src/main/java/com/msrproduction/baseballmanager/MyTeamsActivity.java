@@ -82,6 +82,7 @@ public class MyTeamsActivity extends AppCompatActivity {
 			//for updating list view
 			case 2:
 				if (resultCode == 1) {
+					System.out.println("data changed my teams");
 					cursorAdapter.swapCursor(
 							databaseAdapter.loadPlayersInMyTeam(
 									getSharedPreferences("coach_info", MODE_PRIVATE)
@@ -135,6 +136,9 @@ public class MyTeamsActivity extends AppCompatActivity {
 
 	private void initSetup() {
 		findViewById(R.id.fab_menu).setVisibility(View.VISIBLE);
+		FloatingActionMenu fabMenu = (FloatingActionMenu) findViewById(R.id.fab_menu);
+		fabMenu.setClosedOnTouchOutside(true);
+
 		ListView listView = (ListView) findViewById(R.id.my_players_list);
 		ViewGroup header = (ViewGroup) getLayoutInflater().inflate(R.layout.activity_my_team, listView, false);
 		listView.addHeaderView(header, null, false);
@@ -146,8 +150,8 @@ public class MyTeamsActivity extends AppCompatActivity {
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				startActivity(new Intent(getApplicationContext(), PlayerInformation.class)
-						.putExtra("player_id", id + ""));
+				startActivityForResult(new Intent(getApplicationContext(), PlayerInformation.class)
+						.putExtra("player_id", id + ""), 2);
 			}
 		});
 		loadCoachData();
