@@ -7,25 +7,27 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
-//import com.msrproduction.android.baseballleague.EditActivityTeam;
-
-public class DatabaseAdapter extends AsyncTask<String, Void, Cursor> {
+public class DatabaseAdapter {
 
 	private final String LOG_TAG = DatabaseAdapter.class.getSimpleName();
 	private Database DbHelper;
 	static SQLiteDatabase db;
-
-	@Override
-	protected Cursor doInBackground(String... params) {
-		return null;
-	}
-
-	@Override
-	protected void onPostExecute(Cursor cursor) {
-		super.onPostExecute(cursor);
-	}
 
 	public DatabaseAdapter(Context ctx) {
 		DbHelper = Database.getInstance(ctx);
@@ -39,7 +41,8 @@ public class DatabaseAdapter extends AsyncTask<String, Void, Cursor> {
 		} else return this;
 	}
 
-	public void insertTeam(String value) {
+	/*
+	public void insertMyTeamToServer(String value) {
 		ContentValues addItem = new ContentValues();
 		addItem.put(Contract.TeamEntry.COLUMN_TEAM_NAME, value);
 		addItem.put(Contract.TeamEntry.COLUMN_TEAM_COACH, "n/a");
@@ -47,6 +50,7 @@ public class DatabaseAdapter extends AsyncTask<String, Void, Cursor> {
 		addItem.put(Contract.TeamEntry.COLUMN_TEAM_LOSE, 0);
 		db.insert(Contract.TeamEntry.TABLE_NAME, null, addItem);
 	}
+	*/
 
 	private void insertPlayer(String name, String number, String position, String team, String bats, String throws_) {
 		ContentValues addItem = new ContentValues();
@@ -139,29 +143,6 @@ public class DatabaseAdapter extends AsyncTask<String, Void, Cursor> {
 		return false;
 	}
 
-	/*
-		public boolean checkIfNumberExistsInTeam(String number, String teamName) {
-			Cursor cursor = loadPlayersInTeams(teamName);
-			while (cursor.moveToNext()) {
-				if (cursor.getString(cursor.getColumnIndexOrThrow(Contract.PlayerEntry.COLUMN_PLAYER_NUMBER)).equals(number)) {
-					cursor.close();
-					return true;
-				}
-			}
-			return false;
-		}
-
-		public boolean editing(String team, String playerNumber) {
-			Cursor cursor;
-			cursor = loadPlayersInTeams(team);
-			while (cursor.moveToNext()) {
-				if (cursor.getString(cursor.getColumnIndexOrThrow(Contract.PlayerEntry.COLUMN_PLAYER_NUMBER)).equals(playerNumber)) {
-					return true;
-				}
-			}
-			return false;
-		}
-	*/
 	public Cursor select(String id, String table) {
 		return db.rawQuery(
 				"SELECT *" +
@@ -215,6 +196,75 @@ public class DatabaseAdapter extends AsyncTask<String, Void, Cursor> {
 		for (int i = 0; i < name.size(); i++) {
 			//  insertPlayer params(String name, String number, String team)
 			insertPlayer(name.get(i), number.get(i), position.get(i), team, bats.get(i), throws_.get(i));
+		}
+	}
+
+	public void insertPlayerToServer() {
+		sendToServer sts = new sendToServer();
+		sts.execute();
+	}
+
+	private class sendToServer extends AsyncTask<Void, Void, Void> {
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			BufferedReader reader;
+			StringBuilder sb = new StringBuilder();
+			try {
+				URL url = new URL("http://52.25.231.27:8000/api/test");
+				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+				conn.setReadTimeout(10000);
+				conn.setConnectTimeout(15000);
+				conn.setRequestMethod("POST");
+				conn.setDoInput(true);
+				conn.setDoOutput(true);
+
+
+
+				JSONArray ja = new JSONArray();
+				JSONObject mainObj = new JSONObject();
+
+				for(int i = 0; i < 10; i++) {
+					JSONObject jo = new JSONObject();
+					jo.put("firstName", "John");
+					jo.put("lastName", "Doe");
+
+					ja.put(jo);
+
+					mainObj.put("employees", ja);
+				}
+
+				OutputStream os = conn.getOutputStream();
+				BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os));
+				writer.write(mainObj.toString());
+				writer.flush();
+				writer.close();
+				os.close();
+
+				System.out.println(mainObj.toString());
+
+				conn.connect();
+
+				InputStream inputStream = conn.getInputStream();
+				reader = new BufferedReader(new InputStreamReader(inputStream));
+				String line;
+				while ((line = reader.readLine()) != null) {
+					sb.append(line).append("\n");
+				}
+			} catch (IOException e) {
+				Log.e(LOG_TAG, e.toString());
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
+	}
+
+	private class readFromServer extends AsyncTask<Void, Void, Void> {
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			return null;
 		}
 	}
 }

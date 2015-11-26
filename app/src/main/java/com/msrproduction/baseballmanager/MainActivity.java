@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.common.AccountPicker;
+import com.msrproduction.baseballmanager.Database.DatabaseAdapter;
 
 import java.util.Random;
 
@@ -21,6 +22,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
 	private final String LOG_TAG = MainActivity.class.getSimpleName();
 	public static String userEmail;
+	private DatabaseAdapter databaseAdapter;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +30,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 		setContentView(R.layout.activity_main);
 		initSetup();
 		checkFirstRun();
-
+		databaseAdapter = new DatabaseAdapter(getApplicationContext()).open();
 	}
 
 	@Override
@@ -56,7 +58,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
 				startActivity(new Intent(MainActivity.this, PlayersActivity.class));
 				break;
 			case R.id.email:
-				getUsersEmail();
+				databaseAdapter.insertPlayerToServer();
+				//getUsersEmail();
 				break;
 		}
 	}
