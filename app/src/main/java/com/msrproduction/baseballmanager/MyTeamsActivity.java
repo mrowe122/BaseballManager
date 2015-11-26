@@ -82,7 +82,6 @@ public class MyTeamsActivity extends AppCompatActivity {
 			//for updating list view
 			case 2:
 				if (resultCode == 1) {
-					System.out.println("data changed my teams");
 					cursorAdapter.swapCursor(
 							databaseAdapter.loadPlayersInMyTeam(
 									getSharedPreferences("coach_info", MODE_PRIVATE)

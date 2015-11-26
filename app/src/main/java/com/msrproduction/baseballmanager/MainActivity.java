@@ -58,7 +58,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
 				startActivity(new Intent(MainActivity.this, PlayersActivity.class));
 				break;
 			case R.id.email:
-				databaseAdapter.insertPlayerToServer();
 				//getUsersEmail();
 				break;
 		}
