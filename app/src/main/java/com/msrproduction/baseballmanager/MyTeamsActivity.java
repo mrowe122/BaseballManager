@@ -35,7 +35,7 @@ public class MyTeamsActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		checkFirstRun();
 		setContentView(R.layout.list_view_parallax);
-		databaseAdapter = new DatabaseAdapter(getApplicationContext()).open();
+		databaseAdapter = new DatabaseAdapter(this).open();
 		initSetup();
 	}
 
@@ -196,7 +196,7 @@ public class MyTeamsActivity extends AppCompatActivity {
 		});
 	}
 
-	private class PlayerListAdapter extends CursorAdapter {
+	public class PlayerListAdapter extends CursorAdapter {
 
 		public PlayerListAdapter(Context context, Cursor c, int flags) {
 			super(context, c, flags);

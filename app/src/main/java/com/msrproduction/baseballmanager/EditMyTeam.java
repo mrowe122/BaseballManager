@@ -39,7 +39,7 @@ public class EditMyTeam extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		databaseAdapter = new DatabaseAdapter(getApplicationContext()).open();
+		databaseAdapter = new DatabaseAdapter(this).open();
 		setContentView(R.layout.list_view_parallax);
 		initSetup();
 	}

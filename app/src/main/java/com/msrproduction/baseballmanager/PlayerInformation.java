@@ -22,7 +22,7 @@ public class PlayerInformation extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_player_information);
-		databaseAdapter = new DatabaseAdapter(getApplicationContext()).open();
+		databaseAdapter = new DatabaseAdapter(this).open();
 		initSetup();
 	}
 

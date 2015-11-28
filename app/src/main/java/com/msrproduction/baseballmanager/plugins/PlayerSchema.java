@@ -163,7 +163,7 @@ public class PlayerSchema {
 		List<String> batsList = new ArrayList<>(numPlayers);
 		List<String> throwsList = new ArrayList<>(numPlayers);
         List<String> _id = new ArrayList<>(numPlayers);
-        /*
+
 		for (int i = 0; i < numPlayers; i++) {
 			if (!nameArray.get(i).getText().toString().equals("") && !numberArray.get(i).getText().toString().equals("")) {
 				nameList.add(nameArray.get(i).getText().toString());
@@ -204,74 +204,10 @@ public class PlayerSchema {
                 _id.clear();
 				return false;
 			}
-		}*/
-        _id.add(createId());
-        nameList.add("A");
-        numberList.add("1");
-        positionList.add("P");
-        batsList.add("Both");
-        throwsList.add("Both");
-        _id.add(createId());
-        nameList.add("A");
-        numberList.add("1");
-        positionList.add("P");
-        batsList.add("Both");
-        throwsList.add("Both");
-        _id.add(createId());
-        nameList.add("A");
-        numberList.add("1");
-        positionList.add("P");
-        batsList.add("Both");
-        throwsList.add("Both");
-        _id.add(createId());
-        nameList.add("A");
-        numberList.add("1");
-        positionList.add("P");
-        batsList.add("Both");
-        throwsList.add("Both");
-        _id.add(createId());
-        nameList.add("A");
-        numberList.add("1");
-        positionList.add("P");
-        batsList.add("Both");
-        throwsList.add("Both");
-        _id.add(createId());
-        nameList.add("A");
-        numberList.add("1");
-        positionList.add("P");
-        batsList.add("Both");
-        throwsList.add("Both");
-        _id.add(createId());
-        nameList.add("A");
-        numberList.add("1");
-        positionList.add("P");
-        batsList.add("Both");
-        throwsList.add("Both");
-        _id.add(createId());
-        nameList.add("A");
-        numberList.add("1");
-        positionList.add("P");
-        batsList.add("Both");
-        throwsList.add("Both");
-        _id.add(createId());
-        nameList.add("A");
-        numberList.add("1");
-        positionList.add("P");
-        batsList.add("Both");
-        throwsList.add("Both");
-        _id.add(createId());
-        nameList.add("A");
-        numberList.add("1");
-        positionList.add("P");
-        batsList.add("Both");
-        throwsList.add("Both");
-        _id.add(createId());
-        nameList.add("A");
-        numberList.add("1");
-        positionList.add("P");
-        batsList.add("Both");
-        throwsList.add("Both");
-		databaseAdapter.bulkInsert(_id, nameList, numberList, positionList, activity.getSharedPreferences("coach_info", Context.MODE_PRIVATE).getString("team_name", ""), batsList, throwsList);
+		}
+        /*DatabaseAdapter.StorePlayers sts = new DatabaseAdapter.StorePlayers(activity);
+        sts.execute(_id, name, number, position, bats, throws_, activity.getSharedPreferences("coach_info", Context.MODE_PRIVATE).getString("team_name", ""));*/
+        databaseAdapter.storePlayers(_id, nameList, numberList, positionList, activity.getSharedPreferences("coach_info", Context.MODE_PRIVATE).getString("team_name", ""), batsList, throwsList);
 		return true;
 	}
 

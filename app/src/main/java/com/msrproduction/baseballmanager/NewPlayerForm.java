@@ -25,10 +25,7 @@ public class NewPlayerForm extends AppCompatActivity {
 		(findViewById(R.id.add_new_player)).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (playerSchema.addPlayers()) {
-					setResult(1);
-					finish();
-				}
+				playerSchema.addPlayers();
 			}
 		});
 

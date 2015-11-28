@@ -27,7 +27,7 @@ public class TeamInformation extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_team_information);
-		databaseAdapter = new DatabaseAdapter(getApplicationContext()).open();
+		databaseAdapter = new DatabaseAdapter(this).open();
 		teamId = getIntent().getExtras().getString("team_id");
 		//noinspection ConstantConditions
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);

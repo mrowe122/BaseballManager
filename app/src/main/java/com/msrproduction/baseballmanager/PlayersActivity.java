@@ -6,16 +6,20 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.msrproduction.baseballmanager.Database.Contract;
@@ -38,27 +42,30 @@ import java.net.URL;
 public class PlayersActivity extends AppCompatActivity {
 
 	private DatabaseAdapter databaseAdapter;
-	private String LOG_TAG = PlayersActivity.class.getSimpleName();
-	ProgressDialog progressDialog;
+    private ProgressDialog progressDialog = null;
+    private Button myButton;
+    private int i = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.list_item_layout);
-		databaseAdapter = new DatabaseAdapter(this).open();
-        databaseAdapter.test();
-		/*progressDialog = new ProgressDialog(PlayersActivity.this);
-		progressDialog.setCancelable(false);
-		progressDialog.setTitle("Loading Players");
-		progressDialog.setMessage("Please wait...");
-		progressDialog.show();
-		new talkToServer().execute("players");*/
+		/*databaseAdapter = new DatabaseAdapter(this).open();
+        databaseAdapter.test();*/
+
+
+        findViewById(R.id.text_view_layout).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                server server = new server(getApplicationContext());
+                server.execute();
+            }
+        });
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
-		//readPlayers();
 	}
 
 	private void readPlayers() {
@@ -73,6 +80,46 @@ public class PlayersActivity extends AppCompatActivity {
 			}
 		});
 	}
+
+    private class server extends AsyncTask<Void, Void, Void> {
+
+        Context context;
+
+        public server(Context ctx) {
+            context = ctx;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog = new ProgressDialog(PlayersActivity.this, R.style.StyledDialog);
+            progressDialog.setTitle("Storing players");
+            progressDialog.setMessage("Please wait...");
+            progressDialog.setMax(5);
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            Drawable customDrawable = ContextCompat.getDrawable(context, R.drawable.custom_progressbar);
+            progressDialog.setProgressDrawable(customDrawable);
+            progressDialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            for(int i = 0; i < 5; i++) {
+                try {
+                    Thread.sleep(2500);
+                    progressDialog.setProgress(i + 1);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            progressDialog.dismiss();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            progressDialog.dismiss();
+        }
+    }
 
 	private class PlayerListAdapter extends CursorAdapter {
 

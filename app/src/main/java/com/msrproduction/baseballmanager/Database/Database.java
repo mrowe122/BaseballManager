@@ -1,5 +1,6 @@
 package com.msrproduction.baseballmanager.Database;
 
+import android.app.Activity;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -11,9 +12,9 @@ public class Database extends SQLiteOpenHelper {
 	private static final int DATABASE_VERSION = 1;
 	private static final String DATABASE_NAME = "baseball_manager.db";
 
-	public static synchronized Database getInstance(Context context) {
+	public static synchronized Database getInstance(Activity activity) {
 		if (sInstance == null) {
-			sInstance = new Database(context.getApplicationContext());
+			sInstance = new Database(activity.getApplicationContext());
 		}
 		return sInstance;
 	}

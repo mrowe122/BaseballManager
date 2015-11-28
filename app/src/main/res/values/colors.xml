@@ -17,5 +17,6 @@
 
 	<!-- Alpha colors -->
 	<color name="alpha_grey">#59a9a9a9</color>
+	<color name="transparent">#00000000</color>
 
 </resources>

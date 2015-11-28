@@ -25,7 +25,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
 	private final String LOG_TAG = MainActivity.class.getSimpleName();
 	public static String userEmail;
-	private DatabaseAdapter databaseAdapter;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +32,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
 		setContentView(R.layout.activity_main);
 		initSetup();
 		checkFirstRun();
-		databaseAdapter = new DatabaseAdapter(getApplicationContext()).open();
 	}
 
 	@Override

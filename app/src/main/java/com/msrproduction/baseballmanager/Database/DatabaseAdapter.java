@@ -1,15 +1,28 @@
 package com.msrproduction.baseballmanager.Database;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.CursorAdapter;
+
+import com.msrproduction.baseballmanager.MyTeamsActivity;
+import com.msrproduction.baseballmanager.PlayerInformation;
+import com.msrproduction.baseballmanager.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,12 +37,12 @@ public class DatabaseAdapter {
 
     private final String LOG_TAG = DatabaseAdapter.class.getSimpleName();
     private Database DbHelper;
-    static SQLiteDatabase db;
-    private Context context;
+    private SQLiteDatabase db;
+    private Activity activity;
 
-    public DatabaseAdapter(Context ctx) {
-        context = ctx;
-        DbHelper = Database.getInstance(ctx);
+    public DatabaseAdapter(Activity act) {
+        activity = act;
+        DbHelper = Database.getInstance(activity);
     }
 
     public DatabaseAdapter open() {
@@ -162,18 +175,39 @@ public class DatabaseAdapter {
         }
     }
 
-    public void bulkInsert(List<String> _id, List<String> name, List<String> number, List<String> position, String team, List<String> bats, List<String> throws_) {
-        StorePlayers sts = new StorePlayers();
+    public void storePlayers(List<String> _id, List<String> name, List<String> number, List<String> position, String team, List<String> bats, List<String> throws_) {
+        StorePlayers sts = new StorePlayers(activity);
         sts.execute(_id, name, number, position, bats, throws_, team);
     }
 
     public void test() {
-        ReadPlayersFromServer readPlayersFromServer = new ReadPlayersFromServer(context);
+        ReadPlayersFromServer readPlayersFromServer = new ReadPlayersFromServer(activity);
         readPlayersFromServer.execute();
     }
 
+
+
     //Store players in the database and server
-    private class StorePlayers extends AsyncTask<Object, Void, Void> {
+    public class StorePlayers extends AsyncTask<Object, Void, Void> {
+
+        private ProgressDialog progressDialog;
+        private Activity activity;
+
+        public StorePlayers(Activity act) {
+            activity = act;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+            imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+            progressDialog = new ProgressDialog(activity);
+            progressDialog.setCancelable(false);
+            progressDialog.setTitle("Storing players");
+            progressDialog.setMessage("Please wait...");
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            progressDialog.show();
+        }
 
         @Override
         protected Void doInBackground(Object... params) {
@@ -184,17 +218,18 @@ public class DatabaseAdapter {
             List bats = (List) params[4];
             List throws_ = (List) params[5];
             String team = (String) params[6];
+            progressDialog.setMax(names.size());
 
             //store players locally
             for (int i = 0; i < names.size(); i++) {
                 ContentValues addItem = new ContentValues();
-                addItem.put(Contract.PlayerEntry.COLUMN_PLAYER_NAME_ID, (String)_id.get(i));
-                addItem.put(Contract.PlayerEntry.COLUMN_PLAYER_NAME, (String)names.get(i));
-                addItem.put(Contract.PlayerEntry.COLUMN_PLAYER_NUMBER, (String)number.get(i));
+                addItem.put(Contract.PlayerEntry.COLUMN_PLAYER_NAME_ID, (String) _id.get(i));
+                addItem.put(Contract.PlayerEntry.COLUMN_PLAYER_NAME, (String) names.get(i));
+                addItem.put(Contract.PlayerEntry.COLUMN_PLAYER_NUMBER, (String) number.get(i));
                 addItem.put(Contract.PlayerEntry.COLUMN_PLAYER_TEAM_NAME, team);
-                addItem.put(Contract.PlayerEntry.COLUMN_PLAYER_POSITION, (String)position.get(i));
-                addItem.put(Contract.PlayerEntry.COLUMN_PLAYER_BATS, (String)bats.get(i));
-                addItem.put(Contract.PlayerEntry.COLUMN_PLAYER_THROWS, (String)throws_.get(i));
+                addItem.put(Contract.PlayerEntry.COLUMN_PLAYER_POSITION, (String) position.get(i));
+                addItem.put(Contract.PlayerEntry.COLUMN_PLAYER_BATS, (String) bats.get(i));
+                addItem.put(Contract.PlayerEntry.COLUMN_PLAYER_THROWS, (String) throws_.get(i));
                 addItem.put(Contract.PlayerEntry.COLUMN_PLAYER_BATTING_AVERAGE, 0);
                 addItem.put(Contract.PlayerEntry.COLUMN_PLAYER_RBI, 0);
                 addItem.put(Contract.PlayerEntry.COLUMN_PLAYER_RUNS, 0);
@@ -214,6 +249,12 @@ public class DatabaseAdapter {
                 addItem.put(Contract.PlayerEntry.COLUMN_PLAYER_FIELD_PERCENTAGE, 0);
                 addItem.put(Contract.PlayerEntry.COLUMN_PLAYER_PUT_OUTS, 0);
                 db.insert(Contract.PlayerEntry.TABLE_NAME, null, addItem);
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                progressDialog.setProgress(i + 1);
             }
 
             //store players on the server
@@ -256,17 +297,37 @@ public class DatabaseAdapter {
             }
             return null;
         }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            progressDialog.dismiss();
+            activity.setResult(1);
+            activity.finish();
+        }
     }
 
-    public class ReadPlayersFromServer extends AsyncTask<Void, Void, String> {
-        private Context context;
+    public class ReadPlayersFromServer extends AsyncTask<Void, Void, Void> {
 
-        public ReadPlayersFromServer(Context ctx) {
-            context = ctx;
+        private ProgressDialog progressDialog;
+        private Activity activity;
+
+        public ReadPlayersFromServer(Activity act) {
+            activity = act;
         }
 
         @Override
-        protected String doInBackground(Void... params) {
+        protected void onPreExecute() {
+            InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+            imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+            progressDialog = new ProgressDialog(activity);
+            progressDialog.setCancelable(false);
+            progressDialog.setTitle("Storing players");
+            progressDialog.setMessage("Please wait...");
+            progressDialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
             BufferedReader reader;
             StringBuilder sb = new StringBuilder();
             try {
@@ -280,13 +341,13 @@ public class DatabaseAdapter {
                 InputStream inputStream = conn.getInputStream();
                 reader = new BufferedReader(new InputStreamReader(inputStream));
                 String line;
-                while((line = reader.readLine()) != null) {
+                while ((line = reader.readLine()) != null) {
                     sb.append(line);
                 }
                 if (!sb.toString().equals("")) {
                     JSONArray jArray = new JSONArray(sb.toString());
                     ContentValues addItem = new ContentValues();
-                    for(int i = 0; i < jArray.length(); i++) {
+                    for (int i = 0; i < jArray.length(); i++) {
                         JSONObject jObject = jArray.getJSONObject(i);
                         addItem.put(Contract.PlayerEntry.COLUMN_PLAYER_NAME_ID, jObject.getString("_id"));
                         addItem.put(Contract.PlayerEntry.COLUMN_PLAYER_NAME, jObject.getString("name"));
@@ -313,14 +374,19 @@ public class DatabaseAdapter {
                         addItem.put(Contract.PlayerEntry.COLUMN_PLAYER_ERRORS, jObject.getInt("errors"));
                         addItem.put(Contract.PlayerEntry.COLUMN_PLAYER_FIELD_PERCENTAGE, jObject.getDouble("field_percentage"));
                         addItem.put(Contract.PlayerEntry.COLUMN_PLAYER_PUT_OUTS, jObject.getInt("put_outs"));
+                        db.insert(Contract.PlayerEntry.TABLE_NAME, null, addItem);
                     }
-                    db.insert(Contract.PlayerEntry.TABLE_NAME, null, addItem);
                 }
 
             } catch (IOException | JSONException e) {
                 Log.e(LOG_TAG, e.toString());
             }
-            return sb.toString();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            progressDialog.dismiss();
         }
     }
 }
