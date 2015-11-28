@@ -16,7 +16,10 @@ import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.common.AccountPicker;
 import com.msrproduction.baseballmanager.Database.DatabaseAdapter;
 
+import org.w3c.dom.Text;
+
 import java.util.Random;
+import java.util.UUID;
 
 public class MainActivity extends Activity implements View.OnClickListener {
 

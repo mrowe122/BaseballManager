@@ -17,6 +17,7 @@ public class Contract {
 
 	public static abstract class PlayerEntry implements BaseColumns {
 		public static final String TABLE_NAME = "players";
+        public static final String COLUMN_PLAYER_NAME_ID = "unique_id";
 		public static final String COLUMN_PLAYER_NAME = "name";
 		public static final String COLUMN_PLAYER_NUMBER = "number";
 		public static final String COLUMN_PLAYER_TEAM_NAME = "team_name";

@@ -2,6 +2,7 @@ package com.msrproduction.baseballmanager;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -43,8 +44,9 @@ public class PlayersActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.list_view_layout);
+		setContentView(R.layout.list_item_layout);
 		databaseAdapter = new DatabaseAdapter(this).open();
+        databaseAdapter.test();
 		/*progressDialog = new ProgressDialog(PlayersActivity.this);
 		progressDialog.setCancelable(false);
 		progressDialog.setTitle("Loading Players");
@@ -56,7 +58,7 @@ public class PlayersActivity extends AppCompatActivity {
 	@Override
 	public void onResume() {
 		super.onResume();
-		readPlayers();
+		//readPlayers();
 	}
 
 	private void readPlayers() {
@@ -90,73 +92,6 @@ public class PlayersActivity extends AppCompatActivity {
 					cursor.getString(cursor.getColumnIndexOrThrow(Contract.PlayerEntry.COLUMN_PLAYER_NAME)));
 			((TextView) view.findViewById(R.id.list_item_sub_text)).setText(
 					"(" + cursor.getString(cursor.getColumnIndexOrThrow(Contract.PlayerEntry.COLUMN_PLAYER_TEAM_NAME)) + ")");
-		}
-	}
-
-	public class talkToServer extends AsyncTask<String, Void, String> {
-
-		@Override
-		protected String doInBackground(String... param) {
-			BufferedReader reader;
-			StringBuilder sb = new StringBuilder();
-			try {
-				URL url = new URL("http://amcustomprints.com/android_db/index.php");
-				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-				conn.setReadTimeout(10000);
-				conn.setConnectTimeout(15000);
-				conn.setRequestMethod("POST");
-				conn.setDoInput(true);
-				conn.setDoOutput(true);
-
-				OutputStream os = conn.getOutputStream();
-				BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os));
-				writer.write("method=" + param[0]);
-				writer.flush();
-				writer.close();
-				os.close();
-
-				conn.connect();
-
-				InputStream inputStream = conn.getInputStream();
-				reader = new BufferedReader(new InputStreamReader(inputStream));
-				String line;
-				while ((line = reader.readLine()) != null) {
-					sb.append(line).append("\n");
-				}
-				if (sb.length() != 0) {
-					return readJsonString(sb.toString());
-				}
-			} catch (IOException e) {
-				Log.e(LOG_TAG, e.toString());
-			}
-			return "nothing";
-
-		}
-
-		@Override
-		protected void onPostExecute(String s) {
-			super.onPostExecute(s);
-			progressDialog.dismiss();
-			new AlertDialog.Builder(PlayersActivity.this)
-					.setTitle("Server Response")
-					.setMessage(s)
-					.setPositiveButton("OK", null)
-					.show();
-		}
-
-		public String readJsonString(String s) {
-			StringBuilder sb = new StringBuilder();
-			try {
-				JSONArray databaseJson = new JSONArray(s);
-				for (int i = 0; i < databaseJson.length(); i++) {
-					JSONObject detail = databaseJson.getJSONObject(i);
-					String name = detail.getString("name");
-					sb.append(name).append(":").append("\n");
-				}
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
-			return sb.toString();
 		}
 	}
 }

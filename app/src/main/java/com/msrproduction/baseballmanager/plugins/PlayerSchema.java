@@ -20,11 +20,13 @@ import com.msrproduction.baseballmanager.R;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 import java.util.StringTokenizer;
 
 public class PlayerSchema {
 
-	final private String positionList[] = {"P", "C", "1B", "2B", "3B", "SS", "LF", "CF", "RF"};
+	private final String positionList[] = {"P", "C", "1B", "2B", "3B", "SS", "LF", "CF", "RF"};
+    private final char[] idChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".toCharArray();
 	private Activity activity;
 	private DatabaseAdapter databaseAdapter;
 	private String name, number, position, bats, throws_;
@@ -145,16 +147,28 @@ public class PlayerSchema {
 		}
 	}
 
+    private String createId() {
+        char[] id = new char[10];
+        Random r = new Random();
+        for (int i = 0;  i < 10;  i++) {
+            id[i] = idChars[r.nextInt(idChars.length)];
+        }
+        return new String(id);
+    }
+
 	public boolean addPlayers() {
 		List<String> nameList = new ArrayList<>(numPlayers);
 		List<String> numberList = new ArrayList<>(numPlayers);
 		List<String> positionList = new ArrayList<>(numPlayers);
 		List<String> batsList = new ArrayList<>(numPlayers);
 		List<String> throwsList = new ArrayList<>(numPlayers);
+        List<String> _id = new ArrayList<>(numPlayers);
+        /*
 		for (int i = 0; i < numPlayers; i++) {
 			if (!nameArray.get(i).getText().toString().equals("") && !numberArray.get(i).getText().toString().equals("")) {
 				nameList.add(nameArray.get(i).getText().toString());
 				numberList.add(numberArray.get(i).getText().toString());
+                _id.add(createId());
 				if (positionArray.get(i).getText().toString().equals(activity.getString(R.string.spinner_position_title))) {
 					positionList.add(activity.getString(R.string.no_position_selected));
 				} else {
@@ -187,10 +201,77 @@ public class PlayerSchema {
 				nameList.clear();
 				numberList.clear();
 				positionList.clear();
+                _id.clear();
 				return false;
 			}
-		}
-		databaseAdapter.bulkInsert(nameList, numberList, positionList, activity.getSharedPreferences("coach_info", Context.MODE_PRIVATE).getString("team_name", ""), batsList, throwsList);
+		}*/
+        _id.add(createId());
+        nameList.add("A");
+        numberList.add("1");
+        positionList.add("P");
+        batsList.add("Both");
+        throwsList.add("Both");
+        _id.add(createId());
+        nameList.add("A");
+        numberList.add("1");
+        positionList.add("P");
+        batsList.add("Both");
+        throwsList.add("Both");
+        _id.add(createId());
+        nameList.add("A");
+        numberList.add("1");
+        positionList.add("P");
+        batsList.add("Both");
+        throwsList.add("Both");
+        _id.add(createId());
+        nameList.add("A");
+        numberList.add("1");
+        positionList.add("P");
+        batsList.add("Both");
+        throwsList.add("Both");
+        _id.add(createId());
+        nameList.add("A");
+        numberList.add("1");
+        positionList.add("P");
+        batsList.add("Both");
+        throwsList.add("Both");
+        _id.add(createId());
+        nameList.add("A");
+        numberList.add("1");
+        positionList.add("P");
+        batsList.add("Both");
+        throwsList.add("Both");
+        _id.add(createId());
+        nameList.add("A");
+        numberList.add("1");
+        positionList.add("P");
+        batsList.add("Both");
+        throwsList.add("Both");
+        _id.add(createId());
+        nameList.add("A");
+        numberList.add("1");
+        positionList.add("P");
+        batsList.add("Both");
+        throwsList.add("Both");
+        _id.add(createId());
+        nameList.add("A");
+        numberList.add("1");
+        positionList.add("P");
+        batsList.add("Both");
+        throwsList.add("Both");
+        _id.add(createId());
+        nameList.add("A");
+        numberList.add("1");
+        positionList.add("P");
+        batsList.add("Both");
+        throwsList.add("Both");
+        _id.add(createId());
+        nameList.add("A");
+        numberList.add("1");
+        positionList.add("P");
+        batsList.add("Both");
+        throwsList.add("Both");
+		databaseAdapter.bulkInsert(_id, nameList, numberList, positionList, activity.getSharedPreferences("coach_info", Context.MODE_PRIVATE).getString("team_name", ""), batsList, throwsList);
 		return true;
 	}
 

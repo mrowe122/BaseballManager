@@ -108,5 +108,6 @@
 	<string name="player_throws">Throws</string>
 	<string name="player_bats">Bats</string>
 	<string name="both">Both</string>
+    <string name="undo">Undo</string>
 
 </resources>

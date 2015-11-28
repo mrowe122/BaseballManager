@@ -61,7 +61,7 @@ public class EditMyTeam extends AppCompatActivity {
 		phoneNumberFormatter = new UsPhoneNumberFormatter(new WeakReference<>(phone), (TextInputLayout) findViewById(R.id.input_layout_phone), this);
 		phone.addTextChangedListener(phoneNumberFormatter);
 
-		//hide/show appropiate views
+		//hide/show appropriate views
 		header.findViewById(R.id.buttons).setVisibility(View.GONE);
 		header.findViewById(R.id.edit_roster).setVisibility(View.VISIBLE);
 		findViewById(R.id.parallax_buttons).setVisibility(View.VISIBLE);
@@ -184,9 +184,11 @@ public class EditMyTeam extends AppCompatActivity {
 					if (remove.isChecked()) {
 						removedPlayers.add(item_id);
 						linearLayout.setBackgroundColor(context.getResources().getColor(R.color.lightRed));
+                        remove.setText(getString(R.string.undo));
 					} else {
 						removedPlayers.remove(item_id);
 						linearLayout.setBackgroundColor(context.getResources().getColor(R.color.white));
+                        remove.setText(getString(R.string.remove));
 					}
 				}
 			});

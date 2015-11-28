@@ -33,6 +33,7 @@ public class Database extends SQLiteOpenHelper {
 
 		final String CREATE_PLAYER_TABLE = "CREATE TABLE " + Contract.PlayerEntry.TABLE_NAME + " (\n" +
 				Contract.PlayerEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, \n" +
+                Contract.PlayerEntry.COLUMN_PLAYER_NAME_ID + " TEXT NOT NULL, \n" +
 				Contract.PlayerEntry.COLUMN_PLAYER_NAME + " TEXT NOT NULL, \n" +
 				Contract.PlayerEntry.COLUMN_PLAYER_NUMBER + " INTEGER NOT NULL, \n" +
 				Contract.PlayerEntry.COLUMN_PLAYER_TEAM_NAME + " TEXT NOT NULL, \n" +
