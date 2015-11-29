@@ -98,11 +98,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
 	}
 
 	private void checkFirstRun() {
-		Boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE)
+		Boolean isFirstRun = getSharedPreferences("FirstRunPreference", MODE_PRIVATE)
 				.getBoolean("isfirstrun", true);
 
 		if (isFirstRun) {
-			getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit().putBoolean("isfirstrun", false).apply();
+			getSharedPreferences("FirstRunPreference", MODE_PRIVATE).edit().putBoolean("isfirstrun", false).apply();
 
 			new AlertDialog.Builder(this)
 					.setTitle("Welcome! :)")

@@ -114,7 +114,7 @@ public class MyTeamsActivity extends AppCompatActivity {
 	}
 
 	private void checkFirstRun() {
-		Boolean isCoachSetup = getSharedPreferences("PREFERENCE", MODE_PRIVATE).getBoolean("isCoachSetup", false);
+		Boolean isCoachSetup = getSharedPreferences("FirstRunPreference", MODE_PRIVATE).getBoolean("isCoachSetup", false);
 		if (!isCoachSetup) {
 			new AlertDialog.Builder(this)
 					.setTitle(R.string.dialog_setup_team_title)
@@ -196,7 +196,7 @@ public class MyTeamsActivity extends AppCompatActivity {
 		});
 	}
 
-	public class PlayerListAdapter extends CursorAdapter {
+	private class PlayerListAdapter extends CursorAdapter {
 
 		public PlayerListAdapter(Context context, Cursor c, int flags) {
 			super(context, c, flags);

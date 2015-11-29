@@ -205,9 +205,7 @@ public class PlayerSchema {
 				return false;
 			}
 		}
-        /*DatabaseAdapter.StorePlayers sts = new DatabaseAdapter.StorePlayers(activity);
-        sts.execute(_id, name, number, position, bats, throws_, activity.getSharedPreferences("coach_info", Context.MODE_PRIVATE).getString("team_name", ""));*/
-        databaseAdapter.storePlayers(_id, nameList, numberList, positionList, activity.getSharedPreferences("coach_info", Context.MODE_PRIVATE).getString("team_name", ""), batsList, throwsList);
+        databaseAdapter.savePlayers(_id, nameList, numberList, positionList, activity.getSharedPreferences("coach_info", Context.MODE_PRIVATE).getString("team_name", ""), batsList, throwsList);
 		return true;
 	}
 

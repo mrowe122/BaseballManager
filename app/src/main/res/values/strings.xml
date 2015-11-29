@@ -109,5 +109,8 @@
 	<string name="player_bats">Bats</string>
 	<string name="both">Both</string>
     <string name="undo">Undo</string>
+    <string name="saving_player">Saving players</string>
+    <string name="fetching_player">Fetching players</string>
+    <string name="please_wait">Please wait…</string>
 
 </resources>

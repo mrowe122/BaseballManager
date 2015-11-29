@@ -1,19 +1,27 @@
 package com.msrproduction.baseballmanager.Database;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.CursorAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.msrproduction.baseballmanager.MyTeamsActivity;
 import com.msrproduction.baseballmanager.PlayerInformation;
@@ -175,17 +183,15 @@ public class DatabaseAdapter {
         }
     }
 
-    public void storePlayers(List<String> _id, List<String> name, List<String> number, List<String> position, String team, List<String> bats, List<String> throws_) {
+    public void savePlayers(List<String> _id, List<String> name, List<String> number, List<String> position, String team, List<String> bats, List<String> throws_) {
         StorePlayers sts = new StorePlayers(activity);
         sts.execute(_id, name, number, position, bats, throws_, team);
     }
 
-    public void test() {
-        ReadPlayersFromServer readPlayersFromServer = new ReadPlayersFromServer(activity);
-        readPlayersFromServer.execute();
+    public void readPlayers() {
+        ReadPlayersFromServer rps = new ReadPlayersFromServer(activity);
+        rps.execute();
     }
-
-
 
     //Store players in the database and server
     public class StorePlayers extends AsyncTask<Object, Void, Void> {
@@ -201,10 +207,9 @@ public class DatabaseAdapter {
         protected void onPreExecute() {
             InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
             imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-            progressDialog = new ProgressDialog(activity);
-            progressDialog.setCancelable(false);
-            progressDialog.setTitle("Storing players");
-            progressDialog.setMessage("Please wait...");
+            progressDialog = new ProgressDialog(activity, R.style.StyledDialog);
+            progressDialog.setTitle(activity.getResources().getString(R.string.saving_player));
+            progressDialog.setMessage(activity.getResources().getString(R.string.please_wait));
             progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
             progressDialog.show();
         }
@@ -249,12 +254,6 @@ public class DatabaseAdapter {
                 addItem.put(Contract.PlayerEntry.COLUMN_PLAYER_FIELD_PERCENTAGE, 0);
                 addItem.put(Contract.PlayerEntry.COLUMN_PLAYER_PUT_OUTS, 0);
                 db.insert(Contract.PlayerEntry.TABLE_NAME, null, addItem);
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                progressDialog.setProgress(i + 1);
             }
 
             //store players on the server
@@ -265,6 +264,7 @@ public class DatabaseAdapter {
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestProperty("Content-Type", "application/json");
                 conn.setRequestMethod("POST");
+                conn.setConnectTimeout(3000);
 
                 JSONArray ja = new JSONArray();
 
@@ -306,7 +306,7 @@ public class DatabaseAdapter {
         }
     }
 
-    public class ReadPlayersFromServer extends AsyncTask<Void, Void, Void> {
+    public class ReadPlayersFromServer extends AsyncTask<Void, Void, Boolean> {
 
         private ProgressDialog progressDialog;
         private Activity activity;
@@ -317,17 +317,15 @@ public class DatabaseAdapter {
 
         @Override
         protected void onPreExecute() {
-            InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-            imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
             progressDialog = new ProgressDialog(activity);
             progressDialog.setCancelable(false);
-            progressDialog.setTitle("Storing players");
-            progressDialog.setMessage("Please wait...");
+            progressDialog.setTitle(activity.getResources().getString(R.string.fetching_player));
+            progressDialog.setMessage(activity.getResources().getString(R.string.please_wait));
             progressDialog.show();
         }
 
         @Override
-        protected Void doInBackground(Void... params) {
+        protected Boolean doInBackground(Void... params) {
             BufferedReader reader;
             StringBuilder sb = new StringBuilder();
             try {
@@ -335,18 +333,22 @@ public class DatabaseAdapter {
                 URL url = new URL("http://192.168.1.219:3000/api/players");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("GET");
+                conn.setConnectTimeout(2000);
+                conn.setReadTimeout(2000);
 
                 conn.connect();
 
                 InputStream inputStream = conn.getInputStream();
                 reader = new BufferedReader(new InputStreamReader(inputStream));
                 String line;
-                while ((line = reader.readLine()) != null) {
+
+                while ((line = reader.readLine()) != null)
                     sb.append(line);
-                }
-                if (!sb.toString().equals("")) {
+
+                if (sb.toString().length() > 0 && !sb.toString().equals("null")) {
                     JSONArray jArray = new JSONArray(sb.toString());
                     ContentValues addItem = new ContentValues();
+
                     for (int i = 0; i < jArray.length(); i++) {
                         JSONObject jObject = jArray.getJSONObject(i);
                         addItem.put(Contract.PlayerEntry.COLUMN_PLAYER_NAME_ID, jObject.getString("_id"));
@@ -376,17 +378,66 @@ public class DatabaseAdapter {
                         addItem.put(Contract.PlayerEntry.COLUMN_PLAYER_PUT_OUTS, jObject.getInt("put_outs"));
                         db.insert(Contract.PlayerEntry.TABLE_NAME, null, addItem);
                     }
-                }
 
-            } catch (IOException | JSONException e) {
+                    Thread.sleep(1000);
+                    return true;
+                } else {
+                    Thread.sleep(1000);
+                    System.out.println("sever is empty");
+                }
+            } catch (IOException | JSONException | InterruptedException e) {
                 Log.e(LOG_TAG, e.toString());
             }
-            return null;
+            return false;
         }
 
         @Override
-        protected void onPostExecute(Void aVoid) {
+        protected void onPostExecute(Boolean response) {
             progressDialog.dismiss();
+            if (response) {
+                ListView listView = (ListView) activity.findViewById(R.id.main_list_view);
+                activity.registerForContextMenu(listView);
+                listView.setAdapter(new PlayerListAdapter(activity, loadPlayers(), CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER));
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        activity.startActivity(new Intent(activity, PlayerInformation.class)
+                                .putExtra("player_id", id + ""));
+                    }
+                });
+            } else {
+                new AlertDialog.Builder(activity)
+                        .setTitle("Sorry")
+                        .setMessage("There are no players at this time")
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                activity.getSharedPreferences("FirstRunPreference", 0).edit().putBoolean("firstTimePlayersLoad", true).apply();
+                                activity.finish();
+                            }
+                        }).setCancelable(false).show();
+            }
+        }
+
+        private class PlayerListAdapter extends CursorAdapter {
+
+            public PlayerListAdapter(Context context, Cursor c, int flags) {
+                super(context, c, flags);
+            }
+
+            @Override
+            public View newView(Context context, Cursor cursor, ViewGroup parent) {
+                return LayoutInflater.from(context).inflate(R.layout.list_item_layout, parent, false);
+            }
+
+            @Override
+            public void bindView(View view, Context context, Cursor cursor) {
+                ((TextView) view.findViewById(R.id.list_item_name)).setText("#" +
+                        cursor.getInt(cursor.getColumnIndexOrThrow(Contract.PlayerEntry.COLUMN_PLAYER_NUMBER)) + " " +
+                        cursor.getString(cursor.getColumnIndexOrThrow(Contract.PlayerEntry.COLUMN_PLAYER_NAME)));
+                ((TextView) view.findViewById(R.id.list_item_sub_text)).setText(
+                        "(" + cursor.getString(cursor.getColumnIndexOrThrow(Contract.PlayerEntry.COLUMN_PLAYER_TEAM_NAME)) + ")");
+            }
         }
     }
 }

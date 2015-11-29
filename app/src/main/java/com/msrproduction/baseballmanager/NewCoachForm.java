@@ -78,7 +78,7 @@ public class NewCoachForm extends AppCompatActivity {
 		editor.putString("coach_email", email);
 		editor.putString("coach_phone", formattedPhone);
 		editor.apply();
-		getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit().putBoolean("isCoachSetup", true).apply();
+		getSharedPreferences("FirstRunPreference", MODE_PRIVATE).edit().putBoolean("isCoachSetup", true).apply();
 		setResult(1);
 		finish();
 	}
