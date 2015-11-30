@@ -373,7 +373,7 @@ public class DatabaseAdapter {
                         addItem.put(Contract.PlayerEntry.COLUMN_PLAYER_ON_BASE_PERCENTAGE, jObject.getDouble("on_base_percentage"));
                         addItem.put(Contract.PlayerEntry.COLUMN_PLAYER_BASES_STOLEN, jObject.getInt("bases_stolen"));
                         addItem.put(Contract.PlayerEntry.COLUMN_PLAYER_CAUGHT_STEALING, jObject.getInt("caught_stealing"));
-                        addItem.put(Contract.PlayerEntry.COLUMN_PLAYER_ERRORS, jObject.getInt("errors"));
+                        addItem.put(Contract.PlayerEntry.COLUMN_PLAYER_ERRORS, jObject.getInt("errors_"));
                         addItem.put(Contract.PlayerEntry.COLUMN_PLAYER_FIELD_PERCENTAGE, jObject.getDouble("field_percentage"));
                         addItem.put(Contract.PlayerEntry.COLUMN_PLAYER_PUT_OUTS, jObject.getInt("put_outs"));
                         db.insert(Contract.PlayerEntry.TABLE_NAME, null, addItem);
@@ -383,7 +383,6 @@ public class DatabaseAdapter {
                     return true;
                 } else {
                     Thread.sleep(1000);
-                    System.out.println("sever is empty");
                 }
             } catch (IOException | JSONException | InterruptedException e) {
                 Log.e(LOG_TAG, e.toString());

@@ -22,7 +22,7 @@ public class Contract {
 		public static final String COLUMN_PLAYER_NUMBER = "number";
 		public static final String COLUMN_PLAYER_TEAM_NAME = "team_name";
 		public static final String COLUMN_PLAYER_BATS = "bats";
-		public static final String COLUMN_PLAYER_THROWS = "throws";
+		public static final String COLUMN_PLAYER_THROWS = "throws_";
 		public static final String COLUMN_PLAYER_POSITION = "position";
 		public static final String COLUMN_PLAYER_BATTING_AVERAGE = "batting_average";
 		public static final String COLUMN_PLAYER_RBI = "rbi";
@@ -31,7 +31,7 @@ public class Contract {
 		public static final String COLUMN_PLAYER_STRIKE_OUTS = "strike_outs";
 		public static final String COLUMN_PLAYER_WALKS = "walks";
 		public static final String COLUMN_PLAYER_SINGLE = "single";
-		public static final String COLUMN_PLAYER_DOUBLE = "double";
+		public static final String COLUMN_PLAYER_DOUBLE = "double_";
 		public static final String COLUMN_PLAYER_TRIPLE = "triple";
 		public static final String COLUMN_PLAYER_HOME_RUNS = "home_runs";
 		public static final String COLUMN_PLAYER_FLY_BALL = "fly_balls";
@@ -39,7 +39,7 @@ public class Contract {
 		public static final String COLUMN_PLAYER_ON_BASE_PERCENTAGE = "on_base_percentage";
 		public static final String COLUMN_PLAYER_BASES_STOLEN = "bases_stolen";
 		public static final String COLUMN_PLAYER_CAUGHT_STEALING = "caught_stealing";
-		public static final String COLUMN_PLAYER_ERRORS = "errors";
+		public static final String COLUMN_PLAYER_ERRORS = "errors_";
 		public static final String COLUMN_PLAYER_FIELD_PERCENTAGE = "field_percentage";
 		public static final String COLUMN_PLAYER_PUT_OUTS = "put_outs";
 	}

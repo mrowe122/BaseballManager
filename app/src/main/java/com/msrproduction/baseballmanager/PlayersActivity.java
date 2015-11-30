@@ -29,8 +29,7 @@ public class PlayersActivity extends AppCompatActivity {
 	}
 
     private void checkFirstRun() {
-        Boolean isFirstRun = getSharedPreferences("FirstRunPreference", MODE_PRIVATE)
-                .getBoolean("firstTimePlayersLoad", true);
+        Boolean isFirstRun = getSharedPreferences("FirstRunPreference", MODE_PRIVATE).getBoolean("firstTimePlayersLoad", true);
 
         if (isFirstRun) {
             getSharedPreferences("FirstRunPreference", MODE_PRIVATE).edit().putBoolean("firstTimePlayersLoad", false).apply();
