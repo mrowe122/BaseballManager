@@ -259,12 +259,14 @@ public class DatabaseAdapter {
             //store players on the server
             BufferedReader reader;
             try {
-                //URL url = new URL("http://52.25.231.27:8000/api/players");
-                URL url = new URL("http://192.168.1.219:3000/api/players");
+                URL url = new URL("http://52.25.231.27:8000/api/players");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestProperty("Content-Type", "application/json");
                 conn.setRequestMethod("POST");
                 conn.setConnectTimeout(3000);
+
+                JSONObject email = new JSONObject();
+                email.put("email", activity.getSharedPreferences("coach_email", 0));
 
                 JSONArray ja = new JSONArray();
 
@@ -329,8 +331,8 @@ public class DatabaseAdapter {
             BufferedReader reader;
             StringBuilder sb = new StringBuilder();
             try {
-                //URL url = new URL("http://52.25.231.27:8000/api/players");
-                URL url = new URL("http://192.168.1.219:3000/api/players");
+                URL url = new URL("http://52.25.231.27:8000/api/players");
+                //URL url = new URL("http://192.168.1.219:3000/api/players");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("GET");
                 conn.setConnectTimeout(2000);
