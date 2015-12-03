@@ -9,21 +9,17 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateInterpolator;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.msrproduction.baseballmanager.MyTeamsActivity;
 import com.msrproduction.baseballmanager.PlayerInformation;
 import com.msrproduction.baseballmanager.R;
 
@@ -265,9 +261,6 @@ public class DatabaseAdapter {
                 conn.setRequestMethod("POST");
                 conn.setConnectTimeout(3000);
 
-                JSONObject email = new JSONObject();
-                email.put("email", activity.getSharedPreferences("coach_email", 0));
-
                 JSONArray ja = new JSONArray();
 
                 for (int i = 0; i < names.size(); i++) {
@@ -281,6 +274,10 @@ public class DatabaseAdapter {
                     jo.put("team", team);
                     ja.put(jo);
                 }
+
+                JSONObject email = new JSONObject();
+                String emailCoach = activity.getSharedPreferences("coach_info", 0).getString("coach_email", "");
+                email.put(emailCoach, ja);
 
                 OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
                 wr.write(ja.toString());
