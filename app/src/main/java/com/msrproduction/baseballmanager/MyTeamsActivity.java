@@ -1,6 +1,7 @@
 package com.msrproduction.baseballmanager;
 
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,6 +9,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -21,14 +23,16 @@ import android.widget.TextView;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
+import com.google.android.gms.auth.GoogleAuthUtil;
+import com.google.android.gms.common.AccountPicker;
 import com.msrproduction.baseballmanager.Database.Contract;
 import com.msrproduction.baseballmanager.Database.DatabaseAdapter;
 
 public class MyTeamsActivity extends AppCompatActivity {
 
 	private DatabaseAdapter databaseAdapter;
-	private FloatingActionMenu fabMenu;
 	private PlayerListAdapter cursorAdapter;
+    FloatingActionMenu fabMenu;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +49,9 @@ public class MyTeamsActivity extends AppCompatActivity {
 			case R.id.action_edit_team:
 				startActivityForResult(new Intent(MyTeamsActivity.this, EditMyTeam.class), 2);
 				break;
+            case R.id.action_sign_in:
+                startActivityForResult(new Intent(MyTeamsActivity.this, SignInActivity.class), 3);
+                break;
 			case R.id.action_settings:
 				break;
 		}
@@ -59,17 +66,17 @@ public class MyTeamsActivity extends AppCompatActivity {
 
 	@Override
 	public void onResume() {
-		super.onResume();
+        super.onResume();
 		loadCoachData();
 	}
 
-	@Override
-	protected void onPause() {
-		fabMenu.close(false);
-		super.onPause();
-	}
+    @Override
+    protected void onPause() {
+        super.onPause();
+        fabMenu.close(false);
+    }
 
-	@Override
+    @Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		switch (requestCode) {
@@ -86,8 +93,13 @@ public class MyTeamsActivity extends AppCompatActivity {
 							databaseAdapter.loadPlayersInMyTeam(
 									getSharedPreferences("coach_info", MODE_PRIVATE)
 											.getString("team_name", "")));
-					break;
 				}
+                break;
+            //if synchronized
+            case 3:
+                if(resultCode == 1) {
+                    loadCoachData();
+                }
 		}
 	}
 
@@ -130,31 +142,32 @@ public class MyTeamsActivity extends AppCompatActivity {
 					finish();
 				}
 			}).setCancelable(false).show();
-		}
+        }
 	}
 
 	private void initSetup() {
-		findViewById(R.id.fab_menu).setVisibility(View.VISIBLE);
-		FloatingActionMenu fabMenu = (FloatingActionMenu) findViewById(R.id.fab_menu);
-		fabMenu.setClosedOnTouchOutside(true);
-
+        //Instantiate list of players list view
 		ListView listView = (ListView) findViewById(R.id.my_players_list);
 		ViewGroup header = (ViewGroup) getLayoutInflater().inflate(R.layout.activity_my_team, listView, false);
 		listView.addHeaderView(header, null, false);
 		registerForContextMenu(listView);
 
+        //load coach information
+        loadCoachData();
+        //initiate floating action buttons
+        initFabButtons();
+
+        //load the players in my team
 		String teamName = getSharedPreferences("coach_info", MODE_PRIVATE).getString("team_name", "");
 		cursorAdapter = new PlayerListAdapter(getApplicationContext(), databaseAdapter.loadPlayersInMyTeam(teamName), CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
-		listView.setAdapter(cursorAdapter);
-		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				startActivityForResult(new Intent(getApplicationContext(), PlayerInformation.class)
-						.putExtra("player_id", id + ""), 2);
-			}
-		});
-		loadCoachData();
-		setupFabButtons();
+        listView.setAdapter(cursorAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                startActivityForResult(new Intent(getApplicationContext(), PlayerInformation.class)
+                        .putExtra("player_id", id + ""), 2);
+            }
+        });
 	}
 
 	private void loadCoachData() {
@@ -165,8 +178,11 @@ public class MyTeamsActivity extends AppCompatActivity {
 		((TextView) findViewById(R.id.my_phone)).setText(coachInfo.getString("coach_phone", ""));
 	}
 
-	private void setupFabButtons() {
-		fabMenu = (FloatingActionMenu) findViewById(R.id.fab_menu);
+    /*Instantiate floating action button*/
+	private void initFabButtons() {
+        fabMenu = (FloatingActionMenu) findViewById(R.id.fab_menu);
+        fabMenu.setVisibility(View.VISIBLE);
+        fabMenu.setClosedOnTouchOutside(true);
 		FloatingActionButton addPlayer = (FloatingActionButton) findViewById(R.id.fab_add_player);
 		FloatingActionButton addTeam = (FloatingActionButton) findViewById(R.id.fab_add_team);
 		FloatingActionButton addFreeAgents = (FloatingActionButton) findViewById(R.id.fab_add_player_to_team);

@@ -4,9 +4,15 @@
 
 	<item
 		android:id="@+id/action_edit_team"
-		android:orderInCategory="99"
+		android:orderInCategory="1"
 		android:title="@string/action_edit"
 		app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_sign_in"
+        android:orderInCategory="2"
+        android:title="@string/action_sign_in"
+        app:showAsAction="never"/>
 
 	<item
 		android:id="@+id/action_settings"

@@ -31,11 +31,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
-import java.util.Random;
 
 public class DatabaseAdapter {
 
@@ -56,17 +54,6 @@ public class DatabaseAdapter {
             return this;
         } else return this;
     }
-
-	/*
-    public void insertMyTeamToServer(String value) {
-		ContentValues addItem = new ContentValues();
-		addItem.put(Contract.TeamEntry.COLUMN_TEAM_NAME, value);
-		addItem.put(Contract.TeamEntry.COLUMN_TEAM_COACH, "n/a");
-		addItem.put(Contract.TeamEntry.COLUMN_TEAM_WINS, 0);
-		addItem.put(Contract.TeamEntry.COLUMN_TEAM_LOSE, 0);
-		db.insert(Contract.TeamEntry.TABLE_NAME, null, addItem);
-	}
-	*/
 
     public void updatePlayer(String name, String number, String position, String bats, String throws_) {
         ContentValues contentValues = new ContentValues();
@@ -189,11 +176,11 @@ public class DatabaseAdapter {
         rps.execute();
     }
 
-    //Store players in the database and server
-    public class StorePlayers extends AsyncTask<Object, Void, Void> {
+    //Store players in the database
+    private class StorePlayers extends AsyncTask<Object, Void, Void> {
 
-        private ProgressDialog progressDialog;
         private Activity activity;
+        private ProgressDialog progressDialog;
 
         public StorePlayers(Activity act) {
             activity = act;
@@ -203,10 +190,9 @@ public class DatabaseAdapter {
         protected void onPreExecute() {
             InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
             imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-            progressDialog = new ProgressDialog(activity, R.style.StyledDialog);
+            progressDialog = new ProgressDialog(activity);
             progressDialog.setTitle(activity.getResources().getString(R.string.saving_player));
             progressDialog.setMessage(activity.getResources().getString(R.string.please_wait));
-            progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
             progressDialog.show();
         }
 
@@ -219,7 +205,6 @@ public class DatabaseAdapter {
             List bats = (List) params[4];
             List throws_ = (List) params[5];
             String team = (String) params[6];
-            progressDialog.setMax(names.size());
 
             //store players locally
             for (int i = 0; i < names.size(); i++) {
@@ -251,49 +236,6 @@ public class DatabaseAdapter {
                 addItem.put(Contract.PlayerEntry.COLUMN_PLAYER_PUT_OUTS, 0);
                 db.insert(Contract.PlayerEntry.TABLE_NAME, null, addItem);
             }
-
-            //store players on the server
-            BufferedReader reader;
-            try {
-                URL url = new URL("http://52.25.231.27:8000/api/players");
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setRequestProperty("Content-Type", "application/json");
-                conn.setRequestMethod("POST");
-                conn.setConnectTimeout(3000);
-
-                JSONArray ja = new JSONArray();
-
-                for (int i = 0; i < names.size(); i++) {
-                    JSONObject jo = new JSONObject();
-                    jo.put("_id", _id.get(i));
-                    jo.put("name", names.get(i));
-                    jo.put("number", number.get(i));
-                    jo.put("position", position.get(i));
-                    jo.put("bats", bats.get(i));
-                    jo.put("throws_", throws_.get(i));
-                    jo.put("team", team);
-                    ja.put(jo);
-                }
-
-                JSONObject email = new JSONObject();
-                String emailCoach = activity.getSharedPreferences("coach_info", 0).getString("coach_email", "");
-                email.put(emailCoach, ja);
-
-                OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
-                wr.write(ja.toString());
-                wr.flush();
-                wr.close();
-
-                conn.connect();
-
-                InputStream inputStream = conn.getInputStream();
-                reader = new BufferedReader(new InputStreamReader(inputStream));
-                String line = reader.readLine();
-                System.out.println(line);
-
-            } catch (IOException | JSONException e) {
-                Log.e(LOG_TAG, e.toString());
-            }
             return null;
         }
 
@@ -305,7 +247,7 @@ public class DatabaseAdapter {
         }
     }
 
-    public class ReadPlayersFromServer extends AsyncTask<Void, Void, Boolean> {
+    private class ReadPlayersFromServer extends AsyncTask<Void, Void, Boolean> {
 
         private ProgressDialog progressDialog;
         private Activity activity;
@@ -329,7 +271,6 @@ public class DatabaseAdapter {
             StringBuilder sb = new StringBuilder();
             try {
                 URL url = new URL("http://52.25.231.27:8000/api/players");
-                //URL url = new URL("http://192.168.1.219:3000/api/players");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("GET");
                 conn.setConnectTimeout(2000);
@@ -418,7 +359,6 @@ public class DatabaseAdapter {
         }
 
         private class PlayerListAdapter extends CursorAdapter {
-
             public PlayerListAdapter(Context context, Cursor c, int flags) {
                 super(context, c, flags);
             }

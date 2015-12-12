@@ -30,8 +30,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+        checkFirstRun();
 		initSetup();
-		checkFirstRun();
 	}
 
 	@Override
@@ -64,6 +64,25 @@ public class MainActivity extends Activity implements View.OnClickListener {
 		}
 	}
 
+    private void checkFirstRun() {
+        Boolean isFirstRun = getSharedPreferences("FirstRunPreference", MODE_PRIVATE)
+                .getBoolean("isfirstrun", true);
+
+        if (isFirstRun) {
+            getSharedPreferences("FirstRunPreference", MODE_PRIVATE).edit().putBoolean("isfirstrun", false).apply();
+
+            new AlertDialog.Builder(this)
+                    .setTitle("Welcome! :)")
+                    .setMessage("Hope you enjoy this app!")
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            //do nothing
+                        }
+                    }).setCancelable(false).show();
+        }
+    }
+
 	private void initSetup() {
 		ImageView iv = (ImageView) findViewById(R.id.baseball_icon);
 		switch (new Random().nextInt(6)) {
@@ -95,25 +114,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
 		findViewById(R.id.main_teams).setOnClickListener(this);
 		findViewById(R.id.main_players).setOnClickListener(this);
 		findViewById(R.id.email).setOnClickListener(this);
-	}
-
-	private void checkFirstRun() {
-		Boolean isFirstRun = getSharedPreferences("FirstRunPreference", MODE_PRIVATE)
-				.getBoolean("isfirstrun", true);
-
-		if (isFirstRun) {
-			getSharedPreferences("FirstRunPreference", MODE_PRIVATE).edit().putBoolean("isfirstrun", false).apply();
-
-			new AlertDialog.Builder(this)
-					.setTitle("Welcome! :)")
-					.setMessage("Hope you enjoy this app!")
-					.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							//do nothing
-						}
-					}).setCancelable(false).show();
-		}
 	}
 
 	private void getUsersEmail() {

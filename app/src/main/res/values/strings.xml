@@ -16,6 +16,7 @@
 	<string name="action_settings">Settings</string>
 	<string name="action_edit">Edit</string>
 	<string name="action_search">Search</string>
+    <string name="action_sign_in">Sign in</string>
 
 	<!-- My Team -->
 	<string name="my_phone">Phone:</string>
@@ -25,6 +26,12 @@
 	<string name="create_new_team">Create New Team</string>
 	<string name="dialog_setup_team_title">Team setup</string>
 	<string name="dialog_setup_team_message">Would you like to setup your team now?</string>
+
+    <!-- Sign In Activity -->
+    <string name="sign_in_title">Backup data</string>
+    <string name="sign_in_message">By signing in with your google account, your team will be synchronized in the cloud. Would you like to continue to backup your data?</string>
+    <string name="synchronizing">Synchronizing</string>
+
 
 	<!-- Team Form -->
 	<string name="form_hint_team_name">*Team Name</string>
