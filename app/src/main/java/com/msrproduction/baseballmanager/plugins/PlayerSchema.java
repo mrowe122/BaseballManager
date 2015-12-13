@@ -26,7 +26,7 @@ import java.util.StringTokenizer;
 public class PlayerSchema {
 
 	private final String positionList[] = {"P", "C", "1B", "2B", "3B", "SS", "LF", "CF", "RF"};
-    private final char[] idChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".toCharArray();
+	private final char[] idChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".toCharArray();
 	private Activity activity;
 	private DatabaseAdapter databaseAdapter;
 	private String name, number, position, bats, throws_;
@@ -110,7 +110,7 @@ public class PlayerSchema {
 		layout.findViewById(R.id.remove_field).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if(numPlayers > 1) {
+				if (numPlayers > 1) {
 					((TextView) activity.findViewById(R.id.number_players)).setText(String.valueOf(--numPlayers));
 					listView.remove(layout);
 					nameArray.remove(name);
@@ -147,14 +147,14 @@ public class PlayerSchema {
 		}
 	}
 
-    private String createId() {
-        char[] id = new char[10];
-        Random r = new Random();
-        for (int i = 0;  i < 10;  i++) {
-            id[i] = idChars[r.nextInt(idChars.length)];
-        }
-        return new String(id);
-    }
+	private String createId() {
+		char[] id = new char[10];
+		Random r = new Random();
+		for (int i = 0; i < 10; i++) {
+			id[i] = idChars[r.nextInt(idChars.length)];
+		}
+		return new String(id);
+	}
 
 	public boolean addPlayers() {
 		List<String> nameList = new ArrayList<>(numPlayers);
@@ -162,13 +162,13 @@ public class PlayerSchema {
 		List<String> positionList = new ArrayList<>(numPlayers);
 		List<String> batsList = new ArrayList<>(numPlayers);
 		List<String> throwsList = new ArrayList<>(numPlayers);
-        List<String> _id = new ArrayList<>(numPlayers);
+		List<String> _id = new ArrayList<>(numPlayers);
 
 		for (int i = 0; i < numPlayers; i++) {
 			if (!nameArray.get(i).getText().toString().equals("") && !numberArray.get(i).getText().toString().equals("")) {
 				nameList.add(nameArray.get(i).getText().toString());
 				numberList.add(numberArray.get(i).getText().toString());
-                _id.add(createId());
+				_id.add(createId());
 				if (positionArray.get(i).getText().toString().equals(activity.getString(R.string.spinner_position_title))) {
 					positionList.add(activity.getString(R.string.no_position_selected));
 				} else {
@@ -201,11 +201,11 @@ public class PlayerSchema {
 				nameList.clear();
 				numberList.clear();
 				positionList.clear();
-                _id.clear();
+				_id.clear();
 				return false;
 			}
 		}
-        databaseAdapter.savePlayers(_id, nameList, numberList, positionList, activity.getSharedPreferences("coach_info", Context.MODE_PRIVATE).getString("team_name", ""), batsList, throwsList);
+		databaseAdapter.savePlayers(_id, nameList, numberList, positionList, activity.getSharedPreferences("coach_info", Context.MODE_PRIVATE).getString("team_name", ""), batsList, throwsList);
 		return true;
 	}
 

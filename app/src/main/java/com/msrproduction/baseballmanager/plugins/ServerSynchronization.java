@@ -22,137 +22,203 @@ import java.net.URL;
 
 public class ServerSynchronization {
 
-    private Activity activity;
-    private ProgressDialog progressDialog;
+	private Activity activity;
+	private ProgressDialog progressDialog;
 
-    public ServerSynchronization(Activity act) {
-        activity = act;
-    }
+	public ServerSynchronization(Activity act) {
+		activity = act;
+	}
 
-    public void syncAllData(String email) {
-        SharedPreferences coachInfo = activity.getSharedPreferences("coach_info", Context.MODE_PRIVATE);
-        String coach_name = coachInfo.getString("coach_name", "");
-        String team_name = coachInfo.getString("team_name", "");
-        new SyncCoachInfo().execute(coach_name, team_name, email);
-        new SyncPlayers().execute();
-    }
+	public void players() {
+		new SyncPlayers().execute();
+	}
 
-    public class SyncCoachInfo extends AsyncTask<String, Void, String> {
+	public void syncAllData(String email) {
+		SharedPreferences coachInfo = activity.getSharedPreferences("coach_info", Context.MODE_PRIVATE);
+		String coach_name = coachInfo.getString("coach_name", "");
+		String team_name = coachInfo.getString("team_name", "");
+		new SaveTeamInfo().execute(coach_name, team_name, email);
+		//new SyncPlayers().execute();
+	}
 
-        @Override
-        protected void onPreExecute() {
-            progressDialog = new ProgressDialog(activity);
-            progressDialog.setTitle(activity.getResources().getString(R.string.synchronizing));
-            progressDialog.setMessage(activity.getResources().getString(R.string.please_wait));
-            progressDialog.show();
-        }
+	public class SaveTeamInfo extends AsyncTask<String, Void, String> {
 
-        @Override
-        protected String doInBackground(String... params) {
-            //store coach information in server
-            BufferedReader reader;
-            try {
-                //URL url = new URL("http://52.25.231.27:3000/api/players");
-                URL url = new URL("http://192.168.1.219:3000/api/team");
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setRequestProperty("Content-Type", "application/json");
-                conn.setRequestMethod("POST");
-                conn.setConnectTimeout(3000);
-                conn.setReadTimeout(3000);
+		@Override
+		protected void onPreExecute() {
+			progressDialog = new ProgressDialog(activity);
+			progressDialog.setTitle(activity.getResources().getString(R.string.synchronizing));
+			progressDialog.setMessage(activity.getResources().getString(R.string.please_wait));
+			progressDialog.show();
+		}
 
-                JSONObject teamData = new JSONObject();
+		@Override
+		protected String doInBackground(String... params) {
+			//store coach information in server
+			BufferedReader reader;
+			try {
+				//URL url = new URL("http://52.25.231.27:3000/api/players");
+				URL url = new URL("http://192.168.1.219:3000/api/team");
+				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+				conn.setRequestProperty("Content-Type", "application/json");
+				conn.setRequestMethod("POST");
+				conn.setConnectTimeout(3000);
+				conn.setReadTimeout(3000);
 
-                teamData.put("coach_name", params[0]);
-                teamData.put("team_name", params[1]);
-                teamData.put("coach_email", params[2]);
+				JSONObject teamData = new JSONObject();
 
-                JSONArray jaPlayers = new JSONArray();
-                teamData.put("players", jaPlayers);
+				teamData.put("coach_name", params[0]);
+				teamData.put("team_name", params[1]);
+				teamData.put("coach_email", params[2]);
 
-                OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
-                wr.write(teamData.toString());
-                wr.flush();
-                wr.close();
+				JSONArray jaPlayers = new JSONArray();
+				teamData.put("players", "");
 
-                conn.connect();
+				OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
+				wr.write(teamData.toString());
+				wr.flush();
+				wr.close();
 
-                reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                String line = reader.readLine();
-                System.out.println(line);
-                return line;
+				conn.connect();
 
-            } catch (IOException | JSONException e) {
-                System.out.print(e.toString());
-            }
-            return null;
-        }
-    }
+				reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+				String line = reader.readLine();
+				System.out.println(line);
+				return line;
 
-    public class SyncPlayers extends AsyncTask<Object, Void, Void> {
+			} catch (IOException | JSONException e) {
+				System.out.print(e.toString());
+			}
+			return null;
+		}
 
-        @Override
-        protected void onPreExecute() {
-            progressDialog = new ProgressDialog(activity);
-            progressDialog.setTitle(activity.getResources().getString(R.string.synchronizing));
-            progressDialog.setMessage(activity.getResources().getString(R.string.please_wait));
-            progressDialog.show();
-        }
+		@Override
+		protected void onPostExecute(String aVoid) {
+			progressDialog.dismiss();
+			activity.finish();
+		}
+	}
 
-        @Override
-        protected Void doInBackground(Object... params) {
-            //store players on the server
-            BufferedReader reader;
-            try {
-                //URL url = new URL("http://52.25.231.27:3000/api/players");
-                URL url = new URL("http://192.168.1.219:3000/api/players");
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setRequestProperty("Content-Type", "application/json");
-                conn.setRequestMethod("POST");
-                conn.setConnectTimeout(3000);
-                conn.setReadTimeout(3000);
+	public class RetrieveTeamInfo extends AsyncTask<String, Void, String> {
 
-                JSONObject teamData = new JSONObject();
+		@Override
+		protected void onPreExecute() {
+			progressDialog = new ProgressDialog(activity);
+			progressDialog.setTitle(activity.getResources().getString(R.string.synchronizing));
+			progressDialog.setMessage(activity.getResources().getString(R.string.please_wait));
+			progressDialog.show();
+		}
 
-                JSONArray jaPlayers = new JSONArray();
+		@Override
+		protected String doInBackground(String... params) {
+			//retrieve coach information in server
+			try {
+				//URL url = new URL("http://52.25.231.27:3000/api/players");
+				URL url = new URL("http://192.168.1.219:3000/api/team/" + params[0]);
+				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+				conn.setRequestProperty("Content-Type", "application/json");
+				conn.setRequestMethod("GET");
+				conn.setConnectTimeout(3000);
+				conn.setReadTimeout(3000);
 
-                JSONObject jo = new JSONObject();
-                jo.put("playerNum", "6df5fsdgfd");
-                jo.put("name", "Rick");
-                jo.put("number", "2");
-                jo.put("position", "P");
-                jo.put("bats", "Left");
-                jo.put("throws_", "Left");
-                jo.put("team_name", "Yankees");
-                jaPlayers.put(jo);
+				conn.connect();
 
-                teamData.put("email", "mrowe122@gmail.com");
-                teamData.put("players", jaPlayers);
+				BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+				String line;
+				StringBuilder sb = new StringBuilder();
+				while ((line = reader.readLine()) != null) {
+					sb.append(line);
+				}
+				System.out.println(sb.toString());
+				return sb.toString();
 
-                System.out.println(teamData);
+			} catch (IOException e) {
+				System.out.print(e.toString());
+			}
+			return null;
+		}
 
-                OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
-                wr.write(teamData.toString());
-                wr.flush();
-                wr.close();
+		@Override
+		protected void onPostExecute(String aVoid) {
+			progressDialog.dismiss();
+			activity.finish();
+		}
+	}
 
-                conn.connect();
+	public class SyncPlayers extends AsyncTask<Void, Void, Void> {
 
-                InputStream inputStream = conn.getInputStream();
-                reader = new BufferedReader(new InputStreamReader(inputStream));
-                String line = reader.readLine();
-                System.out.println(line);
+		@Override
+		protected void onPreExecute() {
+			progressDialog = new ProgressDialog(activity);
+			progressDialog.setTitle(activity.getResources().getString(R.string.synchronizing));
+			progressDialog.setMessage(activity.getResources().getString(R.string.please_wait));
+			progressDialog.show();
+		}
 
-            } catch (IOException | JSONException e) {
-                System.out.println(e.toString());
-            }
+		@Override
+		protected Void doInBackground(Void... params) {
+			//store players on the server
+			BufferedReader reader;
+			try {
+				//URL url = new URL("http://52.25.231.27:3000/api/players");
+				URL url = new URL("http://192.168.1.219:3000/api/players");
+				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+				conn.setRequestProperty("Content-Type", "application/json");
+				conn.setRequestMethod("POST");
+				conn.setConnectTimeout(3000);
+				conn.setReadTimeout(3000);
 
-            return null;
-        }
+				JSONObject teamData = new JSONObject();
 
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            progressDialog.dismiss();
-            activity.finish();
-        }
-    }
+				JSONArray jaPlayers = new JSONArray();
+
+				JSONObject jo = new JSONObject();
+				jo.put("playerNum", "6df5fsdgfd");
+				jo.put("name", "Rick");
+				jo.put("number", "2");
+				jo.put("position", "P");
+				jo.put("bats", "Left");
+				jo.put("throws_", "Left");
+				jo.put("team_name", "Yankees");
+				jaPlayers.put(jo);
+
+				JSONObject jo2 = new JSONObject();
+				jo2.put("playerNum", "12345678");
+				jo2.put("name", "Steve");
+				jo2.put("number", "2");
+				jo2.put("position", "P");
+				jo2.put("bats", "Left");
+				jo2.put("throws_", "Left");
+				jo2.put("team_name", "Yankees");
+				jaPlayers.put(jo2);
+
+				teamData.put("email", "mrowe122@gmail.com");
+				teamData.put("players", jaPlayers);
+
+				System.out.println(teamData);
+
+				OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
+				wr.write(teamData.toString());
+				wr.flush();
+				wr.close();
+
+				conn.connect();
+
+				InputStream inputStream = conn.getInputStream();
+				reader = new BufferedReader(new InputStreamReader(inputStream));
+				String line = reader.readLine();
+				System.out.println(line);
+
+			} catch (IOException | JSONException e) {
+				System.out.println(e.toString());
+			}
+
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void aVoid) {
+			progressDialog.dismiss();
+			activity.finish();
+		}
+	}
 }

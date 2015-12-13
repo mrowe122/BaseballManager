@@ -25,12 +25,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
 	private final String LOG_TAG = MainActivity.class.getSimpleName();
 	public static String userEmail;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-        checkFirstRun();
+		checkFirstRun();
 		initSetup();
 	}
 
@@ -59,29 +59,28 @@ public class MainActivity extends Activity implements View.OnClickListener {
 				startActivity(new Intent(MainActivity.this, PlayersActivity.class));
 				break;
 			case R.id.email:
-				//getUsersEmail();
 				break;
 		}
 	}
 
-    private void checkFirstRun() {
-        Boolean isFirstRun = getSharedPreferences("FirstRunPreference", MODE_PRIVATE)
-                .getBoolean("isfirstrun", true);
+	private void checkFirstRun() {
+		Boolean isFirstRun = getSharedPreferences("FirstRunPreference", MODE_PRIVATE)
+				.getBoolean("isfirstrun", true);
 
-        if (isFirstRun) {
-            getSharedPreferences("FirstRunPreference", MODE_PRIVATE).edit().putBoolean("isfirstrun", false).apply();
+		if (isFirstRun) {
+			getSharedPreferences("FirstRunPreference", MODE_PRIVATE).edit().putBoolean("isfirstrun", false).apply();
 
-            new AlertDialog.Builder(this)
-                    .setTitle("Welcome! :)")
-                    .setMessage("Hope you enjoy this app!")
-                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            //do nothing
-                        }
-                    }).setCancelable(false).show();
-        }
-    }
+			new AlertDialog.Builder(this)
+					.setTitle("Welcome! :)")
+					.setMessage("Hope you enjoy this app!")
+					.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							//do nothing
+						}
+					}).setCancelable(false).show();
+		}
+	}
 
 	private void initSetup() {
 		ImageView iv = (ImageView) findViewById(R.id.baseball_icon);

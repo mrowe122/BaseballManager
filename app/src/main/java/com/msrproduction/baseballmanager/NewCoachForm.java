@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.msrproduction.baseballmanager.plugins.UsPhoneNumberFormatter;
+
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -53,13 +54,13 @@ public class NewCoachForm extends AppCompatActivity {
 		phoneNumberFormatter = new UsPhoneNumberFormatter(new WeakReference<>(phone), (TextInputLayout) findViewById(R.id.input_layout_phone), this);
 		phone.addTextChangedListener(phoneNumberFormatter);
 
-        AutoCompleteTextView editTextLogin = (AutoCompleteTextView) findViewById(R.id.form_coach_email);
-        Account[] accounts = AccountManager.get(this).getAccounts();
-        Set<String> emailSet = new HashSet<>();
-        for (Account account : accounts) {
-            emailSet.add(account.name);
-        }
-        editTextLogin.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, new ArrayList<>(emailSet)));
+		AutoCompleteTextView editTextLogin = (AutoCompleteTextView) findViewById(R.id.form_coach_email);
+		Account[] accounts = AccountManager.get(this).getAccounts();
+		Set<String> emailSet = new HashSet<>();
+		for (Account account : accounts) {
+			emailSet.add(account.name);
+		}
+		editTextLogin.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, new ArrayList<>(emailSet)));
 	}
 
 	private void addCoach() {
@@ -87,7 +88,7 @@ public class NewCoachForm extends AppCompatActivity {
 		SharedPreferences sharedpreferences = getSharedPreferences("coach_info", MODE_PRIVATE);
 		SharedPreferences.Editor editor = sharedpreferences.edit();
 		editor.putString("coach_name", name);
-        editor.putString("team_name", teamName);
+		editor.putString("team_name", teamName);
 		editor.apply();
 		getSharedPreferences("FirstRunPreference", MODE_PRIVATE).edit().putBoolean("isCoachSetup", true).apply();
 		setResult(1);

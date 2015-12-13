@@ -69,7 +69,7 @@ public class UsPhoneNumberFormatter implements TextWatcher {
 				}
 				mWeakEditText.get().setSelection(setCusorPos < 0 ? 0 : setCusorPos);
 			}
-			if(formattedValue.length() == 0 ||
+			if (formattedValue.length() == 0 ||
 					(formattedValue.length() == 16 && formatted) ||
 					(!with1 && formattedValue.length() == 14 && formatted)) {
 				til.setError(null);
