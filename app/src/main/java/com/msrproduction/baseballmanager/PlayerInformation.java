@@ -16,7 +16,6 @@ public class PlayerInformation extends AppCompatActivity {
 	private final String LOG_TAG = PlayerInformation.class.getSimpleName();
 	private DatabaseAdapter databaseAdapter;
 	private String playerId;
-	private boolean dataChanged = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
