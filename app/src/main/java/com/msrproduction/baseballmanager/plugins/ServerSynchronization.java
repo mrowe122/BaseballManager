@@ -114,8 +114,8 @@ public class ServerSynchronization {
 				//if account doesn't exist, upload local to server
 				case "99000":
 					new AlertDialog.Builder(activity)
-							.setTitle(R.string.sign_in_title)
-							.setMessage(R.string.sign_in_message)
+							.setTitle(R.string.synchronized_data)
+							.setMessage(R.string.synchronized_message)
 							.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 								@Override
 								public void onClick(DialogInterface dialog, int which) {
