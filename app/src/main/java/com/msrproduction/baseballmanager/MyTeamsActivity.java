@@ -28,7 +28,7 @@ public class MyTeamsActivity extends AppCompatActivity {
 
 	private DatabaseAdapter databaseAdapter;
 	private PlayerListAdapter cursorAdapter;
-	FloatingActionMenu fabMenu;
+	private FloatingActionMenu fabMenu;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -74,37 +74,28 @@ public class MyTeamsActivity extends AppCompatActivity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
 		switch (requestCode) {
-			//for first time running check
-			case 1:
-				if (resultCode != 1) {
+			case 1: //for first time running check
+				if (resultCode != 1)
 					finish();
-				}
 				break;
-			//for updating list view
-			case 2:
-				if (resultCode == 1) {
-					cursorAdapter.swapCursor(
-							databaseAdapter.loadPlayersInMyTeam(
-									getSharedPreferences("coach_info", MODE_PRIVATE)
-											.getString("team_name", "")));
-				}
+			case 2: //for updating list view
+				if (resultCode == 1)
+					cursorAdapter.swapCursor(databaseAdapter.loadPlayersInMyTeam());
 				break;
-			//if synchronized
-			case 3:
+			case 3: //if synchronized
 				if (resultCode == 1) {
 					loadCoachData();
+					cursorAdapter.swapCursor(databaseAdapter.loadPlayersInMyTeam());
 				}
+				break;
 		}
 	}
 
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-		super.onCreateContextMenu(menu, v, menuInfo);
-		if (v.getId() == R.id.my_players_list) {
+		if (v.getId() == R.id.my_players_list)
 			getMenuInflater().inflate(R.menu.context_menu, menu);
-		}
 	}
 
 	@Override
@@ -112,17 +103,15 @@ public class MyTeamsActivity extends AppCompatActivity {
 		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 		switch (item.getItemId()) {
 			case R.id.edit_selected:
-				startActivityForResult(new Intent(getApplicationContext(), EditPlayer.class)
-						.putExtra("edit_player", info.id + ""), 2);
+				startActivityForResult(new Intent(getApplicationContext(), EditPlayer.class).putExtra("edit_player", info.id + ""), 2);
 				return true;
-
 			default:
 				return super.onContextItemSelected(item);
 		}
 	}
 
 	private void checkFirstRun() {
-		Boolean isCoachSetup = getSharedPreferences("FirstRunPreference", MODE_PRIVATE).getBoolean("isCoachSetup", false);
+		Boolean isCoachSetup = getSharedPreferences("FirstRunPreference", MODE_PRIVATE).getBoolean("isTeamSetup", false);
 		if (!isCoachSetup) {
 			new AlertDialog.Builder(this)
 					.setTitle(R.string.dialog_setup_team_title)
@@ -130,14 +119,21 @@ public class MyTeamsActivity extends AppCompatActivity {
 					.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							startActivityForResult(new Intent(getApplicationContext(), NewCoachForm.class), 1);
+							startActivityForResult(new Intent(MyTeamsActivity.this, NewCoachForm.class), 1);
 						}
-					}).setNegativeButton(R.string.later, new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					finish();
-				}
-			}).setCancelable(false).show();
+					})
+					.setNegativeButton(R.string.later, new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							finish();
+						}
+					})
+					.setNeutralButton(R.string.sign_in, new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							startActivityForResult(new Intent(MyTeamsActivity.this, SignInActivity.class), 3);
+						}
+					}).setCancelable(false).show();
 		}
 	}
 
@@ -154,8 +150,7 @@ public class MyTeamsActivity extends AppCompatActivity {
 		initFabButtons();
 
 		//load the players in my team
-		String teamName = getSharedPreferences("coach_info", MODE_PRIVATE).getString("team_name", "");
-		cursorAdapter = new PlayerListAdapter(getApplicationContext(), databaseAdapter.loadPlayersInMyTeam(teamName), CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+		cursorAdapter = new PlayerListAdapter(getApplicationContext(), databaseAdapter.loadPlayersInMyTeam(), CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
 		listView.setAdapter(cursorAdapter);
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
@@ -167,7 +162,7 @@ public class MyTeamsActivity extends AppCompatActivity {
 	}
 
 	private void loadCoachData() {
-		SharedPreferences coachInfo = getSharedPreferences("coach_info", MODE_PRIVATE);
+		SharedPreferences coachInfo = getSharedPreferences("team_info", MODE_PRIVATE);
 		((TextView) findViewById(R.id.my_coach_name)).setText(coachInfo.getString("coach_name", ""));
 		((TextView) findViewById(R.id.my_team_name)).setText(coachInfo.getString("team_name", ""));
 		((TextView) findViewById(R.id.my_email)).setText(coachInfo.getString("coach_email", ""));
@@ -221,10 +216,10 @@ public class MyTeamsActivity extends AppCompatActivity {
 
 		@Override
 		public void bindView(View view, Context context, Cursor cursor) {
-			String playerInfo = "#" + cursor.getInt(cursor.getColumnIndexOrThrow(Contract.PlayerEntry.COLUMN_PLAYER_NUMBER)) + " " +
-					cursor.getString(cursor.getColumnIndexOrThrow(Contract.PlayerEntry.COLUMN_PLAYER_NAME));
+			String playerInfo = "#" + cursor.getInt(cursor.getColumnIndexOrThrow(Contract.MyPlayerEntry.COLUMN_NUMBER)) + " " +
+					cursor.getString(cursor.getColumnIndexOrThrow(Contract.MyPlayerEntry.COLUMN_NAME));
 			((TextView) view.findViewById(R.id.list_item_name)).setText(playerInfo);
-			playerInfo = "(" + cursor.getString(cursor.getColumnIndexOrThrow(Contract.PlayerEntry.COLUMN_PLAYER_POSITION)) + ")";
+			playerInfo = "(" + cursor.getString(cursor.getColumnIndexOrThrow(Contract.MyPlayerEntry.COLUMN_POSITION)) + ")";
 			((TextView) view.findViewById(R.id.list_item_sub_text)).setText(playerInfo);
 		}
 	}

@@ -8,12 +8,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.msrproduction.baseballmanager.Database.Contract.PlayerEntry;
+import com.msrproduction.baseballmanager.Database.Contract.MyPlayerEntry;
 import com.msrproduction.baseballmanager.Database.DatabaseAdapter;
 
 public class PlayerInformation extends AppCompatActivity {
 
-	private final String LOG_TAG = PlayerInformation.class.getSimpleName();
 	private DatabaseAdapter databaseAdapter;
 	private String playerId;
 
@@ -52,7 +51,7 @@ public class PlayerInformation extends AppCompatActivity {
 		switch (requestCode) {
 			case 1:
 				if (resultCode == 1) {
-					loadPlayerStats(databaseAdapter.select(playerId, PlayerEntry.TABLE_NAME));
+					loadPlayerStats(databaseAdapter.select(playerId, MyPlayerEntry.TABLE_NAME));
 					setResult(1);
 					break;
 				}
@@ -63,7 +62,7 @@ public class PlayerInformation extends AppCompatActivity {
 		playerId = getIntent().getExtras().getString("player_id");
 		//noinspection ConstantConditions
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		loadPlayerStats(databaseAdapter.select(playerId, PlayerEntry.TABLE_NAME));
+		loadPlayerStats(databaseAdapter.select(playerId, MyPlayerEntry.TABLE_NAME));
 	}
 
 	private void loadPlayerStats(Cursor cursor) {
@@ -120,30 +119,30 @@ public class PlayerInformation extends AppCompatActivity {
 				(TextView) findViewById(R.id.stats_player_throws)
 		};
 
-		playerTextViews[0].setText(cursor.getString(cursor.getColumnIndexOrThrow(PlayerEntry.COLUMN_PLAYER_NAME)));
-		playerTextViews[1].setText("#" + cursor.getString(cursor.getColumnIndexOrThrow(PlayerEntry.COLUMN_PLAYER_NUMBER)));
-		playerTextViews[2].setText(cursor.getString(cursor.getColumnIndexOrThrow(PlayerEntry.COLUMN_PLAYER_TEAM_NAME)));
-		playerTextViews[3].setText(cursor.getString(cursor.getColumnIndexOrThrow(PlayerEntry.COLUMN_PLAYER_POSITION)));
-		playerTextViews[4].setText("AVG: " + cursor.getString(cursor.getColumnIndexOrThrow(PlayerEntry.COLUMN_PLAYER_BATTING_AVERAGE)));
-		playerTextViews[5].setText("RBI: " + cursor.getString(cursor.getColumnIndexOrThrow(PlayerEntry.COLUMN_PLAYER_RBI)));
-		playerTextViews[6].setText("Runs: " + cursor.getString(cursor.getColumnIndexOrThrow(PlayerEntry.COLUMN_PLAYER_RUNS)));
-		playerTextViews[7].setText("H: " + cursor.getString(cursor.getColumnIndexOrThrow(PlayerEntry.COLUMN_PLAYER_HITS)));
-		playerTextViews[8].setText("SO: " + cursor.getString(cursor.getColumnIndexOrThrow(PlayerEntry.COLUMN_PLAYER_STRIKE_OUTS)));
-		playerTextViews[9].setText("BB: " + cursor.getString(cursor.getColumnIndexOrThrow(PlayerEntry.COLUMN_PLAYER_WALKS)));
-		playerTextViews[10].setText("1B: " + cursor.getString(cursor.getColumnIndexOrThrow(PlayerEntry.COLUMN_PLAYER_SINGLE)));
-		playerTextViews[11].setText("2B: " + cursor.getString(cursor.getColumnIndexOrThrow(PlayerEntry.COLUMN_PLAYER_DOUBLE)));
-		playerTextViews[12].setText("3B: " + cursor.getString(cursor.getColumnIndexOrThrow(PlayerEntry.COLUMN_PLAYER_TRIPLE)));
-		playerTextViews[13].setText("HR: " + cursor.getString(cursor.getColumnIndexOrThrow(PlayerEntry.COLUMN_PLAYER_HOME_RUNS)));
-		playerTextViews[14].setText("FB: " + cursor.getString(cursor.getColumnIndexOrThrow(PlayerEntry.COLUMN_PLAYER_FLY_BALL)));
-		playerTextViews[15].setText("GB: " + cursor.getString(cursor.getColumnIndexOrThrow(PlayerEntry.COLUMN_PLAYER_GROUND_BALLS)));
-		playerTextViews[16].setText("OBP: " + cursor.getString(cursor.getColumnIndexOrThrow(PlayerEntry.COLUMN_PLAYER_ON_BASE_PERCENTAGE)));
-		playerTextViews[17].setText("BS: " + cursor.getString(cursor.getColumnIndexOrThrow(PlayerEntry.COLUMN_PLAYER_BASES_STOLEN)));
-		playerTextViews[18].setText("CS: " + cursor.getString(cursor.getColumnIndexOrThrow(PlayerEntry.COLUMN_PLAYER_CAUGHT_STEALING)));
-		playerTextViews[19].setText("ER: " + cursor.getString(cursor.getColumnIndexOrThrow(PlayerEntry.COLUMN_PLAYER_ERRORS)));
-		playerTextViews[20].setText("FPCT: " + cursor.getString(cursor.getColumnIndexOrThrow(PlayerEntry.COLUMN_PLAYER_FIELD_PERCENTAGE)));
-		playerTextViews[21].setText("PO: " + cursor.getString(cursor.getColumnIndexOrThrow(PlayerEntry.COLUMN_PLAYER_PUT_OUTS)));
-		playerTextViews[22].setText(cursor.getString(cursor.getColumnIndexOrThrow(PlayerEntry.COLUMN_PLAYER_BATS)));
-		playerTextViews[23].setText(cursor.getString(cursor.getColumnIndexOrThrow(PlayerEntry.COLUMN_PLAYER_THROWS)));
+		playerTextViews[0].setText(cursor.getString(cursor.getColumnIndexOrThrow(MyPlayerEntry.COLUMN_NAME)));
+		playerTextViews[1].setText("#" + cursor.getString(cursor.getColumnIndexOrThrow(MyPlayerEntry.COLUMN_NUMBER)));
+		playerTextViews[2].setText(cursor.getString(cursor.getColumnIndexOrThrow(MyPlayerEntry.COLUMN_TEAM_NAME)));
+		playerTextViews[3].setText(cursor.getString(cursor.getColumnIndexOrThrow(MyPlayerEntry.COLUMN_POSITION)));
+		playerTextViews[4].setText("AVG: " + cursor.getString(cursor.getColumnIndexOrThrow(MyPlayerEntry.COLUMN_BATTING_AVERAGE)));
+		playerTextViews[5].setText("RBI: " + cursor.getString(cursor.getColumnIndexOrThrow(MyPlayerEntry.COLUMN_RBI)));
+		playerTextViews[6].setText("Runs: " + cursor.getString(cursor.getColumnIndexOrThrow(MyPlayerEntry.COLUMN_RUNS)));
+		playerTextViews[7].setText("H: " + cursor.getString(cursor.getColumnIndexOrThrow(MyPlayerEntry.COLUMN_HITS)));
+		playerTextViews[8].setText("SO: " + cursor.getString(cursor.getColumnIndexOrThrow(MyPlayerEntry.COLUMN_STRIKE_OUTS)));
+		playerTextViews[9].setText("BB: " + cursor.getString(cursor.getColumnIndexOrThrow(MyPlayerEntry.COLUMN_WALKS)));
+		playerTextViews[10].setText("1B: " + cursor.getString(cursor.getColumnIndexOrThrow(MyPlayerEntry.COLUMN_SINGLE)));
+		playerTextViews[11].setText("2B: " + cursor.getString(cursor.getColumnIndexOrThrow(MyPlayerEntry.COLUMN_DOUBLE)));
+		playerTextViews[12].setText("3B: " + cursor.getString(cursor.getColumnIndexOrThrow(MyPlayerEntry.COLUMN_TRIPLE)));
+		playerTextViews[13].setText("HR: " + cursor.getString(cursor.getColumnIndexOrThrow(MyPlayerEntry.COLUMN_HOME_RUNS)));
+		playerTextViews[14].setText("FB: " + cursor.getString(cursor.getColumnIndexOrThrow(MyPlayerEntry.COLUMN_FLY_BALL)));
+		playerTextViews[15].setText("GB: " + cursor.getString(cursor.getColumnIndexOrThrow(MyPlayerEntry.COLUMN_GROUND_BALLS)));
+		playerTextViews[16].setText("OBP: " + cursor.getString(cursor.getColumnIndexOrThrow(MyPlayerEntry.COLUMN_ON_BASE_PERCENTAGE)));
+		playerTextViews[17].setText("BS: " + cursor.getString(cursor.getColumnIndexOrThrow(MyPlayerEntry.COLUMN_BASES_STOLEN)));
+		playerTextViews[18].setText("CS: " + cursor.getString(cursor.getColumnIndexOrThrow(MyPlayerEntry.COLUMN_CAUGHT_STEALING)));
+		playerTextViews[19].setText("ER: " + cursor.getString(cursor.getColumnIndexOrThrow(MyPlayerEntry.COLUMN_ERRORS)));
+		playerTextViews[20].setText("FPCT: " + cursor.getString(cursor.getColumnIndexOrThrow(MyPlayerEntry.COLUMN_FIELD_PERCENTAGE)));
+		playerTextViews[21].setText("PO: " + cursor.getString(cursor.getColumnIndexOrThrow(MyPlayerEntry.COLUMN_PUT_OUTS)));
+		playerTextViews[22].setText(cursor.getString(cursor.getColumnIndexOrThrow(MyPlayerEntry.COLUMN_BATS)));
+		playerTextViews[23].setText(cursor.getString(cursor.getColumnIndexOrThrow(MyPlayerEntry.COLUMN_THROWS)));
 
 		cursor.close();
 	}

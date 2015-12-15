@@ -50,10 +50,9 @@ public class EditMyTeam extends AppCompatActivity {
 		listView.addHeaderView(header, null, false);
 		registerForContextMenu(listView);
 
-		SharedPreferences coachInfo = getSharedPreferences("coach_info", MODE_PRIVATE);
+		SharedPreferences coachInfo = getSharedPreferences("team_info", MODE_PRIVATE);
 		((EditText) header.findViewById(R.id.form_coach_name)).setText(coachInfo.getString("coach_name", ""));
 		((EditText) header.findViewById(R.id.form_coach_team)).setText(coachInfo.getString("team_name", ""));
-		((EditText) header.findViewById(R.id.form_coach_email)).setText(coachInfo.getString("coach_email", ""));
 		phone = (EditText) header.findViewById(R.id.form_coach_phone);
 		phone.setText(coachInfo.getString("coach_phone", ""));
 
@@ -86,7 +85,7 @@ public class EditMyTeam extends AppCompatActivity {
 			}
 		});
 
-		listView.setAdapter(new PlayerListAdapter(getApplicationContext(), databaseAdapter.loadPlayersInMyTeam(coachInfo.getString("team_name", "")), CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER));
+		listView.setAdapter(new PlayerListAdapter(getApplicationContext(), databaseAdapter.loadPlayersInMyTeam(), CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER));
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -143,14 +142,13 @@ public class EditMyTeam extends AppCompatActivity {
 			return;
 		}
 
-		SharedPreferences sharedpreferences = getSharedPreferences("coach_info", MODE_PRIVATE);
+		SharedPreferences sharedpreferences = getSharedPreferences("team_info", MODE_PRIVATE);
 		SharedPreferences.Editor editor = sharedpreferences.edit();
 		editor.putString("coach_name", name);
 		editor.putString("team_name", teamName);
-		editor.putString("coach_email", email);
 		editor.putString("coach_phone", formattedPhone);
 		editor.apply();
-		getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit().putBoolean("isCoachSetup", true).apply();
+		getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit().putBoolean("isTeamSetup", true).apply();
 		setResult(1);
 		finish();
 	}
@@ -168,14 +166,14 @@ public class EditMyTeam extends AppCompatActivity {
 
 		@Override
 		public void bindView(final View view, final Context context, Cursor cursor) {
-			String playerInfo = "#" + cursor.getInt(cursor.getColumnIndexOrThrow(Contract.PlayerEntry.COLUMN_PLAYER_NUMBER)) + " " +
-					cursor.getString(cursor.getColumnIndexOrThrow(Contract.PlayerEntry.COLUMN_PLAYER_NAME));
+			String playerInfo = "#" + cursor.getInt(cursor.getColumnIndexOrThrow(Contract.MyPlayerEntry.COLUMN_NUMBER)) + " " +
+					cursor.getString(cursor.getColumnIndexOrThrow(Contract.MyPlayerEntry.COLUMN_NAME));
 			((TextView) view.findViewById(R.id.list_item_name)).setText(playerInfo);
-			playerInfo = "(" + cursor.getString(cursor.getColumnIndexOrThrow(Contract.PlayerEntry.COLUMN_PLAYER_POSITION)) + ")";
+			playerInfo = "(" + cursor.getString(cursor.getColumnIndexOrThrow(Contract.MyPlayerEntry.COLUMN_POSITION)) + ")";
 			((TextView) view.findViewById(R.id.list_item_sub_text)).setText(playerInfo);
 
 			final CheckBox remove = (CheckBox) view.findViewById(R.id.remove_field);
-			final String item_id = cursor.getString(cursor.getColumnIndex(Contract.PlayerEntry._ID));
+			final String item_id = cursor.getString(cursor.getColumnIndex(Contract.MyPlayerEntry._ID));
 			remove.setVisibility(View.VISIBLE);
 			remove.setOnClickListener(new View.OnClickListener() {
 				@Override

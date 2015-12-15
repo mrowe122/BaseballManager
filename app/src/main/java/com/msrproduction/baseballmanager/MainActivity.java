@@ -4,6 +4,7 @@ import android.accounts.AccountManager;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -64,11 +65,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
 	}
 
 	private void checkFirstRun() {
-		Boolean isFirstRun = getSharedPreferences("FirstRunPreference", MODE_PRIVATE)
-				.getBoolean("isfirstrun", true);
+		Boolean isFirstRun = getSharedPreferences("FirstRunPreference", MODE_PRIVATE).getBoolean("isFirstRun", true);
 
 		if (isFirstRun) {
-			getSharedPreferences("FirstRunPreference", MODE_PRIVATE).edit().putBoolean("isfirstrun", false).apply();
+			getSharedPreferences("FirstRunPreference", MODE_PRIVATE).edit().putBoolean("isFirstRun", false).apply();
+			getSharedPreferences("FirstRunPreference", MODE_PRIVATE).edit().putBoolean("isSignedIn", false).apply();
 
 			new AlertDialog.Builder(this)
 					.setTitle("Welcome! :)")

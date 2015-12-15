@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class Database extends SQLiteOpenHelper {
 
-	//private final String LOG_TAG = Database.class.getSimpleName();
 	private static Database sInstance;
 	private static final int DATABASE_VERSION = 1;
 	private static final String DATABASE_NAME = "baseball_manager.db";
@@ -25,6 +24,44 @@ public class Database extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
+
+		final String CREATE_TEAM_TABLE = "CREATE TABLE " + Contract.MyTeamEntry.TABLE_NAME + " (\n" +
+				Contract.MyTeamEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, \n" +
+				Contract.MyTeamEntry.COLUMN_WINS + " INTEGER, \n" +
+				Contract.MyTeamEntry.COLUMN_LOSE + " INTEGER );";
+
+		final String CREATE_PLAYER_TABLE = "CREATE TABLE " + Contract.MyPlayerEntry.TABLE_NAME + " (\n" +
+				Contract.MyPlayerEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, \n" +
+				Contract.MyPlayerEntry.COLUMN_TEAM_ID + " TEXT, \n" +
+				Contract.MyPlayerEntry.COLUMN_PLAYER_ID + " TEXT NOT NULL, \n" +
+				Contract.MyPlayerEntry.COLUMN_NAME + " TEXT NOT NULL, \n" +
+				Contract.MyPlayerEntry.COLUMN_NUMBER + " INTEGER NOT NULL, \n" +
+				Contract.MyPlayerEntry.COLUMN_TEAM_NAME + " TEXT NOT NULL, \n" +
+				Contract.MyPlayerEntry.COLUMN_POSITION + " TEXT, \n" +
+				Contract.MyPlayerEntry.COLUMN_BATS + " TEXT, \n" +
+				Contract.MyPlayerEntry.COLUMN_THROWS + " TEXT, \n" +
+				Contract.MyPlayerEntry.COLUMN_BATTING_AVERAGE + " REAL, \n" +
+				Contract.MyPlayerEntry.COLUMN_RBI + " REAL, \n" +
+				Contract.MyPlayerEntry.COLUMN_RUNS + " INTEGER, \n" +
+				Contract.MyPlayerEntry.COLUMN_HITS + " INTEGER, \n" +
+				Contract.MyPlayerEntry.COLUMN_STRIKE_OUTS + " INTEGER, \n" +
+				Contract.MyPlayerEntry.COLUMN_WALKS + " INTEGER, \n" +
+				Contract.MyPlayerEntry.COLUMN_SINGLE + " INTEGER, \n" +
+				Contract.MyPlayerEntry.COLUMN_DOUBLE + " INTEGER, \n" +
+				Contract.MyPlayerEntry.COLUMN_TRIPLE + " INTEGER, \n" +
+				Contract.MyPlayerEntry.COLUMN_HOME_RUNS + " INTEGER, \n" +
+				Contract.MyPlayerEntry.COLUMN_FLY_BALL + " INTEGER, \n" +
+				Contract.MyPlayerEntry.COLUMN_GROUND_BALLS + " INTEGER, \n" +
+				Contract.MyPlayerEntry.COLUMN_ON_BASE_PERCENTAGE + " REAL, \n" +
+				Contract.MyPlayerEntry.COLUMN_BASES_STOLEN + " INTEGER, \n" +
+				Contract.MyPlayerEntry.COLUMN_CAUGHT_STEALING + " INTEGER, \n" +
+				Contract.MyPlayerEntry.COLUMN_ERRORS + " INTEGER, \n" +
+				Contract.MyPlayerEntry.COLUMN_FIELD_PERCENTAGE + " REAL, \n" +
+				Contract.MyPlayerEntry.COLUMN_PUT_OUTS + " INTEGER );";
+
+		/*
+		*********this section may be used for other teams and players that are stored*********
+
 		final String CREATE_TEAM_TABLE = "CREATE TABLE " + Contract.TeamEntry.TABLE_NAME + " (\n" +
 				Contract.TeamEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, \n" +
 				Contract.TeamEntry.COLUMN_TEAM_NAME + " TEXT UNIQUE NOT NULL, \n" +
@@ -74,13 +111,18 @@ public class Database extends SQLiteOpenHelper {
 		db.execSQL(CREATE_TEAM_TABLE);
 		db.execSQL(CREATE_PLAYER_TABLE);
 		db.execSQL(CREATE_PITCHER_TABLE);
+
+		*********this section may be used for other teams and players that are stored*********
+		*/
+		db.execSQL(CREATE_TEAM_TABLE);
+		db.execSQL(CREATE_PLAYER_TABLE);
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		db.execSQL("DROP TABLE IF EXISTS " + Contract.TeamEntry.TABLE_NAME);
+		/*db.execSQL("DROP TABLE IF EXISTS " + Contract.TeamEntry.TABLE_NAME);
 		db.execSQL("DROP TABLE IF EXISTS " + Contract.PlayerEntry.TABLE_NAME);
-		db.execSQL("DROP TABLE IF EXISTS " + Contract.PitcherEntry.TABLE_NAME);
+		db.execSQL("DROP TABLE IF EXISTS " + Contract.PitcherEntry.TABLE_NAME);*/
 		onCreate(db);
 	}
 }

@@ -9,15 +9,15 @@
 		app:showAsAction="never"/>
 
     <item
-        android:id="@+id/action_sign_in"
+        android:id="@+id/action_settings"
         android:orderInCategory="2"
-        android:title="@string/action_sign_in"
+        android:title="@string/action_settings"
         app:showAsAction="never"/>
 
-	<item
-		android:id="@+id/action_settings"
-		android:orderInCategory="100"
-		android:title="@string/action_settings"
-		app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_sign_in"
+        android:orderInCategory="3"
+        android:title="@string/action_sign_in"
+        app:showAsAction="never"/>
 
 </menu>

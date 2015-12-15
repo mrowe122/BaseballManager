@@ -29,23 +29,8 @@ public class SignInActivity extends Activity {
 	protected void onActivityResult(int requestCode, final int resultCode, Intent data) {
 		if (requestCode == 1 && resultCode == RESULT_OK) {
 			final String email = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
-			new AlertDialog.Builder(this)
-					.setTitle(R.string.sign_in_title)
-					.setMessage(R.string.sign_in_message)
-					.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							ServerSynchronization serverSynchronization = new ServerSynchronization(SignInActivity.this);
-							serverSynchronization.syncAllData(email);
-						}
-					})
-					.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							setResult(2);
-							finish();
-						}
-					}).setCancelable(false).show();
+			ServerSynchronization serverSynchronization = new ServerSynchronization(SignInActivity.this);
+			serverSynchronization.syncData(email);
 		}
 	}
 }

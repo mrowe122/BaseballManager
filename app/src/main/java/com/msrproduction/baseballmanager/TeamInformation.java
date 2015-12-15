@@ -20,7 +20,7 @@ import com.msrproduction.baseballmanager.Database.DatabaseAdapter;
 
 public class TeamInformation extends AppCompatActivity {
 
-	private DatabaseAdapter databaseAdapter;
+	/*private DatabaseAdapter databaseAdapter;
 	private String teamId;
 
 	@Override
@@ -49,8 +49,8 @@ public class TeamInformation extends AppCompatActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 			case R.id.edit_selected:
-				/*startActivity(new Intent(TeamInformation.this, EditActivityTeam.class)
-						.putExtra("edit_team", teamId));*/
+				startActivity(new Intent(TeamInformation.this, EditActivityTeam.class)
+						.putExtra("edit_team", teamId));
 				return true;
 			case android.R.id.home:
 				finish();
@@ -112,5 +112,5 @@ public class TeamInformation extends AppCompatActivity {
 			((TextView) view.findViewById(R.id.list_item_sub_text)).setText(
 					cursor.getString(cursor.getColumnIndexOrThrow(Contract.PlayerEntry.COLUMN_PLAYER_POSITION)));
 		}
-	}
+	}*/
 }

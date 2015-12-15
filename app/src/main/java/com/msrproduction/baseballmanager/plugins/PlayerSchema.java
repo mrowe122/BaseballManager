@@ -205,7 +205,9 @@ public class PlayerSchema {
 				return false;
 			}
 		}
-		databaseAdapter.savePlayers(_id, nameList, numberList, positionList, activity.getSharedPreferences("coach_info", Context.MODE_PRIVATE).getString("team_name", ""), batsList, throwsList);
+		String team = activity.getSharedPreferences("coach_info", Context.MODE_PRIVATE).getString("team_name", "");
+
+		databaseAdapter.saveMyPlayers(_id, nameList, numberList, positionList, team, batsList, throwsList);
 		return true;
 	}
 
@@ -214,13 +216,13 @@ public class PlayerSchema {
 	///////////////////////////////////////////////////////
 
 	public void editInitSetup(String id) {
-		Cursor cursor = databaseAdapter.select(id, Contract.PlayerEntry.TABLE_NAME);
+		Cursor cursor = databaseAdapter.select(id, Contract.MyPlayerEntry.TABLE_NAME);
 		cursor.moveToNext();
-		name = cursor.getString(cursor.getColumnIndexOrThrow(Contract.PlayerEntry.COLUMN_PLAYER_NAME));
-		number = cursor.getString(cursor.getColumnIndexOrThrow(Contract.PlayerEntry.COLUMN_PLAYER_NUMBER));
-		position = cursor.getString(cursor.getColumnIndexOrThrow(Contract.PlayerEntry.COLUMN_PLAYER_POSITION));
-		bats = cursor.getString(cursor.getColumnIndexOrThrow(Contract.PlayerEntry.COLUMN_PLAYER_BATS));
-		throws_ = cursor.getString(cursor.getColumnIndexOrThrow(Contract.PlayerEntry.COLUMN_PLAYER_THROWS));
+		name = cursor.getString(cursor.getColumnIndexOrThrow(Contract.MyPlayerEntry.COLUMN_NAME));
+		number = cursor.getString(cursor.getColumnIndexOrThrow(Contract.MyPlayerEntry.COLUMN_NUMBER));
+		position = cursor.getString(cursor.getColumnIndexOrThrow(Contract.MyPlayerEntry.COLUMN_POSITION));
+		bats = cursor.getString(cursor.getColumnIndexOrThrow(Contract.MyPlayerEntry.COLUMN_BATS));
+		throws_ = cursor.getString(cursor.getColumnIndexOrThrow(Contract.MyPlayerEntry.COLUMN_THROWS));
 		cursor.close();
 
 		((TextView) activity.findViewById(R.id.player_name)).setText(name);

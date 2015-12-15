@@ -28,9 +28,10 @@
 	<string name="dialog_setup_team_message">Would you like to setup your team now?</string>
 
     <!-- Sign In Activity -->
-    <string name="sign_in_title">Backup data</string>
-    <string name="sign_in_message">By signing in with your google account, your team will be synchronized in the cloud. Would you like to continue to backup your data?</string>
+    <string name="sign_in_title">Synchronized data</string>
+    <string name="sign_in_message">By signing in with your google account, your team will be synchronized in the cloud.</string>
     <string name="synchronizing">Synchronizing</string>
+    <string name="checking_email">Checking Email</string>
 
 
 	<!-- Team Form -->

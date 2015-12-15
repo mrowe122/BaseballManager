@@ -19,7 +19,7 @@ import com.msrproduction.baseballmanager.Database.Contract;
 import com.msrproduction.baseballmanager.Database.DatabaseAdapter;
 
 public class TeamsActivity extends AppCompatActivity {
-
+/*
 	private DatabaseAdapter databaseAdapter;
 
 	@Override
@@ -48,8 +48,8 @@ public class TeamsActivity extends AppCompatActivity {
 		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 		switch (item.getItemId()) {
 			case R.id.edit_selected:
-				/*startActivity(new Intent(this, EditActivityPlayer.class)
-						.putExtra("edit_player", info.id + ""));*/
+				startActivity(new Intent(this, EditActivityPlayer.class)
+						.putExtra("edit_player", info.id + ""));
 				return true;
 
 			default:
@@ -91,4 +91,5 @@ public class TeamsActivity extends AppCompatActivity {
 			cursor1.close();
 		}
 	}
+	*/
 }

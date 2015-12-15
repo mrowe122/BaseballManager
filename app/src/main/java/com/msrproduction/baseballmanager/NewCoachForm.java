@@ -85,12 +85,12 @@ public class NewCoachForm extends AppCompatActivity {
 			return;
 		}
 */
-		SharedPreferences sharedpreferences = getSharedPreferences("coach_info", MODE_PRIVATE);
+		SharedPreferences sharedpreferences = getSharedPreferences("team_info", MODE_PRIVATE);
 		SharedPreferences.Editor editor = sharedpreferences.edit();
 		editor.putString("coach_name", name);
 		editor.putString("team_name", teamName);
 		editor.apply();
-		getSharedPreferences("FirstRunPreference", MODE_PRIVATE).edit().putBoolean("isCoachSetup", true).apply();
+		getSharedPreferences("FirstRunPreference", MODE_PRIVATE).edit().putBoolean("isTeamSetup", true).apply();
 		setResult(1);
 		finish();
 	}
