@@ -53,14 +53,6 @@ public class NewCoachForm extends AppCompatActivity {
 		phone = (EditText) findViewById(R.id.form_coach_phone);
 		phoneNumberFormatter = new UsPhoneNumberFormatter(new WeakReference<>(phone), (TextInputLayout) findViewById(R.id.input_layout_phone), this);
 		phone.addTextChangedListener(phoneNumberFormatter);
-
-		AutoCompleteTextView editTextLogin = (AutoCompleteTextView) findViewById(R.id.form_coach_email);
-		Account[] accounts = AccountManager.get(this).getAccounts();
-		Set<String> emailSet = new HashSet<>();
-		for (Account account : accounts) {
-			emailSet.add(account.name);
-		}
-		editTextLogin.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, new ArrayList<>(emailSet)));
 	}
 
 	private void addCoach() {

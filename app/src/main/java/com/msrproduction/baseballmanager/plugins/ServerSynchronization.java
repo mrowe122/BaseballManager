@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
+import android.widget.Toast;
 
 import com.msrproduction.baseballmanager.Database.Contract;
 import com.msrproduction.baseballmanager.Database.DatabaseAdapter;
@@ -76,12 +77,8 @@ public class ServerSynchronization {
 				conn.disconnect();
 
 				SharedPreferences coachInfo = activity.getSharedPreferences("team_info", Context.MODE_PRIVATE);
-				SharedPreferences.Editor editor = coachInfo.edit();
-				editor.putString("team_id", params[1]);
-				editor.putString("coach_email", params[0]);
-				editor.putString("coach_phone", "n/a");
-				editor.apply();
 				activity.getSharedPreferences("FirstRunPreference", Context.MODE_PRIVATE).edit().putBoolean("isSignedIn", true).apply();
+				activity.getSharedPreferences("FirstRunPreference", Context.MODE_PRIVATE).edit().putBoolean("isTeamSetup", true).apply();
 
 				String[] data = new String[5];
 				JSONObject obj = new JSONObject(sb.toString());
@@ -95,37 +92,39 @@ public class ServerSynchronization {
 				data[3] = coachInfo.getString("team_name", "");
 				//json response
 				data[4] = sb.toString();
+
+				SharedPreferences.Editor editor = coachInfo.edit();
+				editor.putString("team_id", params[1]);
+				editor.putString("coach_email", params[0]);
+				editor.putString("coach_phone", "n/a");
+				editor.apply();
+				databaseAdapter.addTeamId(params[1]);
 				return data;
 
 			} catch (IOException | JSONException e) {
 				System.out.println(e.toString());
+				return new String[]{"0"};
 			}
-			return null;
 		}
 
 		@Override
 		protected void onPostExecute(final String[] buffer) {
 			progressDialog.dismiss();
 			switch (buffer[0]) {
-				//if account exists, replace local data with server account
-				case "77123":
-					System.out.println(buffer[4]);
+				case "77123": //if account exists, replace local data with server account
+					new LoadServerData().execute(buffer[4]);
 					break;
-				//if account doesn't exist, upload local to server
-				case "99000":
-					new AlertDialog.Builder(activity)
-							.setTitle(R.string.synchronized_data)
-							.setMessage(R.string.synchronized_message)
-							.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-								@Override
-								public void onClick(DialogInterface dialog, int which) {
-									new SaveTeamInfo().execute(buffer[1], buffer[2], buffer[3]);
-									new SavePlayers().execute(databaseAdapter.loadPlayersInMyTeam());
+				case "99000": //if account doesn't exist, upload local to server
+					new SaveTeamInfo().execute(buffer[1], buffer[2], buffer[3]);
+					new SavePlayers().execute(databaseAdapter.loadPlayersInMyTeam());
 
-									activity.setResult(1);
-									activity.finish();
-								}
-							}).setCancelable(false).show();
+					activity.setResult(1);
+					activity.finish();
+					break;
+				case "0": //if no response from server
+					Toast.makeText(activity, R.string.server_timed_out, Toast.LENGTH_SHORT).show();
+					activity.setResult(2);
+					activity.finish();
 					break;
 			}
 		}
@@ -135,7 +134,6 @@ public class ServerSynchronization {
 
 		@Override
 		protected String doInBackground(String... params) {
-			databaseAdapter.addTeamId(params[2]);
 			//store team information in server
 			try {
 				//URL url = new URL("http://52.25.231.27:3000/api/players");
@@ -247,6 +245,82 @@ public class ServerSynchronization {
 				System.out.println("Player data: " + e.toString());
 			}
 			return null;
+		}
+	}
+
+	public class LoadServerData extends AsyncTask<String, Void, Void> {
+
+		private ProgressDialog progressDialog;
+
+		@Override
+		protected void onPreExecute() {
+			progressDialog = new ProgressDialog(activity);
+			progressDialog.setTitle("Downloading data");
+			progressDialog.setMessage(activity.getResources().getString(R.string.please_wait));
+			progressDialog.show();
+		}
+
+		@Override
+		protected Void doInBackground(String... params) {
+			//load team/players from server
+			try {
+				JSONObject jo = new JSONObject(params[0]);
+				String teamId = jo.getJSONObject("Team").getString("teamId");
+				String teamName = jo.getJSONObject("Team").getString("team_name");
+				String coachName = jo.getJSONObject("Team").getString("coach_name");
+				String coachPhone = jo.getJSONObject("Team").getString("coach_phone");
+
+				SharedPreferences sharedpreferences = activity.getSharedPreferences("team_info", Context.MODE_PRIVATE);
+				SharedPreferences.Editor editor = sharedpreferences.edit();
+				editor.putString("team_id", teamId);
+				editor.putString("coach_name", coachName);
+				editor.putString("team_name", teamName);
+				editor.putString("coach_phone", coachPhone);
+				editor.apply();
+
+				JSONArray jaPlayers = jo.getJSONArray("Player");
+				String[] playerInfo = new String[26];
+				for(int i = 0; i < jaPlayers.length(); i++) {
+					playerInfo[0] = jaPlayers.getJSONObject(i).getString("teamId");
+					playerInfo[1] = jaPlayers.getJSONObject(i).getString("playerId");
+					playerInfo[2] = jaPlayers.getJSONObject(i).getString("name");
+					playerInfo[3] = jaPlayers.getJSONObject(i).getString("number");
+					playerInfo[4] = jaPlayers.getJSONObject(i).getString("team_name");
+					playerInfo[5] = jaPlayers.getJSONObject(i).getString("position");
+					playerInfo[6] = jaPlayers.getJSONObject(i).getString("bats");
+					playerInfo[7] = jaPlayers.getJSONObject(i).getString("throws_");
+					playerInfo[8] = jaPlayers.getJSONObject(i).getString("batting_avg");
+					playerInfo[9] = jaPlayers.getJSONObject(i).getString("rbi");
+					playerInfo[10] = jaPlayers.getJSONObject(i).getString("runs");
+					playerInfo[11] = jaPlayers.getJSONObject(i).getString("hits");
+					playerInfo[12] = jaPlayers.getJSONObject(i).getString("strike_outs");
+					playerInfo[13] = jaPlayers.getJSONObject(i).getString("walks");
+					playerInfo[14] = jaPlayers.getJSONObject(i).getString("single");
+					playerInfo[15] = jaPlayers.getJSONObject(i).getString("double_");
+					playerInfo[16] = jaPlayers.getJSONObject(i).getString("triple");
+					playerInfo[17] = jaPlayers.getJSONObject(i).getString("home_runs");
+					playerInfo[18] = jaPlayers.getJSONObject(i).getString("fly_balls");
+					playerInfo[19] = jaPlayers.getJSONObject(i).getString("ground_balls");
+					playerInfo[20] = jaPlayers.getJSONObject(i).getString("on_base_percentage");
+					playerInfo[21] = jaPlayers.getJSONObject(i).getString("bases_stolen");
+					playerInfo[22] = jaPlayers.getJSONObject(i).getString("caught_stealing");
+					playerInfo[23] = jaPlayers.getJSONObject(i).getString("errors_");
+					playerInfo[24] = jaPlayers.getJSONObject(i).getString("field_percentage");
+					playerInfo[25] = jaPlayers.getJSONObject(i).getString("put_outs");
+					databaseAdapter.loadPlayersFromServer(playerInfo);
+				}
+
+			} catch (JSONException e) {
+				System.out.println("Player data: " + e.toString());
+			}
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void aVoid) {
+			progressDialog.dismiss();
+			activity.setResult(1);
+			activity.finish();
 		}
 	}
 }

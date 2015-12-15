@@ -102,6 +102,37 @@ public class DatabaseAdapter {
 				, null);
 	}
 
+	public void loadPlayersFromServer(String[] playerInfo) {
+		ContentValues addItem = new ContentValues();
+		addItem.put(Contract.MyPlayerEntry.COLUMN_TEAM_ID, playerInfo[0]);
+		addItem.put(Contract.MyPlayerEntry.COLUMN_PLAYER_ID, playerInfo[1]);
+		addItem.put(Contract.MyPlayerEntry.COLUMN_NAME, playerInfo[2]);
+		addItem.put(Contract.MyPlayerEntry.COLUMN_NUMBER, playerInfo[3]);
+		addItem.put(Contract.MyPlayerEntry.COLUMN_TEAM_NAME, playerInfo[4]);
+		addItem.put(Contract.MyPlayerEntry.COLUMN_POSITION, playerInfo[5]);
+		addItem.put(Contract.MyPlayerEntry.COLUMN_BATS, playerInfo[6]);
+		addItem.put(Contract.MyPlayerEntry.COLUMN_THROWS, playerInfo[7]);
+		addItem.put(Contract.MyPlayerEntry.COLUMN_BATTING_AVERAGE, playerInfo[8]);
+		addItem.put(Contract.MyPlayerEntry.COLUMN_RBI, playerInfo[9]);
+		addItem.put(Contract.MyPlayerEntry.COLUMN_RUNS, playerInfo[10]);
+		addItem.put(Contract.MyPlayerEntry.COLUMN_HITS, playerInfo[11]);
+		addItem.put(Contract.MyPlayerEntry.COLUMN_STRIKE_OUTS, playerInfo[12]);
+		addItem.put(Contract.MyPlayerEntry.COLUMN_WALKS, playerInfo[13]);
+		addItem.put(Contract.MyPlayerEntry.COLUMN_SINGLE, playerInfo[14]);
+		addItem.put(Contract.MyPlayerEntry.COLUMN_DOUBLE, playerInfo[15]);
+		addItem.put(Contract.MyPlayerEntry.COLUMN_TRIPLE, playerInfo[16]);
+		addItem.put(Contract.MyPlayerEntry.COLUMN_HOME_RUNS, playerInfo[17]);
+		addItem.put(Contract.MyPlayerEntry.COLUMN_FLY_BALL, playerInfo[18]);
+		addItem.put(Contract.MyPlayerEntry.COLUMN_GROUND_BALLS, playerInfo[19]);
+		addItem.put(Contract.MyPlayerEntry.COLUMN_ON_BASE_PERCENTAGE, playerInfo[20]);
+		addItem.put(Contract.MyPlayerEntry.COLUMN_BASES_STOLEN, playerInfo[21]);
+		addItem.put(Contract.MyPlayerEntry.COLUMN_CAUGHT_STEALING, playerInfo[22]);
+		addItem.put(Contract.MyPlayerEntry.COLUMN_ERRORS, playerInfo[23]);
+		addItem.put(Contract.MyPlayerEntry.COLUMN_FIELD_PERCENTAGE, playerInfo[24]);
+		addItem.put(Contract.MyPlayerEntry.COLUMN_PUT_OUTS, playerInfo[25]);
+		db.insert(Contract.MyPlayerEntry.TABLE_NAME, null, addItem);
+	}
+
 	/*
 	public Cursor searchDatabase(String subString, String filter) {
 		switch (filter) {

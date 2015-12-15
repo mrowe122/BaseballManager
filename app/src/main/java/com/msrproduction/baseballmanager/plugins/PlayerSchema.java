@@ -205,7 +205,7 @@ public class PlayerSchema {
 				return false;
 			}
 		}
-		String team = activity.getSharedPreferences("coach_info", Context.MODE_PRIVATE).getString("team_name", "");
+		String team = activity.getSharedPreferences("team_info", Context.MODE_PRIVATE).getString("team_name", "");
 
 		databaseAdapter.saveMyPlayers(_id, nameList, numberList, positionList, team, batsList, throwsList);
 		return true;

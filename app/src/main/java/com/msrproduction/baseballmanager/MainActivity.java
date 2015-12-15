@@ -2,12 +2,11 @@ package com.msrproduction.baseballmanager;
 
 import android.accounts.AccountManager;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,12 +14,8 @@ import android.widget.TextView;
 
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.common.AccountPicker;
-import com.msrproduction.baseballmanager.Database.DatabaseAdapter;
-
-import org.w3c.dom.Text;
 
 import java.util.Random;
-import java.util.UUID;
 
 public class MainActivity extends Activity implements View.OnClickListener {
 

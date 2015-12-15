@@ -1,12 +1,13 @@
 package com.msrproduction.baseballmanager;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.widget.CursorAdapter;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -15,7 +16,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -87,6 +87,8 @@ public class MyTeamsActivity extends AppCompatActivity {
 				if (resultCode == 1) {
 					loadCoachData();
 					cursorAdapter.swapCursor(databaseAdapter.loadPlayersInMyTeam());
+				} else if (resultCode == 2) {
+					finish();
 				}
 				break;
 		}
@@ -111,8 +113,8 @@ public class MyTeamsActivity extends AppCompatActivity {
 	}
 
 	private void checkFirstRun() {
-		Boolean isCoachSetup = getSharedPreferences("FirstRunPreference", MODE_PRIVATE).getBoolean("isTeamSetup", false);
-		if (!isCoachSetup) {
+		Boolean isTeamSetup = getSharedPreferences("FirstRunPreference", MODE_PRIVATE).getBoolean("isTeamSetup", false);
+		if (!isTeamSetup) {
 			new AlertDialog.Builder(this)
 					.setTitle(R.string.dialog_setup_team_title)
 					.setMessage(R.string.dialog_setup_team_message)

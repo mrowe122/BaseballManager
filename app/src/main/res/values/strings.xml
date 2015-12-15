@@ -28,11 +28,10 @@
 	<string name="dialog_setup_team_message">Would you like to setup your team now?</string>
 
     <!-- Sign In Activity -->
-    <string name="synchronized_data">Synchronized data</string>
-    <string name="synchronized_message">By signing in with your google account, your team will be synchronized in the cloud.</string>
+    <string name="synchronized_data">Synchronized Data</string>
+    <string name="synchronized_message">By signing in with your Google account, your team will be synchronized in the cloud.\nWould you like to continue in backing up your team?</string>
     <string name="synchronizing">Synchronizing</string>
     <string name="checking_email">Checking Email</string>
-
 
 	<!-- Team Form -->
 	<string name="form_hint_team_name">*Team Name</string>
@@ -120,5 +119,6 @@
     <string name="saving_player">Saving players</string>
     <string name="fetching_player">Fetching players</string>
     <string name="please_wait">Please wait…</string>
+    <string name="server_timed_out">Server timed out</string>
 
 </resources>
