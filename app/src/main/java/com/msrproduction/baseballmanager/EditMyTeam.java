@@ -33,8 +33,6 @@ public class EditMyTeam extends AppCompatActivity {
 
 	private DatabaseAdapter databaseAdapter;
 	private List<String> removedPlayers = new ArrayList<>();
-	private EditText phone;
-	private UsPhoneNumberFormatter phoneNumberFormatter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -53,12 +51,6 @@ public class EditMyTeam extends AppCompatActivity {
 		SharedPreferences coachInfo = getSharedPreferences("team_info", MODE_PRIVATE);
 		((EditText) header.findViewById(R.id.form_coach_name)).setText(coachInfo.getString("coach_name", ""));
 		((EditText) header.findViewById(R.id.form_coach_team)).setText(coachInfo.getString("team_name", ""));
-		phone = (EditText) header.findViewById(R.id.form_coach_phone);
-		phone.setText(coachInfo.getString("coach_phone", ""));
-
-		//add auto number formatter
-		phoneNumberFormatter = new UsPhoneNumberFormatter(new WeakReference<>(phone), (TextInputLayout) findViewById(R.id.input_layout_phone), this);
-		phone.addTextChangedListener(phoneNumberFormatter);
 
 		//hide/show appropriate views
 		header.findViewById(R.id.buttons).setVisibility(View.GONE);
@@ -129,26 +121,13 @@ public class EditMyTeam extends AppCompatActivity {
 			Toast.makeText(this, R.string.error_empty_team, Toast.LENGTH_SHORT).show();
 			return;
 		}
-		String email = ((EditText) findViewById(R.id.form_coach_email)).getText().toString();
-		if (email.equals(""))
-			email = "n/a";
-
-		String formattedPhone = phone.getText().toString();
-		if(!phoneNumberFormatter.getError()) {
-			if (formattedPhone.equals(""))
-				formattedPhone = "n/a";
-		} else {
-			Toast.makeText(this, R.string.error_invalid_phone, Toast.LENGTH_SHORT).show();
-			return;
-		}
 
 		SharedPreferences sharedpreferences = getSharedPreferences("team_info", MODE_PRIVATE);
 		SharedPreferences.Editor editor = sharedpreferences.edit();
 		editor.putString("coach_name", name);
 		editor.putString("team_name", teamName);
-		editor.putString("coach_phone", formattedPhone);
 		editor.apply();
-		getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit().putBoolean("isTeamSetup", true).apply();
+		getSharedPreferences("AppPreferences", MODE_PRIVATE).edit().putBoolean("isTeamSetup", true).apply();
 		setResult(1);
 		finish();
 	}

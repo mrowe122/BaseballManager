@@ -59,7 +59,7 @@ public class ServerSynchronization {
 		protected String[] doInBackground(String... params) {
 			//retrieve coach information in server
 			try {
-				URL url = new URL("http://192.168.1.219:3000/api/team/" + params[1]);
+				URL url = new URL("http://192.168.1.21:3000/api/team/" + params[1]);
 				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 				conn.setRequestProperty("Content-Type", "text/html");
 				conn.setRequestMethod("GET");
@@ -77,8 +77,8 @@ public class ServerSynchronization {
 				conn.disconnect();
 
 				SharedPreferences coachInfo = activity.getSharedPreferences("team_info", Context.MODE_PRIVATE);
-				activity.getSharedPreferences("FirstRunPreference", Context.MODE_PRIVATE).edit().putBoolean("isSignedIn", true).apply();
-				activity.getSharedPreferences("FirstRunPreference", Context.MODE_PRIVATE).edit().putBoolean("isTeamSetup", true).apply();
+				activity.getSharedPreferences("AppPreferences", Context.MODE_PRIVATE).edit().putBoolean("isSignedIn", true).apply();
+				activity.getSharedPreferences("AppPreferences", Context.MODE_PRIVATE).edit().putBoolean("isTeamSetup", true).apply();
 
 				String[] data = new String[5];
 				JSONObject obj = new JSONObject(sb.toString());
@@ -137,7 +137,7 @@ public class ServerSynchronization {
 			//store team information in server
 			try {
 				//URL url = new URL("http://52.25.231.27:3000/api/players");
-				URL url = new URL("http://192.168.1.219:3000/api/team");
+				URL url = new URL("http://192.168.1.21:3000/api/team");
 				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 				conn.setRequestProperty("Content-Type", "application/json");
 				conn.setRequestMethod("POST");
@@ -181,7 +181,7 @@ public class ServerSynchronization {
 			//store players on the server
 			try {
 				//URL url = new URL("http://52.25.231.27:3000/api/players");
-				URL url = new URL("http://192.168.1.219:3000/api/players");
+				URL url = new URL("http://192.168.1.21:3000/api/players");
 				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 				conn.setRequestProperty("Content-Type", "application/json");
 				conn.setRequestMethod("POST");

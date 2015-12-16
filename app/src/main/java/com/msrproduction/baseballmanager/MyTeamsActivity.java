@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
@@ -46,7 +47,12 @@ public class MyTeamsActivity extends AppCompatActivity {
 				startActivityForResult(new Intent(MyTeamsActivity.this, EditMyTeam.class), 2);
 				break;
 			case R.id.action_sign_in:
-				startActivityForResult(new Intent(MyTeamsActivity.this, SignInActivity.class), 3);
+				boolean signedOn = getSharedPreferences("AppPreferences", Context.MODE_PRIVATE).getBoolean("isSignedIn", false);
+				if(signedOn) {
+					Toast.makeText(MyTeamsActivity.this, "Logged out", Toast.LENGTH_SHORT).show();
+				} else {
+					startActivityForResult(new Intent(MyTeamsActivity.this, SignInActivity.class), 3);
+				}
 				break;
 			case R.id.action_settings:
 				break;
@@ -57,6 +63,15 @@ public class MyTeamsActivity extends AppCompatActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.menu_my_team, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		boolean signedOn = getSharedPreferences("AppPreferences", Context.MODE_PRIVATE).getBoolean("isSignedIn", false);
+		if(signedOn) {
+			menu.findItem(R.id.action_sign_in).setTitle(R.string.action_sign_out);
+		}
 		return true;
 	}
 
@@ -113,7 +128,7 @@ public class MyTeamsActivity extends AppCompatActivity {
 	}
 
 	private void checkFirstRun() {
-		Boolean isTeamSetup = getSharedPreferences("FirstRunPreference", MODE_PRIVATE).getBoolean("isTeamSetup", false);
+		Boolean isTeamSetup = getSharedPreferences("AppPreferences", MODE_PRIVATE).getBoolean("isTeamSetup", false);
 		if (!isTeamSetup) {
 			new AlertDialog.Builder(this)
 					.setTitle(R.string.dialog_setup_team_title)
@@ -157,8 +172,7 @@ public class MyTeamsActivity extends AppCompatActivity {
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				startActivityForResult(new Intent(getApplicationContext(), PlayerInformation.class)
-						.putExtra("player_id", id + ""), 2);
+				startActivityForResult(new Intent(getApplicationContext(), PlayerInformation.class).putExtra("player_id", id + ""), 2);
 			}
 		});
 	}
@@ -168,7 +182,6 @@ public class MyTeamsActivity extends AppCompatActivity {
 		((TextView) findViewById(R.id.my_coach_name)).setText(coachInfo.getString("coach_name", ""));
 		((TextView) findViewById(R.id.my_team_name)).setText(coachInfo.getString("team_name", ""));
 		((TextView) findViewById(R.id.my_email)).setText(coachInfo.getString("coach_email", ""));
-		((TextView) findViewById(R.id.my_phone)).setText(coachInfo.getString("coach_phone", ""));
 	}
 
 	/*Instantiate floating action button*/

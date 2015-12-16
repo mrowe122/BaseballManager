@@ -29,7 +29,7 @@ public class PlayerSchema {
 	private final char[] idChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".toCharArray();
 	private Activity activity;
 	private DatabaseAdapter databaseAdapter;
-	private String name, number, position, bats, throws_;
+	private String name, number, position, bats, throws_, playerId;
 	private CheckBox batsLeft, batsRight, throwsLeft, throwsRight;
 
 	private ArrayList<EditText> nameArray = new ArrayList<>();
@@ -208,6 +208,8 @@ public class PlayerSchema {
 		String team = activity.getSharedPreferences("team_info", Context.MODE_PRIVATE).getString("team_name", "");
 
 		databaseAdapter.saveMyPlayers(_id, nameList, numberList, positionList, team, batsList, throwsList);
+		ServerSynchronization serverSynchronization = new ServerSynchronization(activity);
+		serverSynchronization.syncPlayers(databaseAdapter.loadPlayersInMyTeam());
 		return true;
 	}
 
@@ -216,6 +218,7 @@ public class PlayerSchema {
 	///////////////////////////////////////////////////////
 
 	public void editInitSetup(String id) {
+		playerId = id;
 		Cursor cursor = databaseAdapter.select(id, Contract.MyPlayerEntry.TABLE_NAME);
 		cursor.moveToNext();
 		name = cursor.getString(cursor.getColumnIndexOrThrow(Contract.MyPlayerEntry.COLUMN_NAME));
@@ -305,6 +308,7 @@ public class PlayerSchema {
 			return false;
 		}
 		databaseAdapter.updatePlayer(name, number, position, bats, throws_);
+		new ServerSynchronization(activity).syncPlayers(databaseAdapter.select(playerId, Contract.MyPlayerEntry.TABLE_NAME));
 		return true;
 	}
 

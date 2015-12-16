@@ -31,7 +31,7 @@ public class SignInActivity extends Activity {
 					.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							if (!getSharedPreferences("FirstRunPreference", Context.MODE_PRIVATE).getBoolean("isSignedIn", false)) {
+							if (!getSharedPreferences("AppPreferences", Context.MODE_PRIVATE).getBoolean("isTeamSetup", false)) {
 								setResult(2);
 							}
 							finish();
@@ -50,6 +50,9 @@ public class SignInActivity extends Activity {
 			ServerSynchronization serverSynchronization = new ServerSynchronization(SignInActivity.this);
 			serverSynchronization.syncData(email);
 		} else {
+			if (!getSharedPreferences("AppPreferences", Context.MODE_PRIVATE).getBoolean("isTeamSetup", false)) {
+				setResult(2);
+			}
 			finish();
 		}
 	}

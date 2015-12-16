@@ -17,6 +17,7 @@
 	<string name="action_edit">Edit</string>
 	<string name="action_search">Search</string>
     <string name="action_sign_in">Sign in</string>
+    <string name="action_sign_out">Sign out</string>
 
 	<!-- My Team -->
 	<string name="my_phone">Phone:</string>
