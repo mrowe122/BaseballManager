@@ -3,11 +3,9 @@ package com.msrproduction.baseballmanager.plugins;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.AsyncTask;
-import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
 
 import com.msrproduction.baseballmanager.Database.Contract;
@@ -122,7 +120,7 @@ public class ServerSynchronization {
 					activity.finish();
 					break;
 				case "0": //if no response from server
-					Toast.makeText(activity, R.string.server_timed_out, Toast.LENGTH_SHORT).show();
+					Toast.makeText(activity, R.string.failed_server_connection, Toast.LENGTH_SHORT).show();
 					activity.setResult(2);
 					activity.finish();
 					break;
@@ -201,7 +199,7 @@ public class ServerSynchronization {
 					jo.put("bats", params[0].getString(params[0].getColumnIndex(Contract.MyPlayerEntry.COLUMN_BATS)));
 					jo.put("throws_", params[0].getString(params[0].getColumnIndex(Contract.MyPlayerEntry.COLUMN_THROWS)));
 					jo.put("position", params[0].getString(params[0].getColumnIndex(Contract.MyPlayerEntry.COLUMN_POSITION)));
-					jo.put("batting_avg", params[0].getString(params[0].getColumnIndex(Contract.MyPlayerEntry.COLUMN_BATTING_AVERAGE)));
+					/*jo.put("batting_avg", params[0].getString(params[0].getColumnIndex(Contract.MyPlayerEntry.COLUMN_BATTING_AVERAGE)));
 					jo.put("rbi", params[0].getString(params[0].getColumnIndex(Contract.MyPlayerEntry.COLUMN_RBI)));
 					jo.put("runs", params[0].getString(params[0].getColumnIndex(Contract.MyPlayerEntry.COLUMN_RUNS)));
 					jo.put("hits", params[0].getString(params[0].getColumnIndex(Contract.MyPlayerEntry.COLUMN_HITS)));
@@ -218,7 +216,7 @@ public class ServerSynchronization {
 					jo.put("caught_stealing", params[0].getString(params[0].getColumnIndex(Contract.MyPlayerEntry.COLUMN_CAUGHT_STEALING)));
 					jo.put("errors_", params[0].getString(params[0].getColumnIndex(Contract.MyPlayerEntry.COLUMN_ERRORS)));
 					jo.put("field_percentage", params[0].getString(params[0].getColumnIndex(Contract.MyPlayerEntry.COLUMN_FIELD_PERCENTAGE)));
-					jo.put("put_outs", params[0].getString(params[0].getColumnIndex(Contract.MyPlayerEntry.COLUMN_PUT_OUTS)));
+					jo.put("put_outs", params[0].getString(params[0].getColumnIndex(Contract.MyPlayerEntry.COLUMN_PUT_OUTS)));*/
 					jaPlayers.put(jo);
 				}
 
@@ -255,7 +253,7 @@ public class ServerSynchronization {
 		@Override
 		protected void onPreExecute() {
 			progressDialog = new ProgressDialog(activity);
-			progressDialog.setTitle("Downloading data");
+			progressDialog.setTitle(R.string.downloading_data);
 			progressDialog.setMessage(activity.getResources().getString(R.string.please_wait));
 			progressDialog.show();
 		}
@@ -309,8 +307,9 @@ public class ServerSynchronization {
 					playerInfo[25] = jaPlayers.getJSONObject(i).getString("put_outs");
 					databaseAdapter.loadPlayersFromServer(playerInfo);
 				}
+				Thread.sleep(2000);
 
-			} catch (JSONException e) {
+			} catch (JSONException | InterruptedException e) {
 				System.out.println("Player data: " + e.toString());
 			}
 			return null;

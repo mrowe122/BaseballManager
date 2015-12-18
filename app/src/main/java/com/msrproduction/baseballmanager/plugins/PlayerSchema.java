@@ -1,10 +1,10 @@
 package com.msrproduction.baseballmanager.plugins;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -24,6 +24,10 @@ import java.util.Random;
 import java.util.StringTokenizer;
 
 public class PlayerSchema {
+
+	private class ViewHolderItem {
+		TextView textViewItem;
+	}
 
 	private final String positionList[] = {"P", "C", "1B", "2B", "3B", "SS", "LF", "CF", "RF"};
 	private final char[] idChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".toCharArray();
@@ -315,7 +319,7 @@ public class PlayerSchema {
 	public void removePlayer(String id) {
 		final List<String> temp = new ArrayList<>();
 		temp.add(id);
-		new AlertDialog.Builder(activity)
+		new AlertDialog.Builder(activity, R.style.CustomAlertDialog)
 				.setTitle(R.string.removing_players_title)
 				.setMessage(R.string.removing_players_message)
 				.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
@@ -330,7 +334,6 @@ public class PlayerSchema {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						activity.setResult(0);
-						//do nothing
 					}
 				}).show();
 	}

@@ -28,7 +28,7 @@
 				android:layout_width="match_parent"
 				android:layout_height="30dp"
 				android:layout_gravity="bottom"
-				android:background="@drawable/alphabackground"/>
+				android:background="@drawable/alpha_background"/>
 
 		</FrameLayout>
 
@@ -96,16 +96,6 @@
 			fab:fab_colorNormal="@color/ColorPrimaryDark"
 			fab:fab_colorPressed="@color/ColorPrimary"
 			fab:fab_label="@string/create_new_team"
-			fab:fab_size="mini"/>
-
-		<com.github.clans.fab.FloatingActionButton
-			android:id="@+id/fab_add_player_to_team"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:src="@drawable/ic_star"
-			fab:fab_colorNormal="@color/ColorPrimaryDark"
-			fab:fab_colorPressed="@color/ColorPrimary"
-			fab:fab_label="@string/add_free_agents"
 			fab:fab_size="mini"/>
 
 	</com.github.clans.fab.FloatingActionMenu>

@@ -33,6 +33,9 @@
     <string name="synchronized_message">By signing in with your Google account, your team will be synchronized in the cloud.\nWould you like to continue in backing up your team?</string>
     <string name="synchronizing">Synchronizing</string>
     <string name="checking_email">Checking Email</string>
+    <string name="downloading_data">Downloading Data</string>
+    <string name="load_team">Load team?</string>
+    <string name="load_team_message">Warning: your current team will be lost!\nAre you sure you want to continue?</string>
 
 	<!-- Team Form -->
 	<string name="form_hint_team_name">*Team Name</string>
@@ -49,7 +52,7 @@
 	<string name="game_history">Game History</string>
 
 	<!-- Player Form -->
-	<string name="new_player">Add New Player</string>
+	<string name="new_player">Add Players</string>
 	<string name="add_new_field">+Add more</string>
 	<string name="form_hint_player_name">*Name</string>
 	<string name="form_hint_player_number">*Number</string>
@@ -120,6 +123,6 @@
     <string name="saving_player">Saving players</string>
     <string name="fetching_player">Fetching players</string>
     <string name="please_wait">Please wait…</string>
-    <string name="server_timed_out">Server timed out</string>
+    <string name="failed_server_connection">Failed to connect to server</string>
 
 </resources>

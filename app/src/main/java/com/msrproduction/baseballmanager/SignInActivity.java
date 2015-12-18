@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.common.AccountPicker;
@@ -18,20 +19,40 @@ public class SignInActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		try {
-			new android.support.v7.app.AlertDialog.Builder(SignInActivity.this)
+			final boolean teamSetup = getSharedPreferences("AppPreferences", Context.MODE_PRIVATE).getBoolean("isTeamSetup", false);
+			new AlertDialog.Builder(SignInActivity.this, R.style.CustomAlertDialog)
 					.setTitle(R.string.synchronized_data)
 					.setMessage(R.string.synchronized_message)
 					.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							Intent intent = AccountPicker.zza(null, null, new String[]{GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE}, false, null, null, null, null, false, 1, 0);
-							startActivityForResult(intent, 1);
+							if (teamSetup) {
+								new AlertDialog.Builder(SignInActivity.this, R.style.CustomAlertDialog)
+										.setTitle(R.string.load_team)
+										.setMessage(R.string.load_team_message)
+										.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+											@Override
+											public void onClick(DialogInterface dialog, int which) {
+												Intent intent = AccountPicker.zza(null, null, new String[]{GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE}, false, null, null, null, null, false, 1, 0);
+												startActivityForResult(intent, 1);
+											}
+										})
+										.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
+											@Override
+											public void onClick(DialogInterface dialog, int which) {
+												finish();
+											}
+										}).setCancelable(false).show();
+							} else {
+								Intent intent = AccountPicker.zza(null, null, new String[]{GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE}, false, null, null, null, null, false, 1, 0);
+								startActivityForResult(intent, 1);
+							}
 						}
 					})
 					.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							if (!getSharedPreferences("AppPreferences", Context.MODE_PRIVATE).getBoolean("isTeamSetup", false)) {
+							if (!teamSetup) {
 								setResult(2);
 							}
 							finish();

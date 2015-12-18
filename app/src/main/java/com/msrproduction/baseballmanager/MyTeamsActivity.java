@@ -47,8 +47,8 @@ public class MyTeamsActivity extends AppCompatActivity {
 				startActivityForResult(new Intent(MyTeamsActivity.this, EditMyTeam.class), 2);
 				break;
 			case R.id.action_sign_in:
-				boolean signedOn = getSharedPreferences("AppPreferences", Context.MODE_PRIVATE).getBoolean("isSignedIn", false);
-				if(signedOn) {
+				boolean signedIn = getSharedPreferences("AppPreferences", Context.MODE_PRIVATE).getBoolean("isSignedIn", false);
+				if (signedIn) {
 					Toast.makeText(MyTeamsActivity.this, "Logged out", Toast.LENGTH_SHORT).show();
 				} else {
 					startActivityForResult(new Intent(MyTeamsActivity.this, SignInActivity.class), 3);
@@ -69,7 +69,7 @@ public class MyTeamsActivity extends AppCompatActivity {
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		boolean signedOn = getSharedPreferences("AppPreferences", Context.MODE_PRIVATE).getBoolean("isSignedIn", false);
-		if(signedOn) {
+		if (signedOn) {
 			menu.findItem(R.id.action_sign_in).setTitle(R.string.action_sign_out);
 		}
 		return true;
@@ -92,19 +92,22 @@ public class MyTeamsActivity extends AppCompatActivity {
 		switch (requestCode) {
 			case 1: //for first time running check
 				if (resultCode != 1)
-					finish();
+					checkFirstRun();
 				break;
 			case 2: //for updating list view
 				if (resultCode == 1)
 					cursorAdapter.swapCursor(databaseAdapter.loadPlayersInMyTeam());
 				break;
-			case 3: //if synchronized
+			case 3: //for synchronization
 				if (resultCode == 1) {
 					loadCoachData();
 					cursorAdapter.swapCursor(databaseAdapter.loadPlayersInMyTeam());
 				} else if (resultCode == 2) {
-					finish();
+					checkFirstRun();
 				}
+				break;
+			default: //just in case something goes wrong
+				finish();
 				break;
 		}
 	}
@@ -130,7 +133,7 @@ public class MyTeamsActivity extends AppCompatActivity {
 	private void checkFirstRun() {
 		Boolean isTeamSetup = getSharedPreferences("AppPreferences", MODE_PRIVATE).getBoolean("isTeamSetup", false);
 		if (!isTeamSetup) {
-			new AlertDialog.Builder(this)
+			new AlertDialog.Builder(this, R.style.CustomAlertDialog)
 					.setTitle(R.string.dialog_setup_team_title)
 					.setMessage(R.string.dialog_setup_team_message)
 					.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
@@ -139,16 +142,16 @@ public class MyTeamsActivity extends AppCompatActivity {
 							startActivityForResult(new Intent(MyTeamsActivity.this, NewCoachForm.class), 1);
 						}
 					})
-					.setNegativeButton(R.string.later, new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							finish();
-						}
-					})
-					.setNeutralButton(R.string.sign_in, new DialogInterface.OnClickListener() {
+					.setNegativeButton(R.string.sign_in, new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							startActivityForResult(new Intent(MyTeamsActivity.this, SignInActivity.class), 3);
+						}
+					})
+					.setNeutralButton(R.string.later, new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							finish();
 						}
 					}).setCancelable(false).show();
 		}
@@ -157,15 +160,14 @@ public class MyTeamsActivity extends AppCompatActivity {
 	private void initSetup() {
 		//Instantiate list of players list view
 		ListView listView = (ListView) findViewById(R.id.my_players_list);
+		//make layout the header to the list view to scroll entire screen
 		ViewGroup header = (ViewGroup) getLayoutInflater().inflate(R.layout.activity_my_team, listView, false);
 		listView.addHeaderView(header, null, false);
 		registerForContextMenu(listView);
-
 		//load coach information
 		loadCoachData();
 		//initiate floating action buttons
 		initFabButtons();
-
 		//load the players in my team
 		cursorAdapter = new PlayerListAdapter(getApplicationContext(), databaseAdapter.loadPlayersInMyTeam(), CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
 		listView.setAdapter(cursorAdapter);
@@ -179,19 +181,21 @@ public class MyTeamsActivity extends AppCompatActivity {
 
 	private void loadCoachData() {
 		SharedPreferences coachInfo = getSharedPreferences("team_info", MODE_PRIVATE);
-		((TextView) findViewById(R.id.my_coach_name)).setText(coachInfo.getString("coach_name", ""));
+		//load team name to text view
 		((TextView) findViewById(R.id.my_team_name)).setText(coachInfo.getString("team_name", ""));
+		//load coaches name to text view
+		((TextView) findViewById(R.id.my_coach_name)).setText(coachInfo.getString("coach_name", ""));
+		//load the signed in email to text view
 		((TextView) findViewById(R.id.my_email)).setText(coachInfo.getString("coach_email", ""));
 	}
 
-	/*Instantiate floating action button*/
+	//Instantiate floating action button
 	private void initFabButtons() {
 		fabMenu = (FloatingActionMenu) findViewById(R.id.fab_menu);
 		fabMenu.setVisibility(View.VISIBLE);
 		fabMenu.setClosedOnTouchOutside(true);
 		FloatingActionButton addPlayer = (FloatingActionButton) findViewById(R.id.fab_add_player);
 		FloatingActionButton addTeam = (FloatingActionButton) findViewById(R.id.fab_add_team);
-		FloatingActionButton addFreeAgents = (FloatingActionButton) findViewById(R.id.fab_add_player_to_team);
 
 		addPlayer.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -206,14 +210,6 @@ public class MyTeamsActivity extends AppCompatActivity {
 			public void onClick(View v) {
 				startActivity(new Intent(MyTeamsActivity.this, NewTeamForm.class));
 				overridePendingTransition(R.anim.abc_slide_in_bottom, R.anim.abc_slide_out_bottom);
-			}
-		});
-
-		addFreeAgents.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				//startActivity(new Intent(MyTeamsActivity.this, AddPlayerToTeam.class));
-				//overridePendingTransition(R.anim.abc_slide_in_bottom, R.anim.abc_slide_out_bottom);
 			}
 		});
 	}
